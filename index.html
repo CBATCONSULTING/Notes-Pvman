@@ -262,6 +262,19 @@
                 transform: translateX(-50%) translateY(-6px);
             }
 
+        /* Input text dans "Autre" */
+        .other-input {
+            width: 100%;
+            max-width: 320px;
+            margin-top: 6px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.14);
+            background: rgba(0,0,0,.18);
+            color: var(--text);
+            padding: 10px 12px;
+            outline: none;
+        }
+
         @media (max-width: 720px) {
             .row {
                 flex-direction: column;
@@ -294,7 +307,7 @@
                     En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
                 </p>
             </div>
-            <div class="pill">v1.01</div>
+            <div class="pill">v1.02</div>
         </div>
 
         <div class="card">
@@ -417,22 +430,33 @@
                     </div>
                 </div>
 
-                <!-- AUTRE -->
-                <div class="row" data-appliance="Autre">
+                <!-- AUTRE 1 (optionnel) -->
+                <div class="row" data-appliance="Autre" data-optional-other="1">
                     <div class="label">
-                        <b>Autre (optionnel)</b>
+                        <b>Autre (optionnel) #1</b>
                         <small>
-                            <input id="autreLabel" type="text" placeholder="Ex : Cave à vin…" style="
-                width:100%;max-width:320px;margin-top:6px;
-                border-radius:12px;border:1px solid rgba(255,255,255,.14);
-                background: rgba(0,0,0,.18);color:var(--text);padding:10px 12px;outline:none;
-              ">
+                            <input id="autreLabel1" class="other-input" type="text" placeholder="Ex : Cave à vin…">
                         </small>
                     </div>
                     <div class="options">
-                        <label><input type="radio" name="autre" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="autre" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="autre" value="pasde"><span class="opt">Pas souhaité</span></label>
+                        <label><input type="radio" name="autre1" value="client"><span class="opt">Client</span></label>
+                        <label><input type="radio" name="autre1" value="entreprise"><span class="opt">Entreprise</span></label>
+                        <label><input type="radio" name="autre1" value="pasde"><span class="opt">Pas souhaité</span></label>
+                    </div>
+                </div>
+
+                <!-- AUTRE 2 (optionnel) -->
+                <div class="row" data-appliance="Autre" data-optional-other="1">
+                    <div class="label">
+                        <b>Autre (optionnel) #2</b>
+                        <small>
+                            <input id="autreLabel2" class="other-input" type="text" placeholder="Ex : Cave à vin…">
+                        </small>
+                    </div>
+                    <div class="options">
+                        <label><input type="radio" name="autre2" value="client"><span class="opt">Client</span></label>
+                        <label><input type="radio" name="autre2" value="entreprise"><span class="opt">Entreprise</span></label>
+                        <label><input type="radio" name="autre2" value="pasde"><span class="opt">Pas souhaité</span></label>
                     </div>
                 </div>
 
@@ -458,7 +482,6 @@
     <script>
         const output = document.getElementById("output");
         const toast = document.getElementById("toast");
-        const autreLabel = document.getElementById("autreLabel");
 
         // Client/Entreprise (avec le "PAR" demandé)
         function whoText(value) {
@@ -476,18 +499,22 @@
 
             rows.forEach(row => {
                 let label = row.getAttribute("data-appliance");
+                const isOptionalOther = row.hasAttribute("data-optional-other");
 
-                // Gestion "Autre"
-                if (label === "Autre") {
-                    const custom = (autreLabel.value || "").trim();
-                    label = custom ? custom : "Autre";
+                // Gestion "Autre" (optionnels) :
+                // ✅ Si le champ texte est vide => on N'EXPORTe PAS cette ligne (on la saute totalement)
+                if (isOptionalOther) {
+                    const input = row.querySelector('input[type="text"]');
+                    const custom = (input?.value || "").trim();
+                    if (!custom) return;      // <-- la ligne n'apparaît pas dans l'export
+                    label = custom;          // sinon on utilise le texte saisi comme nom d'appareil
                 }
 
                 const checked = row.querySelector('input[type="radio"]:checked');
 
                 if (checked) {
                     if (checked.value === "pasde") {
-                        lines.push(`PAS DE ${formatForPasDe(label)} souhaité`);
+                        lines.push(`PAS DE ${formatForPasDe(label)} souhaité(e)`);
                     } else {
                         lines.push(`${label} installé(e) ${whoText(checked.value)}`);
                     }
@@ -529,7 +556,7 @@
 
         document.getElementById("btnReset").addEventListener("click", () => {
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-            autreLabel.value = "";
+            document.querySelectorAll('input[type="text"]').forEach(t => t.value = "");
             buildRecap();
             showToast("Réinitialisé");
         });
@@ -538,7 +565,9 @@
             if (e.target.matches('input[type="radio"]')) buildRecap();
         });
 
-        autreLabel.addEventListener("input", buildRecap);
+        document.addEventListener("input", (e) => {
+            if (e.target.matches('input[type="text"]')) buildRecap();
+        });
 
         buildRecap();
     </script>
