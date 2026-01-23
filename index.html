@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Électroménagers — Qui installe ?</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#93a4c7;
+      --text:#eaf0ff;
+      --line:#23335f;
+      --btn:#1b2a54;
+      --btnHover:#223463;
+      --green:#1f8f4a;
+      --greenSoft:rgba(31,143,74,.18);
+      --red:#b23a3a;
+      --shadow: 0 18px 45px rgba(0,0,0,.35);
+      --radius:18px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background: radial-gradient(1200px 600px at 20% 0%, #162455 0%, rgba(22,36,85,0) 60%),
+                  radial-gradient(900px 500px at 90% 20%, #2a1b5c 0%, rgba(42,27,92,0) 55%),
+                  var(--bg);
+      color:var(--text);
+      padding: 22px;
+    }
+
+    .wrap{max-width:980px;margin:0 auto}
+    .header{
+      display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    h1{font-size:20px;margin:0}
+    .sub{color:var(--muted);margin:6px 0 0 0;font-size:13px;line-height:1.35}
+    .pill{
+      font-size:12px;color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px 10px;border-radius:999px;
+      background: rgba(255,255,255,.06);
+      white-space:nowrap;
+      align-self:flex-start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .list{padding:10px 12px}
+    .row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .row:last-child{border-bottom:none}
+
+    .label{
+      display:flex;flex-direction:column;gap:4px;
+      min-width: 220px;
+    }
+    .label b{font-size:14px;font-weight:650}
+    .label small{color:var(--muted);font-size:12px}
+
+    .options{
+      display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+    }
+
+    /* radios cachés */
+    input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+
+    .opt{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+      min-width:130px;
+      transition: transform .06s ease, background .15s ease, border-color .15s ease;
+      font-size:13px;
+    }
+    .opt:hover{background: rgba(255,255,255,.09);border-color: rgba(255,255,255,.22)}
+    .opt:active{transform: translateY(1px)}
+
+    /* sélection : vert */
+    input[type="radio"]:checked + .opt{
+      background: var(--greenSoft);
+      border-color: rgba(31,143,74,.7);
+      box-shadow: 0 0 0 2px rgba(31,143,74,.18) inset;
+    }
+
+    .footer{
+      padding:12px;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+
+    textarea{
+      width:100%;
+      min-height:140px;
+      resize:vertical;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
+      padding:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+      line-height:1.35;
+      outline:none;
+    }
+
+    .actions{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    }
+    .btns{display:flex;gap:10px;flex-wrap:wrap}
+    button{
+      border:none;
+      border-radius:12px;
+      padding:10px 14px;
+      background: var(--btn);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:650;
+      transition: transform .06s ease, background .15s ease, opacity .15s ease;
+    }
+    button:hover{background: var(--btnHover)}
+    button:active{transform: translateY(1px)}
+    .primary{background: linear-gradient(180deg, rgba(31,143,74,.95), rgba(31,143,74,.75));}
+    .primary:hover{background: linear-gradient(180deg, rgba(31,143,74,1), rgba(31,143,74,.82));}
+    .ghost{background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+    .ghost:hover{background: rgba(255,255,255,.11)}
+    .danger{background: rgba(178,58,58,.18);border:1px solid rgba(178,58,58,.40)}
+    .danger:hover{background: rgba(178,58,58,.26)}
+
+    .hint{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 12px;
+      border-radius:999px;
+      color:var(--text);
+      font-size:13px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px);}
+
+    @media (max-width: 720px){
+      .row{flex-direction:column;align-items:stretch}
+      .options{justify-content:flex-start}
+      .label{min-width:auto}
+      .opt{min-width: 140px; flex: 1}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <h1>Électroménagers — installé par qui ?</h1>
+        <p class="sub">
+          Pour chaque électro, choisis <b>Client</b> ou <b>Entreprise</b>.
+          En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
+        </p>
+      </div>
+      <div class="pill">v1.00</div>
+    </div>
+
+    <div class="card">
+      <div class="list" id="list">
+
+        <!-- PLAQUE -->
+        <div class="row" data-appliance="Plaque de cuisson">
+          <div class="label">
+            <b>Plaque de cuisson</b>
+            <small>Pose + branchement</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="plaque" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="plaque" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- FOUR -->
+        <div class="row" data-appliance="Four">
+          <div class="label">
+            <b>Four</b>
+            <small>Encastrable / pose</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="four" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="four" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- LAVE-VAISSELLE -->
+        <div class="row" data-appliance="Lave-vaisselle">
+          <div class="label">
+            <b>Lave-vaisselle</b>
+            <small>Pose + raccordements</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="lv" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="lv" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- HOTTE -->
+        <div class="row" data-appliance="Hotte">
+          <div class="label">
+            <b>Hotte</b>
+            <small>Fixation + raccordement</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="hotte" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="hotte" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- LAVE-LINGE -->
+        <div class="row" data-appliance="Lave-linge">
+          <div class="label">
+            <b>Lave-linge</b>
+            <small>Pose + raccordements</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="ll" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="ll" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- MICRO-ONDES -->
+        <div class="row" data-appliance="Four micro-ondes">
+          <div class="label">
+            <b>Four micro-ondes</b>
+            <small>Pose / encastrement</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="mo" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="mo" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- FRIGO -->
+        <div class="row" data-appliance="Réfrigérateur">
+          <div class="label">
+            <b>Réfrigérateur</b>
+            <small>Pose / encastrement</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="frigo" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="frigo" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- CONGEL -->
+        <div class="row" data-appliance="Congélateur">
+          <div class="label">
+            <b>Congélateur</b>
+            <small>Pose / encastrement</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="congel" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="congel" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SECHE-LINGE -->
+        <div class="row" data-appliance="Sèche-linge">
+          <div class="label">
+            <b>Sèche-linge</b>
+            <small>Pose + raccordements</small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="sl" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="sl" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- AUTRE -->
+        <div class="row" data-appliance="Autre">
+          <div class="label">
+            <b>Autre (optionnel)</b>
+            <small>
+              <input id="autreLabel" type="text" placeholder="Ex : Cave à vin…" style="
+                width:100%;max-width:320px;margin-top:6px;
+                border-radius:12px;border:1px solid rgba(255,255,255,.14);
+                background: rgba(0,0,0,.18);color:var(--text);padding:10px 12px;outline:none;
+              ">
+            </small>
+          </div>
+          <div class="options">
+            <label>
+              <input type="radio" name="autre" value="client">
+              <span class="opt">Client</span>
+            </label>
+            <label>
+              <input type="radio" name="autre" value="entreprise">
+              <span class="opt">Entreprise</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <textarea id="output" readonly placeholder="Le récap' apparaîtra ici..."></textarea>
+
+        <div class="actions">
+          <div class="hint">Astuce : le récap se met à jour automatiquement à chaque sélection.</div>
+          <div class="btns">
+            <button class="ghost" id="btnGenerate" type="button">Rafraîchir</button>
+            <button class="primary" id="btnCopy" type="button">Copier</button>
+            <button class="danger" id="btnReset" type="button">Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copié ✅</div>
+
+  <script>
+    const output = document.getElementById("output");
+    const toast = document.getElementById("toast");
+    const autreLabel = document.getElementById("autreLabel");
+
+    function whoText(value){
+      return value === "entreprise" ? "l'entreprise" : "le client";
+    }
+
+    function buildRecap(){
+      const rows = document.querySelectorAll(".row[data-appliance]");
+      const lines = [];
+
+      rows.forEach(row => {
+        let label = row.getAttribute("data-appliance");
+
+        // Gestion "Autre"
+        if(label === "Autre"){
+          const custom = (autreLabel.value || "").trim();
+          if(custom) label = custom;
+          else {
+            // Si rien n'est saisi et aucune option cochée, on peut ignorer.
+            // Mais si une option est cochée, on met "Autre".
+            label = "Autre";
+          }
+        }
+
+        const checked = row.querySelector('input[type="radio"]:checked');
+        if(checked){
+          lines.push(`${label} installé(e) par ${whoText(checked.value)}`);
+        } else {
+          lines.push(`${label} : non renseigné`);
+        }
+      });
+
+      output.value = lines.join("\n");
+      return output.value;
+    }
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("show"), 1200);
+    }
+
+    async function copyToClipboard(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Copié ✅");
+      }catch(e){
+        // Fallback
+        output.focus();
+        output.select();
+        document.execCommand("copy");
+        showToast("Copié ✅");
+        window.getSelection().removeAllRanges();
+      }
+    }
+
+    // Events
+    document.getElementById("btnGenerate").addEventListener("click", buildRecap);
+
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      const text = buildRecap();
+      await copyToClipboard(text);
+    });
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      autreLabel.value = "";
+      buildRecap();
+      showToast("Réinitialisé");
+    });
+
+    document.addEventListener("change", (e) => {
+      if(e.target.matches('input[type="radio"]')) buildRecap();
+    });
+
+    autreLabel.addEventListener("input", buildRecap);
+
+    // Init
+    buildRecap();
+  </script>
+</body>
+</html>
