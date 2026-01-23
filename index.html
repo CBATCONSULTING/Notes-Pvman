@@ -96,6 +96,14 @@
       box-shadow: 0 0 0 2px rgba(31,143,74,.18) inset;
     }
 
+    /* ✅ Séparateur (entre électroménagers et réseaux) */
+    .separator{
+      height:1px;
+      background: rgba(255,255,255,.12);
+      margin: 10px 10px;
+      border-radius:999px;
+    }
+
     .footer{
       padding:12px;
       border-top:1px solid rgba(255,255,255,.10);
@@ -193,7 +201,7 @@
           En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
         </p>
       </div>
-      <div class="pill">v1.03</div>
+      <div class="pill">v1.05</div>
     </div>
 
     <div class="card">
@@ -359,6 +367,37 @@
           </div>
         </div>
 
+        <!-- ✅ SÉPARATEUR -->
+        <div class="separator" aria-hidden="true"></div>
+
+        <!-- PLOMBERIE (spécial) -->
+        <div class="row" data-special="plomberie" data-label="Plomberie">
+          <div class="label">
+            <b>Plomberie</b>
+            <small>Arrivées / évacuations</small>
+          </div>
+          <div class="options">
+            <!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
+            <label><input type="radio" name="plomberie" value="chargeclient"><span class="opt">À charge client</span></label>
+            <label><input type="radio" name="plomberie" value="devis"><span class="opt">Devis</span></label>
+            <label><input type="radio" name="plomberie" value="enplace"><span class="opt">En place OK</span></label>
+          </div>
+        </div>
+
+        <!-- ÉLECTRICITÉ (spécial) -->
+        <div class="row" data-special="electricite" data-label="Électricité">
+          <div class="label">
+            <b>Électricité</b>
+            <small>Alimentations / sorties de câble</small>
+          </div>
+          <div class="options">
+            <!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
+            <label><input type="radio" name="electricite" value="chargeclient"><span class="opt">À charge client</span></label>
+            <label><input type="radio" name="electricite" value="devis"><span class="opt">Devis</span></label>
+            <label><input type="radio" name="electricite" value="enplace"><span class="opt">En place OK</span></label>
+          </div>
+        </div>
+
       </div>
 
       <div class="footer">
@@ -382,6 +421,20 @@
     const output = document.getElementById("output");
     const toast = document.getElementById("toast");
 
+    // Export exact demandé pour Plomberie / Électricité
+    const SPECIAL_EXPORT = {
+      plomberie: {
+        enplace: "PLOMBERIE EN PLACE OK",
+        chargeclient: "PLOMBERIE À CHARGE CLIENT",
+        devis: "PLOMBERIE SELON DEVIS TRAVAUX ANNEXES"
+      },
+      electricite: {
+        enplace: "ÉLECTRICITÉ EN PLACE OK",
+        chargeclient: "ÉLECTRICITÉ À CHARGE CLIENT",
+        devis: "ÉLECTRICITÉ SELON DEVIS TRAVAUX ANNEXES"
+      }
+    };
+
     function whoText(value){
       return value === "entreprise" ? "par l'entreprise" : "PAR LE CLIENT";
     }
@@ -391,10 +444,25 @@
     }
 
     function buildRecap(){
-      const rows = document.querySelectorAll(".row[data-appliance]");
+      const rows = document.querySelectorAll(".row[data-appliance], .row[data-special]");
       const lines = [];
 
       rows.forEach(row => {
+        // 1) Lignes "spéciales" (Plomberie / Électricité)
+        const special = row.getAttribute("data-special");
+        if(special){
+          const checked = row.querySelector('input[type="radio"]:checked');
+          if(checked){
+            const line = SPECIAL_EXPORT[special]?.[checked.value];
+            if(line) lines.push(line);
+            else lines.push(`${row.getAttribute("data-label") || special} : non renseigné`);
+          } else {
+            lines.push(`${row.getAttribute("data-label") || special} : non renseigné`);
+          }
+          return;
+        }
+
+        // 2) Lignes "électroménagers"
         let label = row.getAttribute("data-appliance");
         const isOptionalOther = row.hasAttribute("data-optional-other");
 
