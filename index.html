@@ -1,575 +1,471 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Électroménagers — Qui installe ?</title>
-    <style>
-        :root {
-            --bg: #0b1020;
-            --card: #111a33;
-            --muted: #93a4c7;
-            --text: #eaf0ff;
-            --btn: #1b2a54;
-            --btnHover: #223463;
-            --greenSoft: rgba(31,143,74,.18);
-            --shadow: 0 18px 45px rgba(0,0,0,.35);
-            --radius: 18px;
-            --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Électroménagers — Qui installe ?</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#93a4c7;
+      --text:#eaf0ff;
+      --btn:#1b2a54;
+      --btnHover:#223463;
+      --greenSoft:rgba(31,143,74,.18);
+      --shadow: 0 18px 45px rgba(0,0,0,.35);
+      --radius:18px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
 
-        * {
-            box-sizing: border-box
-        }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background: radial-gradient(1200px 600px at 20% 0%, #162455 0%, rgba(22,36,85,0) 60%),
+                  radial-gradient(900px 500px at 90% 20%, #2a1b5c 0%, rgba(42,27,92,0) 55%),
+                  var(--bg);
+      color:var(--text);
+      padding: 22px;
+    }
 
-        body {
-            margin: 0;
-            font-family: var(--font);
-            background: radial-gradient(1200px 600px at 20% 0%, #162455 0%, rgba(22,36,85,0) 60%), radial-gradient(900px 500px at 90% 20%, #2a1b5c 0%, rgba(42,27,92,0) 55%), var(--bg);
-            color: var(--text);
-            padding: 22px;
-        }
+    .wrap{max-width:980px;margin:0 auto}
+    .header{
+      display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    h1{font-size:20px;margin:0}
+    .sub{color:var(--muted);margin:6px 0 0 0;font-size:13px;line-height:1.35}
+    .pill{
+      font-size:12px;color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px 10px;border-radius:999px;
+      background: rgba(255,255,255,.06);
+      white-space:nowrap;
+      align-self:flex-start;
+    }
 
-        .wrap {
-            max-width: 980px;
-            margin: 0 auto
-        }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
 
-        .header {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 14px;
-        }
+    .list{padding:10px 12px}
+    .row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .row:last-child{border-bottom:none}
 
-        h1 {
-            font-size: 20px;
-            margin: 0
-        }
+    .label{
+      display:flex;flex-direction:column;gap:4px;
+      min-width: 220px;
+    }
+    .label b{font-size:14px;font-weight:650}
+    .label small{color:var(--muted);font-size:12px}
 
-        .sub {
-            color: var(--muted);
-            margin: 6px 0 0 0;
-            font-size: 13px;
-            line-height: 1.35
-        }
+    .options{
+      display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+    }
 
-        .pill {
-            font-size: 12px;
-            color: var(--muted);
-            border: 1px solid rgba(255,255,255,.12);
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: rgba(255,255,255,.06);
-            white-space: nowrap;
-            align-self: flex-start;
-        }
+    input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
 
-        .card {
-            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-            border: 1px solid rgba(255,255,255,.10);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
+    .opt{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+      min-width:130px;
+      transition: transform .06s ease, background .15s ease, border-color .15s ease;
+      font-size:13px;
+    }
+    .opt:hover{background: rgba(255,255,255,.09);border-color: rgba(255,255,255,.22)}
+    .opt:active{transform: translateY(1px)}
 
-        .list {
-            padding: 10px 12px
-        }
+    input[type="radio"]:checked + .opt{
+      background: var(--greenSoft);
+      border-color: rgba(31,143,74,.7);
+      box-shadow: 0 0 0 2px rgba(31,143,74,.18) inset;
+    }
 
-        .row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 10px;
-            border-bottom: 1px solid rgba(255,255,255,.08);
-        }
+    .footer{
+      padding:12px;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
 
-            .row:last-child {
-                border-bottom: none
-            }
+    textarea{
+      width:100%;
+      min-height:140px;
+      resize:vertical;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
+      padding:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+      line-height:1.35;
+      outline:none;
+    }
 
-        .label {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            min-width: 220px;
-        }
+    .actions{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    }
+    .btns{display:flex;gap:10px;flex-wrap:wrap}
+    button{
+      border:none;
+      border-radius:12px;
+      padding:10px 14px;
+      background: #1b2a54;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:650;
+      transition: transform .06s ease, background .15s ease, opacity .15s ease;
+    }
+    button:hover{background: #223463}
+    button:active{transform: translateY(1px)}
+    .primary{background: linear-gradient(180deg, rgba(31,143,74,.95), rgba(31,143,74,.75));}
+    .primary:hover{background: linear-gradient(180deg, rgba(31,143,74,1), rgba(31,143,74,.82));}
+    .ghost{background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+    .ghost:hover{background: rgba(255,255,255,.11)}
+    .danger{background: rgba(178,58,58,.18);border:1px solid rgba(178,58,58,.40)}
+    .danger:hover{background: rgba(178,58,58,.26)}
 
-            .label b {
-                font-size: 14px;
-                font-weight: 650
-            }
+    .hint{color:var(--muted);font-size:12px}
 
-            .label small {
-                color: var(--muted);
-                font-size: 12px
-            }
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 12px;
+      border-radius:999px;
+      color:var(--text);
+      font-size:13px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px);}
 
-        .options {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
+    .other-input{
+      width:100%;
+      max-width:320px;
+      margin-top:6px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
+      padding:10px 12px;
+      outline:none;
+    }
 
-        input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            pointer-events: none
-        }
-
-        .opt {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,.14);
-            background: rgba(255,255,255,.06);
-            color: var(--text);
-            cursor: pointer;
-            user-select: none;
-            min-width: 130px;
-            transition: transform .06s ease, background .15s ease, border-color .15s ease;
-            font-size: 13px;
-        }
-
-            .opt:hover {
-                background: rgba(255,255,255,.09);
-                border-color: rgba(255,255,255,.22)
-            }
-
-            .opt:active {
-                transform: translateY(1px)
-            }
-
-        input[type="radio"]:checked + .opt {
-            background: var(--greenSoft);
-            border-color: rgba(31,143,74,.7);
-            box-shadow: 0 0 0 2px rgba(31,143,74,.18) inset;
-        }
-
-        .footer {
-            padding: 12px;
-            border-top: 1px solid rgba(255,255,255,.10);
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
-        textarea {
-            width: 100%;
-            min-height: 140px;
-            resize: vertical;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,.14);
-            background: rgba(0,0,0,.18);
-            color: var(--text);
-            padding: 12px;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 13px;
-            line-height: 1.35;
-            outline: none;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .btns {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap
-        }
-
-        button {
-            border: none;
-            border-radius: 12px;
-            padding: 10px 14px;
-            background: #1b2a54;
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 650;
-            transition: transform .06s ease, background .15s ease, opacity .15s ease;
-        }
-
-            button:hover {
-                background: #223463
-            }
-
-            button:active {
-                transform: translateY(1px)
-            }
-
-        .primary {
-            background: linear-gradient(180deg, rgba(31,143,74,.95), rgba(31,143,74,.75));
-        }
-
-            .primary:hover {
-                background: linear-gradient(180deg, rgba(31,143,74,1), rgba(31,143,74,.82));
-            }
-
-        .ghost {
-            background: rgba(255,255,255,.08);
-            border: 1px solid rgba(255,255,255,.14)
-        }
-
-            .ghost:hover {
-                background: rgba(255,255,255,.11)
-            }
-
-        .danger {
-            background: rgba(178,58,58,.18);
-            border: 1px solid rgba(178,58,58,.40)
-        }
-
-            .danger:hover {
-                background: rgba(178,58,58,.26)
-            }
-
-        .hint {
-            color: var(--muted);
-            font-size: 12px
-        }
-
-        .toast {
-            position: fixed;
-            left: 50%;
-            bottom: 18px;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,.55);
-            border: 1px solid rgba(255,255,255,.14);
-            padding: 10px 12px;
-            border-radius: 999px;
-            color: var(--text);
-            font-size: 13px;
-            box-shadow: 0 10px 25px rgba(0,0,0,.35);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .2s ease, transform .2s ease;
-        }
-
-            .toast.show {
-                opacity: 1;
-                transform: translateX(-50%) translateY(-6px);
-            }
-
-        /* Input text dans "Autre" */
-        .other-input {
-            width: 100%;
-            max-width: 320px;
-            margin-top: 6px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,.14);
-            background: rgba(0,0,0,.18);
-            color: var(--text);
-            padding: 10px 12px;
-            outline: none;
-        }
-
-        @media (max-width: 720px) {
-            .row {
-                flex-direction: column;
-                align-items: stretch
-            }
-
-            .options {
-                justify-content: flex-start
-            }
-
-            .label {
-                min-width: auto
-            }
-
-            .opt {
-                min-width: 140px;
-                flex: 1
-            }
-        }
-    </style>
+    @media (max-width: 720px){
+      .row{flex-direction:column;align-items:stretch}
+      .options{justify-content:flex-start}
+      .label{min-width:auto}
+      .opt{min-width: 140px; flex: 1}
+    }
+  </style>
 </head>
 
 <body>
-    <div class="wrap">
-        <div class="header">
-            <div>
-                <h1>Électroménagers — installé par qui ?</h1>
-                <p class="sub">
-                    Pour chaque électro, choisis <b>Client</b>, <b>Entreprise</b> ou <b>Pas souhaité</b>.
-                    En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
-                </p>
-            </div>
-            <div class="pill">v1.02</div>
-        </div>
-
-        <div class="card">
-            <div class="list" id="list">
-
-                <!-- PLAQUE -->
-                <div class="row" data-appliance="Plaque de cuisson">
-                    <div class="label">
-                        <b>Plaque de cuisson</b>
-                        <small>Pose + branchement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="plaque" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="plaque" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="plaque" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- FOUR -->
-                <div class="row" data-appliance="Four">
-                    <div class="label">
-                        <b>Four</b>
-                        <small>Encastrable / pose</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="four" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="four" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="four" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- LAVE-VAISSELLE -->
-                <div class="row" data-appliance="Lave-vaisselle">
-                    <div class="label">
-                        <b>Lave-vaisselle</b>
-                        <small>Pose + raccordements</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="lv" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="lv" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="lv" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- HOTTE -->
-                <div class="row" data-appliance="Hotte">
-                    <div class="label">
-                        <b>Hotte</b>
-                        <small>Fixation + raccordement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="hotte" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="hotte" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="hotte" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- LAVE-LINGE -->
-                <div class="row" data-appliance="Lave-linge">
-                    <div class="label">
-                        <b>Lave-linge</b>
-                        <small>Pose + raccordements</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="ll" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="ll" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="ll" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- MICRO-ONDES -->
-                <div class="row" data-appliance="Four micro-ondes">
-                    <div class="label">
-                        <b>Four micro-ondes</b>
-                        <small>Pose / encastrement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="mo" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="mo" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="mo" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- FRIGO -->
-                <div class="row" data-appliance="Réfrigérateur">
-                    <div class="label">
-                        <b>Réfrigérateur</b>
-                        <small>Pose / encastrement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="frigo" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="frigo" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="frigo" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- CONGEL -->
-                <div class="row" data-appliance="Congélateur">
-                    <div class="label">
-                        <b>Congélateur</b>
-                        <small>Pose / encastrement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="congel" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="congel" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="congel" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- SECHE-LINGE -->
-                <div class="row" data-appliance="Sèche-linge">
-                    <div class="label">
-                        <b>Sèche-linge</b>
-                        <small>Pose + raccordements</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="sl" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="sl" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="sl" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- AUTRE 1 (optionnel) -->
-                <div class="row" data-appliance="Autre" data-optional-other="1">
-                    <div class="label">
-                        <b>Autre (optionnel) #1</b>
-                        <small>
-                            <input id="autreLabel1" class="other-input" type="text" placeholder="Ex : Cave à vin…">
-                        </small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="autre1" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="autre1" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="autre1" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- AUTRE 2 (optionnel) -->
-                <div class="row" data-appliance="Autre" data-optional-other="1">
-                    <div class="label">
-                        <b>Autre (optionnel) #2</b>
-                        <small>
-                            <input id="autreLabel2" class="other-input" type="text" placeholder="Ex : Cave à vin…">
-                        </small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="autre2" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="autre2" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="autre2" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="footer">
-                <textarea id="output" readonly placeholder="Le récap' apparaîtra ici..."></textarea>
-
-                <div class="actions">
-                    <div class="hint">Astuce : le récap se met à jour automatiquement à chaque sélection.</div>
-                    <div class="btns">
-                        <button class="ghost" id="btnGenerate" type="button">Rafraîchir</button>
-                        <button class="primary" id="btnCopy" type="button">Copier</button>
-                        <button class="danger" id="btnReset" type="button">Réinitialiser</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <h1>Électroménagers — installé par qui ?</h1>
+        <p class="sub">
+          Pour chaque électro, choisis <b>Client</b>, <b>Entreprise</b> ou <b>Pas souhaité</b>.
+          En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
+        </p>
+      </div>
+      <div class="pill">v1.03</div>
     </div>
 
-    <div class="toast" id="toast">Copié ✅</div>
+    <div class="card">
+      <div class="list" id="list">
 
-    <script>
-        const output = document.getElementById("output");
-        const toast = document.getElementById("toast");
+        <!-- PLAQUE -->
+        <div class="row" data-appliance="Plaque de cuisson">
+          <div class="label">
+            <b>Plaque de cuisson</b>
+            <small>Pose + branchement</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="plaque" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="plaque" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="plaque" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
 
-        // Client/Entreprise (avec le "PAR" demandé)
-        function whoText(value) {
-            return value === "entreprise" ? "par l'entreprise" : "PAR LE CLIENT";
+        <!-- CUISINIÈRE / PIANO -->
+        <div class="row" data-appliance="Cuisinière / Piano">
+          <div class="label">
+            <b>Cuisinière / Piano</b>
+            <small>Pose + branchement</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="piano" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="piano" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="piano" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- FOUR -->
+        <div class="row" data-appliance="Four">
+          <div class="label">
+            <b>Four</b>
+            <small>Encastrable / pose</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="four" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="four" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="four" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- LAVE-VAISSELLE -->
+        <div class="row" data-appliance="Lave-vaisselle">
+          <div class="label">
+            <b>Lave-vaisselle</b>
+            <small>Pose + raccordements</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="lv" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="lv" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="lv" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- HOTTE -->
+        <div class="row" data-appliance="Hotte">
+          <div class="label">
+            <b>Hotte</b>
+            <small>Fixation + raccordement</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="hotte" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="hotte" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="hotte" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- LAVE-LINGE -->
+        <div class="row" data-appliance="Lave-linge">
+          <div class="label">
+            <b>Lave-linge</b>
+            <small>Pose + raccordements</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="ll" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="ll" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="ll" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- MICRO-ONDES -->
+        <div class="row" data-appliance="Four micro-ondes">
+          <div class="label">
+            <b>Four micro-ondes</b>
+            <small>Pose / encastrement</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="mo" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="mo" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="mo" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- FRIGO -->
+        <div class="row" data-appliance="Réfrigérateur">
+          <div class="label">
+            <b>Réfrigérateur</b>
+            <small>Pose / encastrement</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="frigo" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="frigo" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="frigo" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- CONGEL -->
+        <div class="row" data-appliance="Congélateur">
+          <div class="label">
+            <b>Congélateur</b>
+            <small>Pose / encastrement</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="congel" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="congel" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="congel" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- SECHE-LINGE -->
+        <div class="row" data-appliance="Sèche-linge">
+          <div class="label">
+            <b>Sèche-linge</b>
+            <small>Pose + raccordements</small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="sl" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="sl" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="sl" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- AUTRE 1 (optionnel) -->
+        <div class="row" data-appliance="Autre" data-optional-other="1">
+          <div class="label">
+            <b>Autre (optionnel) #1</b>
+            <small>
+              <input id="autreLabel1" class="other-input" type="text" placeholder="Ex : Cave à vin…">
+            </small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="autre1" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="autre1" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="autre1" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+        <!-- AUTRE 2 (optionnel) -->
+        <div class="row" data-appliance="Autre" data-optional-other="1">
+          <div class="label">
+            <b>Autre (optionnel) #2</b>
+            <small>
+              <input id="autreLabel2" class="other-input" type="text" placeholder="Ex : Cave à vin…">
+            </small>
+          </div>
+          <div class="options">
+            <label><input type="radio" name="autre2" value="client"><span class="opt">Client</span></label>
+            <label><input type="radio" name="autre2" value="entreprise"><span class="opt">Entreprise</span></label>
+            <label><input type="radio" name="autre2" value="pasde"><span class="opt">Pas souhaité</span></label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <textarea id="output" readonly placeholder="Le récap' apparaîtra ici..."></textarea>
+
+        <div class="actions">
+          <div class="hint">Astuce : le récap se met à jour automatiquement à chaque sélection.</div>
+          <div class="btns">
+            <button class="ghost" id="btnGenerate" type="button">Rafraîchir</button>
+            <button class="primary" id="btnCopy" type="button">Copier</button>
+            <button class="danger" id="btnReset" type="button">Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copié ✅</div>
+
+  <script>
+    const output = document.getElementById("output");
+    const toast = document.getElementById("toast");
+
+    function whoText(value){
+      return value === "entreprise" ? "par l'entreprise" : "PAR LE CLIENT";
+    }
+
+    function formatForPasDe(label){
+      return (label || "").trim().toLowerCase();
+    }
+
+    function buildRecap(){
+      const rows = document.querySelectorAll(".row[data-appliance]");
+      const lines = [];
+
+      rows.forEach(row => {
+        let label = row.getAttribute("data-appliance");
+        const isOptionalOther = row.hasAttribute("data-optional-other");
+
+        // Si "Autre" est vide => pas d'export du tout pour cette ligne
+        if(isOptionalOther){
+          const input = row.querySelector('input[type="text"]');
+          const custom = (input?.value || "").trim();
+          if(!custom) return;
+          label = custom;
         }
 
-        // Pour coller à tes exemples : "PAS DE four souhaité"
-        function formatForPasDe(label) {
-            return (label || "").trim().toLowerCase();
+        const checked = row.querySelector('input[type="radio"]:checked');
+
+        if(checked){
+          if(checked.value === "pasde"){
+            lines.push(`PAS DE ${formatForPasDe(label)} souhaité`);
+          } else {
+            lines.push(`${label} installé(e) ${whoText(checked.value)}`);
+          }
+        } else {
+          lines.push(`${label} : non renseigné`);
         }
+      });
 
-        function buildRecap() {
-            const rows = document.querySelectorAll(".row[data-appliance]");
-            const lines = [];
+      output.value = lines.join("\n");
+      return output.value;
+    }
 
-            rows.forEach(row => {
-                let label = row.getAttribute("data-appliance");
-                const isOptionalOther = row.hasAttribute("data-optional-other");
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("show"), 1200);
+    }
 
-                // Gestion "Autre" (optionnels) :
-                // ✅ Si le champ texte est vide => on N'EXPORTe PAS cette ligne (on la saute totalement)
-                if (isOptionalOther) {
-                    const input = row.querySelector('input[type="text"]');
-                    const custom = (input?.value || "").trim();
-                    if (!custom) return;      // <-- la ligne n'apparaît pas dans l'export
-                    label = custom;          // sinon on utilise le texte saisi comme nom d'appareil
-                }
+    async function copyToClipboard(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Copié ✅");
+      }catch(e){
+        output.focus();
+        output.select();
+        document.execCommand("copy");
+        showToast("Copié ✅");
+        window.getSelection().removeAllRanges();
+      }
+    }
 
-                const checked = row.querySelector('input[type="radio"]:checked');
+    document.getElementById("btnGenerate").addEventListener("click", buildRecap);
 
-                if (checked) {
-                    if (checked.value === "pasde") {
-                        lines.push(`PAS DE ${formatForPasDe(label)} souhaité(e)`);
-                    } else {
-                        lines.push(`${label} installé(e) ${whoText(checked.value)}`);
-                    }
-                } else {
-                    lines.push(`${label} : non renseigné`);
-                }
-            });
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      const text = buildRecap();
+      await copyToClipboard(text);
+    });
 
-            output.value = lines.join("\n");
-            return output.value;
-        }
+    document.getElementById("btnReset").addEventListener("click", () => {
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      document.querySelectorAll('input[type="text"]').forEach(t => t.value = "");
+      buildRecap();
+      showToast("Réinitialisé");
+    });
 
-        function showToast(msg) {
-            toast.textContent = msg;
-            toast.classList.add("show");
-            clearTimeout(showToast._t);
-            showToast._t = setTimeout(() => toast.classList.remove("show"), 1200);
-        }
+    document.addEventListener("change", (e) => {
+      if(e.target.matches('input[type="radio"]')) buildRecap();
+    });
 
-        async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                showToast("Copié ✅");
-            } catch (e) {
-                output.focus();
-                output.select();
-                document.execCommand("copy");
-                showToast("Copié ✅");
-                window.getSelection().removeAllRanges();
-            }
-        }
+    document.addEventListener("input", (e) => {
+      if(e.target.matches('input[type="text"]')) buildRecap();
+    });
 
-        document.getElementById("btnGenerate").addEventListener("click", buildRecap);
-
-        document.getElementById("btnCopy").addEventListener("click", async () => {
-            const text = buildRecap();
-            await copyToClipboard(text);
-        });
-
-        document.getElementById("btnReset").addEventListener("click", () => {
-            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-            document.querySelectorAll('input[type="text"]').forEach(t => t.value = "");
-            buildRecap();
-            showToast("Réinitialisé");
-        });
-
-        document.addEventListener("change", (e) => {
-            if (e.target.matches('input[type="radio"]')) buildRecap();
-        });
-
-        document.addEventListener("input", (e) => {
-            if (e.target.matches('input[type="text"]')) buildRecap();
-        });
-
-        buildRecap();
-    </script>
+    buildRecap();
+  </script>
 </body>
 </html>
