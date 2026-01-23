@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="fr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Électroménagers — Qui installe ?</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Notes projet client</title>
+<style>
         :root {
             --bg: #0b1020;
             --card: #111a33;
@@ -116,7 +117,8 @@
             justify-content: flex-end;
         }
 
-        input[type="radio"] {
+        input[type="radio"],
+        input[type="checkbox"] {
             position: absolute;
             opacity: 0;
             pointer-events: none
@@ -147,7 +149,8 @@
                 transform: translateY(1px)
             }
 
-        input[type="radio"]:checked + .opt {
+        input[type="radio"]:checked + .opt,
+        input[type="checkbox"]:checked + .opt {
             background: var(--greenSoft);
             border-color: rgba(31,143,74,.7);
             box-shadow: 0 0 0 2px rgba(31,143,74,.18) inset;
@@ -303,234 +306,234 @@
         }
     </style>
 </head>
-
 <body>
-    <div class="wrap">
-        <div class="header">
-            <div>
-                <h1>Électroménagers — installé par qui ?</h1>
-                <p class="sub">
-                    Pour chaque électro, choisis <b>Client</b>, <b>Entreprise</b> ou <b>Pas souhaité</b>.
+<div class="wrap">
+<div class="header">
+<div>
+<h1>Notes projet client</h1>
+<p class="sub">
+                    Pour chaque élément, choisis <b>Installé par le client</b>, <b>Installé par l'entreprise</b> ou <b>Non souhaité</b>.
                     En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
                 </p>
-            </div>
-            <div class="pill">v1.05</div>
-        </div>
-
-        <div class="card">
-            <div class="list" id="list">
-
-                <!-- PLAQUE -->
-                <div class="row" data-appliance="Plaque de cuisson">
-                    <div class="label">
-                        <b>Plaque de cuisson</b>
-                        <small>Pose + branchement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="plaque" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="plaque" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="plaque" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- CUISINIÈRE / PIANO -->
-                <div class="row" data-appliance="Cuisinière / Piano">
-                    <div class="label">
-                        <b>Cuisinière / Piano</b>
-                        <small>Pose + branchement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="piano" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="piano" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="piano" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- FOUR -->
-                <div class="row" data-appliance="Four">
-                    <div class="label">
-                        <b>Four</b>
-                        <small>Encastrable / pose</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="four" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="four" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="four" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- LAVE-VAISSELLE -->
-                <div class="row" data-appliance="Lave-vaisselle">
-                    <div class="label">
-                        <b>Lave-vaisselle</b>
-                        <small>Pose + raccordements</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="lv" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="lv" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="lv" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- HOTTE -->
-                <div class="row" data-appliance="Hotte">
-                    <div class="label">
-                        <b>Hotte</b>
-                        <small>Fixation + raccordement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="hotte" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="hotte" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="hotte" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- LAVE-LINGE -->
-                <div class="row" data-appliance="Lave-linge">
-                    <div class="label">
-                        <b>Lave-linge</b>
-                        <small>Pose + raccordements</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="ll" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="ll" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="ll" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- MICRO-ONDES -->
-                <div class="row" data-appliance="Four micro-ondes">
-                    <div class="label">
-                        <b>Four micro-ondes</b>
-                        <small>Pose / encastrement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="mo" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="mo" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="mo" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- FRIGO -->
-                <div class="row" data-appliance="Réfrigérateur">
-                    <div class="label">
-                        <b>Réfrigérateur</b>
-                        <small>Pose / encastrement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="frigo" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="frigo" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="frigo" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- CONGEL -->
-                <div class="row" data-appliance="Congélateur">
-                    <div class="label">
-                        <b>Congélateur</b>
-                        <small>Pose / encastrement</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="congel" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="congel" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="congel" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- SECHE-LINGE -->
-                <div class="row" data-appliance="Sèche-linge">
-                    <div class="label">
-                        <b>Sèche-linge</b>
-                        <small>Pose + raccordements</small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="sl" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="sl" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="sl" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- AUTRE 1 (optionnel) -->
-                <div class="row" data-appliance="Autre" data-optional-other="1">
-                    <div class="label">
-                        <b>Autre (optionnel) #1</b>
-                        <small>
-                            <input id="autreLabel1" class="other-input" type="text" placeholder="Ex : Cave à vin…">
-                        </small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="autre1" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="autre1" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="autre1" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- AUTRE 2 (optionnel) -->
-                <div class="row" data-appliance="Autre" data-optional-other="1">
-                    <div class="label">
-                        <b>Autre (optionnel) #2</b>
-                        <small>
-                            <input id="autreLabel2" class="other-input" type="text" placeholder="Ex : Cave à vin…">
-                        </small>
-                    </div>
-                    <div class="options">
-                        <label><input type="radio" name="autre2" value="client"><span class="opt">Client</span></label>
-                        <label><input type="radio" name="autre2" value="entreprise"><span class="opt">Entreprise</span></label>
-                        <label><input type="radio" name="autre2" value="pasde"><span class="opt">Pas souhaité</span></label>
-                    </div>
-                </div>
-
-                <!-- ✅ SÉPARATEUR -->
-                <div class="separator" aria-hidden="true"></div>
-
-                <!-- PLOMBERIE (spécial) -->
-                <div class="row" data-special="plomberie" data-label="Plomberie">
-                    <div class="label">
-                        <b>Plomberie</b>
-                        <small>Arrivées / évacuations</small>
-                    </div>
-                    <div class="options">
-                        <!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
-                        <label><input type="radio" name="plomberie" value="chargeclient"><span class="opt">À charge client</span></label>
-                        <label><input type="radio" name="plomberie" value="devis"><span class="opt">Devis</span></label>
-                        <label><input type="radio" name="plomberie" value="enplace"><span class="opt">En place OK</span></label>
-                    </div>
-                </div>
-
-                <!-- ÉLECTRICITÉ (spécial) -->
-                <div class="row" data-special="electricite" data-label="Électricité">
-                    <div class="label">
-                        <b>Électricité</b>
-                        <small>Alimentations / sorties de câble</small>
-                    </div>
-                    <div class="options">
-                        <!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
-                        <label><input type="radio" name="electricite" value="chargeclient"><span class="opt">À charge client</span></label>
-                        <label><input type="radio" name="electricite" value="devis"><span class="opt">Devis</span></label>
-                        <label><input type="radio" name="electricite" value="enplace"><span class="opt">En place OK</span></label>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="footer">
-                <textarea id="output" readonly placeholder="Le récap' apparaîtra ici..."></textarea>
-
-                <div class="actions">
-                    <div class="hint">Astuce : le récap se met à jour automatiquement à chaque sélection.</div>
-                    <div class="btns">
-                        <button class="ghost" id="btnGenerate" type="button">Rafraîchir</button>
-                        <button class="primary" id="btnCopy" type="button">Copier</button>
-                        <button class="danger" id="btnReset" type="button">Réinitialiser</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="toast" id="toast">Copié ✅</div>
-
-    <script>
+</div>
+<div class="pill">v1.09</div>
+</div>
+<div class="card">
+<div class="list" id="list">
+<!-- PLAQUE -->
+<div class="row" data-appliance="Plaque de cuisson">
+<div class="label">
+<b>Plaque de cuisson</b>
+<small>Pose + branchement</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt">Plaque de cuisson NON IKEA</span></label>
+<label><input name="plaque" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="plaque" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="plaque" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- CUISINIÈRE / PIANO -->
+<div class="row" data-appliance="Cuisinière / Piano">
+<div class="label">
+<b>Cuisinière / Piano</b>
+<small>Pose + branchement</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="piano_nonikea" type="checkbox"/><span class="opt">Cuisinière / Piano NON IKEA</span></label>
+<label><input name="piano" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="piano" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="piano" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- FOUR -->
+<div class="row" data-appliance="Four">
+<div class="label">
+<b>Four</b>
+<small>Encastrable / pose</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="four_nonikea" type="checkbox"/><span class="opt">Four NON IKEA</span></label>
+<label><input name="four" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="four" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="four" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- LAVE-VAISSELLE -->
+<div class="row" data-appliance="Lave-vaisselle">
+<div class="label">
+<b>Lave-vaisselle</b>
+<small>Pose + raccordements</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="lv_nonikea" type="checkbox"/><span class="opt">Lave-vaisselle NON IKEA</span></label>
+<label><input name="lv" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="lv" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="lv" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- HOTTE -->
+<div class="row" data-appliance="Hotte">
+<div class="label">
+<b>Hotte</b>
+<small>Fixation + raccordement</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="hotte_nonikea" type="checkbox"/><span class="opt">Hotte NON IKEA</span></label>
+<label><input name="hotte" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="hotte" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="hotte" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- LAVE-LINGE -->
+<div class="row" data-appliance="Lave-linge">
+<div class="label">
+<b>Lave-linge</b>
+<small>Pose + raccordements</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="ll_nonikea" type="checkbox"/><span class="opt">Lave-linge NON IKEA</span></label>
+<label><input name="ll" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="ll" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="ll" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- MICRO-ONDES -->
+<div class="row" data-appliance="Four micro-ondes">
+<div class="label">
+<b>Four micro-ondes</b>
+<small>Pose / encastrement</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="mo_nonikea" type="checkbox"/><span class="opt">Four micro-ondes NON IKEA</span></label>
+<label><input name="mo" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="mo" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="mo" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- FRIGO -->
+<div class="row" data-appliance="Réfrigérateur">
+<div class="label">
+<b>Réfrigérateur</b>
+<small>Pose / encastrement</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="frigo_nonikea" type="checkbox"/><span class="opt">Réfrigérateur NON IKEA</span></label>
+<label><input name="frigo" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="frigo" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="frigo" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- CONGEL -->
+<div class="row" data-appliance="Congélateur">
+<div class="label">
+<b>Congélateur</b>
+<small>Pose / encastrement</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="congel_nonikea" type="checkbox"/><span class="opt">Congélateur NON IKEA</span></label>
+<label><input name="congel" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="congel" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="congel" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- SECHE-LINGE -->
+<div class="row" data-appliance="Sèche-linge">
+<div class="label">
+<b>Sèche-linge</b>
+<small>Pose + raccordements</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="sl_nonikea" type="checkbox"/><span class="opt">Sèche-linge NON IKEA</span></label>
+<label><input name="sl" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="sl" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="sl" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- AUTRE 1 (optionnel) -->
+<div class="row" data-appliance="Autre" data-optional-other="1">
+<div class="label">
+<b>Autre (optionnel) #1</b>
+<small>
+<input class="other-input" id="autreLabel1" placeholder="Ex : Cave à vin…" type="text"/>
+</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="autre1_nonikea" type="checkbox"/><span class="opt" id="nonIkeaLabel_autre1">Autre NON IKEA</span></label>
+<label><input name="autre1" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="autre1" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="autre1" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- AUTRE 2 (optionnel) -->
+<div class="row" data-appliance="Autre" data-optional-other="1">
+<div class="label">
+<b>Autre (optionnel) #2</b>
+<small>
+<input class="other-input" id="autreLabel2" placeholder="Ex : Cave à vin…" type="text"/>
+</small>
+</div>
+<div class="options"><label><input data-nonikea="1" name="autre2_nonikea" type="checkbox"/><span class="opt" id="nonIkeaLabel_autre2">Autre NON IKEA</span></label>
+<label><input name="autre2" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
+<label><input name="autre2" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
+<label><input name="autre2" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+</div>
+</div>
+<!-- ✅ SÉPARATEUR (Sanitaire) -->
+<div aria-hidden="true" class="separator"></div>
+<!-- ÉVIER (note) -->
+<div class="row" data-export="Évier NON IKEA" data-toggle="evier_non_ikea">
+<div class="label">
+<b>Évier</b>
+<small>Note</small>
+</div>
+<div class="options">
+<label><input name="evier_non_ikea" type="checkbox"/><span class="opt">Évier NON IKEA</span></label>
+</div>
+</div>
+<!-- MITIGEUR (note) -->
+<div class="row" data-export="Mitigeur NON IKEA" data-toggle="mitigeur_non_ikea">
+<div class="label">
+<b>Mitigeur</b>
+<small>Note</small>
+</div>
+<div class="options">
+<label><input name="mitigeur_non_ikea" type="checkbox"/><span class="opt">Mitigeur NON IKEA</span></label>
+</div>
+</div>
+<!-- ✅ SÉPARATEUR -->
+<div aria-hidden="true" class="separator"></div>
+<!-- PLOMBERIE (spécial) -->
+<div class="row" data-label="Plomberie" data-special="plomberie">
+<div class="label">
+<b>Plomberie</b>
+<small>Arrivées / évacuations</small>
+</div>
+<div class="options">
+<!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
+<label><input name="plomberie" type="radio" value="chargeclient"/><span class="opt">À charge client</span></label>
+<label><input name="plomberie" type="radio" value="devis"/><span class="opt">Devis</span></label>
+<label><input name="plomberie" type="radio" value="enplace"/><span class="opt">En place OK</span></label>
+</div>
+</div>
+<!-- ÉLECTRICITÉ (spécial) -->
+<div class="row" data-label="Électricité" data-special="electricite">
+<div class="label">
+<b>Électricité</b>
+<small>Alimentations / sorties de câble</small>
+</div>
+<div class="options">
+<!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
+<label><input name="electricite" type="radio" value="chargeclient"/><span class="opt">À charge client</span></label>
+<label><input name="electricite" type="radio" value="devis"/><span class="opt">Devis</span></label>
+<label><input name="electricite" type="radio" value="enplace"/><span class="opt">En place OK</span></label>
+</div>
+</div>
+</div>
+<div class="footer">
+<textarea id="output" placeholder="Le récap' apparaîtra ici..." readonly=""></textarea>
+<div class="actions">
+<div class="hint">Astuce : le récap se met à jour automatiquement à chaque sélection.</div>
+<div class="btns">
+<button class="ghost" id="btnGenerate" type="button">Rafraîchir</button>
+<button class="primary" id="btnCopy" type="button">Copier</button>
+<button class="danger" id="btnReset" type="button">Réinitialiser</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="toast" id="toast">Copié ✅</div>
+<script>
         const output = document.getElementById("output");
         const toast = document.getElementById("toast");
 
@@ -556,8 +559,23 @@
             return (label || "").trim().toLowerCase();
         }
 
+        // ✅ Met à jour le libellé du bouton "Autre NON IKEA" selon le texte saisi
+        function syncOtherNonIkeaLabels() {
+            const pairs = [
+                { inputId: "autreLabel1", spanId: "nonIkeaLabel_autre1" },
+                { inputId: "autreLabel2", spanId: "nonIkeaLabel_autre2" }
+            ];
+            pairs.forEach(p => {
+                const inp = document.getElementById(p.inputId);
+                const span = document.getElementById(p.spanId);
+                if (!span) return;
+                const v = (inp?.value || "").trim();
+                span.textContent = v ? `${v} NON IKEA` : "Autre NON IKEA";
+            });
+        }
+
         function buildRecap() {
-            const rows = document.querySelectorAll(".row[data-appliance], .row[data-special]");
+            const rows = document.querySelectorAll(".row[data-appliance], .row[data-special], .row[data-toggle]");
             const lines = [];
 
             rows.forEach(row => {
@@ -575,6 +593,17 @@
                     return;
                 }
 
+                // 1b) Notes (checkbox) — si non coché : aucune ligne exportée
+                const toggle = row.getAttribute("data-toggle");
+                if (toggle) {
+                    const cb = row.querySelector('input[type="checkbox"]');
+                    if (cb && cb.checked) {
+                        const line = row.getAttribute("data-export") || row.getAttribute("data-label") || "Note";
+                        if (line) lines.push(line);
+                    }
+                    return;
+                }
+
                 // 2) Lignes "électroménagers"
                 let label = row.getAttribute("data-appliance");
                 const isOptionalOther = row.hasAttribute("data-optional-other");
@@ -587,6 +616,9 @@
                     label = custom;
                 }
 
+                // ✅ Option "NON IKEA" (checkbox) : note exportée si coché
+                const nonIkea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+
                 const checked = row.querySelector('input[type="radio"]:checked');
 
                 if (checked) {
@@ -597,6 +629,11 @@
                     }
                 } else {
                     lines.push(`${label} : non renseigné`);
+                }
+
+                // ✅ Si NON IKEA est coché (et que l'appareil n'est pas "Non souhaité"), on ajoute la note
+                if (nonIkea && nonIkea.checked && checked?.value !== "pasde") {
+                    lines.push(`${label} NON IKEA`);
                 }
             });
 
@@ -633,19 +670,23 @@
 
         document.getElementById("btnReset").addEventListener("click", () => {
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
             document.querySelectorAll('input[type="text"]').forEach(t => t.value = "");
             buildRecap();
             showToast("Réinitialisé");
         });
 
         document.addEventListener("change", (e) => {
-            if (e.target.matches('input[type="radio"]')) buildRecap();
+            if (e.target.matches('input[type="radio"], input[type="checkbox"]')) buildRecap();
         });
-
         document.addEventListener("input", (e) => {
-            if (e.target.matches('input[type="text"]')) buildRecap();
+            if (e.target.matches('input[type="text"]')) {
+                syncOtherNonIkeaLabels();
+                buildRecap();
+            }
         });
 
+        syncOtherNonIkeaLabels();
         buildRecap();
     </script>
 </body>
