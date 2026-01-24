@@ -84,8 +84,8 @@
             position: relative;
             overflow: hidden;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            align-items: flex-start;
+            justify-content: flex-start;
             gap: 12px;
             padding: 10px 10px;
             border-bottom: 1px solid rgba(255,255,255,.08);
@@ -128,7 +128,9 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            min-width: 220px;
+            min-width: 240px;
+            max-width: 360px;
+            flex: 1 1 340px;
         }
 
             .label b {
@@ -145,7 +147,8 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            justify-content: flex-end;
+            justify-content: flex-start;
+            margin-left: auto;
         }
 
         input[type="radio"],
@@ -320,6 +323,15 @@
             padding: 10px 12px;
             outline: none;
         }
+        /* Boutons compacts pour éviter les retours à la ligne (Listing / NON IKEA / Non souhaité) */
+        .opt.compact {
+            min-width: 0;
+            padding: 8px 10px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .options.compact-gap { gap: 6px; }
+
 
         @media (max-width: 720px) {
             .row {
@@ -340,7 +352,9 @@
                 flex: 1
             }
         }
-    </style>
+    
+        .opt-listing{min-width: 92px;}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -352,7 +366,7 @@
                     En bas, tu as un récap’ “ligne par ligne” prêt à copier-coller.
                 </p>
 </div>
-<div class="pill">v1.23</div>
+<div class="pill">v1.26</div>
 </div>
 <div class="card">
 <div class="list" id="list">
@@ -362,8 +376,8 @@
 <b>Évier</b>
 <small>Note</small>
 </div>
-<div class="options">
-<label><input name="evier_non_ikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="evier_non_ikea_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
+<label><input name="evier_non_ikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 </div>
 </div>
 <!-- MITIGEUR (note) -->
@@ -372,34 +386,33 @@
 <b>Mitigeur</b>
 <small>Note</small>
 </div>
-<div class="options">
-<label><input name="mitigeur_non_ikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="mitigeur_non_ikea_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
+<label><input name="mitigeur_non_ikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 </div>
 </div>
 <div aria-hidden="true" class="separator"></div>
-
 <!-- PLAQUE -->
 <div class="row" data-appliance="Plaque de cuisson">
 <div class="label">
 <b>Plaque de cuisson</b>
 <small>Pose + branchement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaque_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plaque" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaque" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="plaque" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="plaque" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- PLAQUE DE CUISSON AVEC HOTTE INTÉGRÉE -->
-<div class="row" data-appliance="Plaque de cuisson avec hotte intégrée">
+<div class="row" data-appliance="Plaque de cuisson - hotte intégrée">
 <div class="label">
-<b>Plaque de cuisson avec hotte intégrée</b>
+<b>Plaque de cuisson - hotte intégrée</b>
 <small>Pose + branchement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="plaquehotte_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaquehotte_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="plaquehotte_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plaquehotte" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaquehotte" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="plaquehotte" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="plaquehotte" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- CUISINIÈRE / PIANO -->
@@ -408,10 +421,10 @@
 <b>Cuisinière / Piano</b>
 <small>Pose + branchement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="piano_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="piano_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="piano_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="piano" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="piano" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="piano" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="piano" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- HOTTE INTÉGRABLE -->
@@ -420,10 +433,10 @@
 <b>Hotte intégrable</b>
 <small>Fixation + raccordement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="hotte_int_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="hotte" name="hotte_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="hotte_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="hotte_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="hotte_int" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="hotte_int" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="hotte_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- HOTTE DÉCORATION -->
@@ -432,10 +445,10 @@
 <b>Hotte décoration</b>
 <small>Fixation + raccordement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="hotte_deco_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="hotte" name="hotte_deco_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="hotte_deco_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="hotte_deco" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="hotte_deco" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="hotte_deco" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="hotte_deco" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- FOUR -->
@@ -444,10 +457,10 @@
 <b>Four</b>
 <small>Encastrable / pose</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="four_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="four_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="four_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="four" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="four" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="four" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="four" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- FOUR MICRO-ONDES INTÉGRABLE -->
@@ -456,10 +469,10 @@
 <b>Four micro-ondes intégrable</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="mo_int_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="microondes" name="mo_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="mo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="mo_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="mo_int" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="mo_int" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="mo_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- FOUR MICRO-ONDES POSE LIBRE -->
@@ -468,10 +481,10 @@
 <b>Four micro-ondes pose libre</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="mo_libre_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="microondes" name="mo_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="mo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="mo_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="mo_libre" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="mo_libre" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="mo_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- LAVE-VAISSELLE INTÉGRABLE -->
@@ -480,10 +493,10 @@
 <b>Lave-vaisselle intégrable</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="lv_int_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="lv" name="lv_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="lv_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="lv_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="lv_int" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="lv_int" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="lv_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- LAVE-VAISSELLE POSE LIBRE -->
@@ -492,10 +505,10 @@
 <b>Lave-vaisselle pose libre</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="lv_libre_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="lv" name="lv_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="lv_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="lv_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="lv_libre" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="lv_libre" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="lv_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- RÉFRIGÉRATEUR INTÉGRABLE -->
@@ -504,10 +517,10 @@
 <b>Réfrigérateur intégrable</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="frigo_int_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="frigo" name="frigo_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="frigo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="frigo_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="frigo_int" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="frigo_int" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="frigo_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- RÉFRIGÉRATEUR POSE LIBRE -->
@@ -516,10 +529,10 @@
 <b>Réfrigérateur pose libre</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="frigo_libre_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="frigo" name="frigo_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="frigo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="frigo_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="frigo_libre" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="frigo_libre" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="frigo_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- CONGÉLATEUR INTÉGRABLE -->
@@ -528,10 +541,10 @@
 <b>Congélateur intégrable</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="congel_int_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="congel" name="congel_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="congel_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="congel_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="congel_int" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="congel_int" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="congel_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- CONGÉLATEUR POSE LIBRE -->
@@ -540,10 +553,10 @@
 <b>Congélateur pose libre</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="congel_libre_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="congel" name="congel_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="congel_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="congel_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="congel_libre" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="congel_libre" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="congel_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- LAVE-LINGE INTÉGRABLE -->
@@ -552,10 +565,10 @@
 <b>Lave-linge intégrable</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="ll_int_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="ll" name="ll_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="ll_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="ll_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="ll_int" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="ll_int" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="ll_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- LAVE-LINGE POSE LIBRE -->
@@ -564,10 +577,10 @@
 <b>Lave-linge pose libre</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="ll_libre_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="ll" name="ll_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="ll_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="ll_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="ll_libre" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="ll_libre" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="ll_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- SÈCHE-LINGE -->
@@ -576,10 +589,10 @@
 <b>Sèche-linge</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="sl_nonikea" type="checkbox"/><span class="opt">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="sl_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="sl_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="sl" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="sl" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="sl" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="sl" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- AUTRE 1 (optionnel) -->
@@ -590,10 +603,10 @@
 <input class="other-input" id="autreLabel1" placeholder="Ex : Cave à vin…" type="text"/>
 </small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="autre1_nonikea" type="checkbox"/><span class="opt" id="nonIkeaLabel_autre1">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="autre1_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="autre1_nonikea" type="checkbox"/><span class="opt" id="nonIkeaLabel_autre1">NON IKEA</span></label>
 <label><input name="autre1" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="autre1" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="autre1" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="autre1" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- AUTRE 2 (optionnel) -->
@@ -604,23 +617,23 @@
 <input class="other-input" id="autreLabel2" placeholder="Ex : Cave à vin…" type="text"/>
 </small>
 </div>
-<div class="options"><label><input data-nonikea="1" name="autre2_nonikea" type="checkbox"/><span class="opt" id="nonIkeaLabel_autre2">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="autre2_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="autre2_nonikea" type="checkbox"/><span class="opt" id="nonIkeaLabel_autre2">NON IKEA</span></label>
 <label><input name="autre2" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="autre2" type="radio" value="entreprise"/><span class="opt">Installé par l'entreprise</span></label>
-<label><input name="autre2" type="radio" value="pasde"/><span class="opt">Non souhaité</span></label>
+<label><input name="autre2" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
 </div>
 <!-- ✅ SÉPARATEUR (Sanitaire) -->
 <div aria-hidden="true" class="separator"></div>
 <!-- LUMINAIRES (note) -->
-<div class="row" data-luminaires="1" data-label="Luminaires">
+<div class="row" data-label="Luminaires" data-luminaires="1">
 <div class="label">
 <b>Luminaires</b>
 <small>Note</small>
 </div>
-<div class="options">
-<label><input name="luminaires" type="radio" value="nonikea"/><span class="opt">NON IKEA</span></label>
-<label><input name="luminaires" type="radio" value="pasde"/><span class="opt">Non souhaités</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="luminaires_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
+<label><input name="luminaires" type="radio" value="nonikea"/><span class="opt compact">NON IKEA</span></label>
+<label><input name="luminaires" type="radio" value="pasde"/><span class="opt compact">Non souhaités</span></label>
 </div>
 </div>
 <!-- ✅ SÉPARATEUR -->
@@ -631,7 +644,7 @@
 <b>Plomberie</b>
 <small>Arrivées / évacuations</small>
 </div>
-<div class="options">
+<div class="options compact-gap">
 <!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
 <label><input name="plomberie" type="radio" value="chargeclient"/><span class="opt">À charge client</span></label>
 <label><input name="plomberie" type="radio" value="devis"/><span class="opt">Devis</span></label>
@@ -644,7 +657,7 @@
 <b>Électricité</b>
 <small>Alimentations / sorties de câble</small>
 </div>
-<div class="options">
+<div class="options compact-gap">
 <!-- ✅ Ordre inversé : À charge client, Devis, En place OK -->
 <label><input name="electricite" type="radio" value="chargeclient"/><span class="opt">À charge client</span></label>
 <label><input name="electricite" type="radio" value="devis"/><span class="opt">Devis</span></label>
@@ -722,7 +735,36 @@
 
         
 
-        // ✅ Vrai si un item a un radio coché OU son bouton NON IKEA coché
+        
+
+// ✅ Listing : si coché, la ligne n'apparaît pas dans les notes
+function listingCheckboxInRow(row){
+    return row ? row.querySelector('input[type="checkbox"][data-listing="1"]') : null;
+}
+function setListingGroup(group, checked){
+    if(!group) return;
+    document.querySelectorAll('input[type="checkbox"][data-listing="1"][data-listing-group="'+group+'"]').forEach(cb => cb.checked = checked);
+}
+function syncListing(cb){
+    const g = cb.getAttribute("data-listing-group");
+    if(!g) return;
+    setListingGroup(g, cb.checked);
+}
+function clearListing(row){
+    const cb = listingCheckboxInRow(row);
+    if(!cb) return;
+    const g = cb.getAttribute("data-listing-group");
+    if(g) setListingGroup(g, false);
+    else cb.checked = false;
+}
+function isListingOn(row){
+    const cb = listingCheckboxInRow(row);
+    return !!(cb && cb.checked);
+}
+function isListingOnEither(rowA,rowB){
+    return isListingOn(rowA) || isListingOn(rowB);
+}
+// ✅ Vrai si un item a un radio coché OU son bouton NON IKEA coché
         function isAnySelected(radioName, nonIkeaName){
             const r = document.querySelector('input[name="' + radioName + '"]:checked');
             const cb = document.querySelector('input[name="' + nonIkeaName + '"]');
@@ -802,7 +844,9 @@ function updatePlaqueHotteConstraint() {
             const rowB = document.querySelector('.row[data-appliance="' + pair.bLabel + '"]');
             if (!rowA || !rowB) return pair.base + " : non renseigné";
 
-            const checkedA = rowA.querySelector('input[type="radio"]:checked');
+            
+            if (isListingOnEither(rowA, rowB)) return null;
+const checkedA = rowA.querySelector('input[type="radio"]:checked');
             const checkedB = rowB.querySelector('input[type="radio"]:checked');
             const sel = checkedA || checkedB;
 
@@ -840,7 +884,17 @@ function updatePlaqueHotteConstraint() {
             const donePairs = new Set();
 
             rows.forEach(row => {
-                // 1) Lignes "spéciales" (Plomberie / Électricité)
+                                // 0) Listing : si coché, on n'exporte pas cette ligne
+                const listingCb = row.querySelector('input[type="checkbox"][data-listing="1"]');
+                if (listingCb && listingCb.checked) {
+                    // Pour les paires, la gestion finale se fait au moment du résumé (sur la ligne primaire)
+                    const lbl = row.getAttribute("data-appliance");
+                    const pinfo = lbl ? PAIR_BY_LABEL[lbl] : null;
+                    if (!pinfo || pinfo.primary) return;
+                    return;
+                }
+
+// 1) Lignes "spéciales" (Plomberie / Électricité)
                 const special = row.getAttribute("data-special");
                 if (special) {
                     const checked = row.querySelector('input[type="radio"]:checked');
@@ -886,13 +940,13 @@ function updatePlaqueHotteConstraint() {
                 // ✅ Règles "cuisson" (éviter des lignes incohérentes dans le récap)
                 // - Si Piano sélectionné => on ne sort pas Plaque / Four / Plaque+Hotte
                 if (pianoActive) {
-                    if (label === "Plaque de cuisson" || label === "Four" || label === "Plaque de cuisson avec hotte intégrée") return;
+                    if (label === "Plaque de cuisson" || label === "Four" || label === "Plaque de cuisson - hotte intégrée") return;
                 }
                 // - Si Plaque OU Plaque+Hotte sélectionnée => on ne sort pas Piano
                 if ((plaqueActive || plaqueHotteIntegreeActive) && label === "Cuisinière / Piano") return;
 
-                // - Si Plaque sélectionnée => on ne sort pas "Plaque de cuisson avec hotte intégrée"
-                if (plaqueActive && label === "Plaque de cuisson avec hotte intégrée") return;
+                // - Si Plaque sélectionnée => on ne sort pas "Plaque de cuisson - hotte intégrée"
+                if (plaqueActive && label === "Plaque de cuisson - hotte intégrée") return;
 
                 // Si "Plaque avec hotte intégrée" est sélectionnée => on n'affiche pas Plaque + Hotte
                 if (plaqueHotteIntegreeActive) {
@@ -911,7 +965,8 @@ function updatePlaqueHotteConstraint() {
                     if (donePairs.has(pair.base)) return;
                     donePairs.add(pair.base);
 
-                    lines.push(summarizePair(pair));
+                    const s = summarizePair(pair);
+                    if (s) lines.push(s);
                     return;
                 }
 
@@ -982,9 +1037,17 @@ function updatePlaqueHotteConstraint() {
         });
 
         document.addEventListener("change", (e) => {
-            // --- Radios ---
+                        // --- Listing ---
+            if (e.target.matches('input[type="checkbox"][data-listing="1"]')) {
+                syncListing(e.target);
+                buildRecap();
+                return;
+            }
+
+// --- Radios ---
             if (e.target.matches('input[type="radio"]')) {
-                const info = PAIR_BY_RADIO[e.target.name];
+                                clearListing(e.target.closest(".row"));
+const info = PAIR_BY_RADIO[e.target.name];
                 if (info) {
                     const pair = info.pair;
                     const side = info.side;
@@ -1026,7 +1089,8 @@ function updatePlaqueHotteConstraint() {
 
             // --- Checkboxes (NON IKEA) ---
             if (e.target.matches('input[type="checkbox"]')) {
-                const info = PAIR_BY_NON[e.target.name];
+                                clearListing(e.target.closest(".row"));
+const info = PAIR_BY_NON[e.target.name];
                 if (info && e.target.checked) {
                     const pair = info.pair;
                     const side = info.side;
