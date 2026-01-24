@@ -217,7 +217,9 @@
         textarea {
             width: 100%;
             min-height: 140px;
-            resize: vertical;
+            height: auto;
+            overflow: hidden; /* auto-hauteur = pas de scrollbar */
+            resize: none;
             border-radius: 14px;
             border: 1px solid rgba(255,255,255,.14);
             background: rgba(0,0,0,.18);
@@ -437,7 +439,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.31</div>
+  <div class="pill">v1.33</div>
 </div>
 </div>
 <div class="card">
@@ -769,6 +771,14 @@
         const output = document.getElementById("output");
         const toast = document.getElementById("toast");
 
+
+        function autoGrowTextarea(el) {
+            if (!el) return;
+            // Reset then set to scrollHeight (fit contenu)
+            el.style.height = "auto";
+            el.style.height = (el.scrollHeight + 2) + "px";
+        }
+
         // Export exact demandé pour Plomberie / Électricité
         const SPECIAL_EXPORT = {
             plomberie: {
@@ -1086,6 +1096,7 @@ const checkedA = rowA.querySelector('input[type="radio"]:checked');
             });
 
             output.value = lines.join("\n");
+            autoGrowTextarea(output);
             return output.value;
         }
 
