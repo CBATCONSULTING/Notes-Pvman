@@ -107,16 +107,16 @@
             border-radius:12px;
             border:1px solid rgba(255,255,255,.14);
             background: rgba(255,255,255,.06);
-            color: rgba(255,170,70,.95);
+            color: var(--text);
             font-weight: 750;
         }
         .row.alt .label small{
-            color: rgba(255,170,70,.78);
+            color: rgba(233,238,252,.75);
         }
 
         /* ✅ Même repère sur les boutons à droite (texte seulement) */
         .row.alt .options .opt{
-            color: rgba(255,170,70,.95);
+            color: var(--text);
         
             min-height: 36px;
             line-height: 1.1;
@@ -130,7 +130,7 @@
             color: var(--text);
         }
         .row.alt input:disabled + .opt{
-            color: rgba(255,170,70,.55);
+            color: var(--muted);
         }
 
         .label {
@@ -160,7 +160,47 @@
             margin-left: auto;
         }
 
-        /* Chaque "bouton" est un label qui encapsule son input + son visuel */
+        
+        /* ✅ Boutons sur 2 lignes (comme demandé) */
+        .options.two-lines{
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .options.two-lines .optline{
+            display:flex;
+            flex-wrap: nowrap;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+        @media (max-width: 980px){
+            .options.two-lines{ align-items: flex-start; }
+            .options.two-lines .optline{ flex-wrap: wrap; justify-content: flex-start; }
+        }
+
+        /* ✅ Sélecteur largeur (compact) */
+        .width-wrap{ display:inline-flex; }
+        
+
+        @keyframes widthPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+            50%      { box-shadow: 0 0 0 3px rgba(255,255,255,0.35); }
+        }
+        .width-wrap.attention .width-select{
+            animation: widthPulse .9s ease-in-out 0s 2;
+            border-color: rgba(255,255,255,0.7) !important;
+        }
+.width-select{
+            height: 36px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.14);
+            background: rgba(255,255,255,.06);
+            color: var(--text);
+            padding: 0 10px;
+            outline: none;
+        }
+        .width-select option{ color: #111; }
+/* Chaque "bouton" est un label qui encapsule son input + son visuel */
         .options label{
             position: relative;
             display: inline-flex;
@@ -383,7 +423,23 @@
     
         .opt-listing{min-width: 92px;}
 
-        /* --- Header right (toggle mode) --- */
+        
+
+        .opt-defmag{min-width: 128px;}
+        .extra-line{
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.14);
+            background: rgba(255,255,255,.06);
+            color: var(--text);
+            outline: none;
+            font-size: 12px;
+        }
+        .extra-line::placeholder{color: rgba(255,255,255,.45);}
+
+/* --- Header right (toggle mode) --- */
         .header-right{
             display:flex;
             gap:10px;
@@ -474,6 +530,16 @@
             font-size: 13px;
             line-height: 1.25;
         }
+
+
+        @keyframes otherPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+            50%      { box-shadow: 0 0 0 3px rgba(255,255,255,0.35); }
+        }
+        input.other-input.attention{
+            animation: otherPulse .9s ease-in-out 0s 2;
+            border-color: rgba(255,255,255,0.7) !important;
+        }
 </style>
 </head>
 <body>
@@ -487,7 +553,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.58</div>
+  <div class="pill">v1.76</div>
 </div>
 </div>
 <div class="card">
@@ -509,6 +575,7 @@
   </div>
   <div class="options compact-gap">
     <label><input class="listing-toggle" data-listing="1" name="evier_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
+    <label><input data-defmag="1" name="evier_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
     <label><input data-nonikea="1" name="evier_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
     <label><input name="evier" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
     <label><input name="evier" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
@@ -522,6 +589,7 @@
   </div>
   <div class="options compact-gap">
     <label><input class="listing-toggle" data-listing="1" name="mitigeur_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
+    <label><input data-defmag="1" name="mitigeur_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
     <label><input data-nonikea="1" name="mitigeur_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
     <label><input name="mitigeur" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
     <label><input name="mitigeur" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
@@ -538,7 +606,8 @@
 <div class="options compact-gap">
 <label><input data-en2temps="1" name="plan_travail_en2temps" type="checkbox"/><span class="opt compact">En 2 temps</span></label>
 <label><input class="listing-toggle" data-listing="1" name="plan_travail_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
-<label><input data-nonikea="1" name="plan_travail_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<label><input data-defmag="1" name="plan_travail_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="plan_travail_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plan_travail" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plan_travail" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -553,7 +622,8 @@
 <div class="options compact-gap">
 <label><input data-en2temps="1" name="credence_en2temps" type="checkbox"/><span class="opt compact">En 2 temps</span></label>
 <label><input class="listing-toggle" data-listing="1" name="credence_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
-<label><input data-nonikea="1" name="credence_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<label><input data-defmag="1" name="credence_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="credence_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="credence" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="credence" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -567,7 +637,8 @@
 </div>
 <div class="options compact-gap">
 <label><input class="listing-toggle" data-listing="1" name="finitions_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
-<label><input data-nonikea="1" name="finitions_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<label><input data-defmag="1" name="finitions_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="finitions_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="finitions" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="finitions" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -581,7 +652,8 @@
 <b>Plaque de cuisson</b>
 <small>Pose + branchement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaque_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaque_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="plaque_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plaque" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaque" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -592,7 +664,8 @@
 <b>Plaque de cuisson - hotte intégrée</b>
 <small>Pose + branchement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaquehotte_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="plaquehotte_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaquehotte_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="plaquehotte_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="plaquehotte_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plaquehotte" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaquehotte" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -603,7 +676,8 @@
 <b>Cuisinière / Piano</b>
 <small>Pose + branchement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="piano_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="piano_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="piano_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="piano_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="piano_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="piano" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="piano" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -614,7 +688,8 @@
 <b>Hotte intégrable</b>
 <small>Fixation + raccordement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="hotte" name="hotte_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="hotte_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="hotte" name="hotte_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="hotte_int_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="hotte_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="hotte_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="hotte_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -625,7 +700,8 @@
 <b>Hotte décoration</b>
 <small>Fixation + raccordement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="hotte" name="hotte_deco_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="hotte_deco_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="hotte" name="hotte_deco_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="hotte_deco_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="hotte_deco_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="hotte_deco" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="hotte_deco" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -636,7 +712,8 @@
 <b>Four</b>
 <small>Encastrable / pose</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="four_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="four_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="four_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="four_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="four_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="four" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="four" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -647,7 +724,8 @@
 <b>Four micro-ondes intégrable</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="microondes" name="mo_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="mo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="microondes" name="mo_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="mo_int_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="mo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="mo_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="mo_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -658,7 +736,8 @@
 <b>Four micro-ondes pose libre</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="microondes" name="mo_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="mo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="microondes" name="mo_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="mo_libre_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="mo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="mo_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="mo_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -669,7 +748,8 @@
 <b>Lave-vaisselle intégrable</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="lv" name="lv_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="lv_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="lv" name="lv_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="lv_int_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="lv_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="lv_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="lv_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -680,7 +760,8 @@
 <b>Lave-vaisselle pose libre</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="lv" name="lv_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="lv_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="lv" name="lv_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="lv_libre_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="lv_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="lv_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="lv_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -691,7 +772,8 @@
 <b>Réfrigérateur intégrable</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="frigo" name="frigo_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="frigo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="frigo" name="frigo_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="frigo_int_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="frigo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="frigo_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="frigo_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -702,7 +784,8 @@
 <b>Réfrigérateur pose libre</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="frigo" name="frigo_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="frigo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="frigo" name="frigo_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="frigo_libre_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="frigo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="frigo_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="frigo_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -713,7 +796,8 @@
 <b>Congélateur intégrable</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="congel" name="congel_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="congel_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="congel" name="congel_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="congel_int_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="congel_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="congel_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="congel_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -724,7 +808,8 @@
 <b>Congélateur pose libre</b>
 <small>Pose / encastrement</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="congel" name="congel_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="congel_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="congel" name="congel_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="congel_libre_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="congel_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="congel_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="congel_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -735,7 +820,8 @@
 <b>Lave-linge intégrable</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="ll" name="ll_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="ll_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="ll" name="ll_int_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="ll_int_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="ll_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="ll_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="ll_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -746,7 +832,8 @@
 <b>Lave-linge pose libre</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="ll" name="ll_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="ll_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" data-listing-group="ll" name="ll_libre_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="ll_libre_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="ll_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="ll_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="ll_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -757,7 +844,8 @@
 <b>Sèche-linge</b>
 <small>Pose + raccordements</small>
 </div>
-<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="sl_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-nonikea="1" name="sl_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="sl_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="sl_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="sl_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="sl" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="sl" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 </div>
@@ -797,7 +885,8 @@
 <small>Note</small>
 </div>
 <div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="luminaires_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label>
-<label><input data-nonikea="1" name="luminaires_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<label><input data-defmag="1" name="luminaires_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
+    <label><input data-nonikea="1" name="luminaires_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="luminaires" type="radio" value="client"/><span class="opt">Installés par le client</span></label>
 <label><input name="luminaires" type="radio" value="pasde"/><span class="opt compact">Non souhaités</span></label></div>
 </div>
@@ -958,6 +1047,7 @@ function clearRowAllChoices(row){
     if(!row) return;
     row.querySelectorAll(
         'input[type="checkbox"][data-listing="1"],' +
+        'input[type="checkbox"][data-defmag="1"],' +
         'input[type="checkbox"][data-nonikea="1"],' +
         'input[type="checkbox"][data-en2temps="1"]'
     ).forEach(i => i.checked = false);
@@ -1010,6 +1100,25 @@ function clearNonIkeaForRowOrPair(row){
 
 
 
+
+
+// ✅ Si on coche Listing => on décoche "À définir en mag" (dans la ligne ou la paire)
+function clearDefMagInRow(row){
+    if(!row) return;
+    row.querySelectorAll('input[type="checkbox"][data-defmag="1"]').forEach(cb => cb.checked = false);
+}
+function clearDefMagForRowOrPair(row){
+    if(!row) return;
+    const label = row.getAttribute("data-appliance");
+    const pinfo = label ? PAIR_BY_LABEL[label] : null;
+    if(pinfo && pinfo.pair){
+        const pair = pinfo.pair;
+        clearDefMagInRow(document.querySelector('.row[data-appliance="' + pair.aLabel + '"]'));
+        clearDefMagInRow(document.querySelector('.row[data-appliance="' + pair.bLabel + '"]'));
+    } else {
+        clearDefMagInRow(row);
+    }
+}
 // ✅ "En 2 temps" (Plan de travail / Crédence) : si on coche Listing / NON IKEA / Non souhaité => on décoche "En 2 temps"
 function clearEn2TempsInRow(row){
     if(!row) return;
@@ -1031,8 +1140,10 @@ function clearEn2TempsForRowOrPair(row){
 // ✅ Vrai si un item a un radio coché OU son bouton NON IKEA coché
         function isAnySelected(radioName, nonIkeaName){
             const r = document.querySelector('input[name="' + radioName + '"]:checked');
-            const cb = document.querySelector('input[name="' + nonIkeaName + '"]');
-            return !!r || (!!cb && cb.checked);
+            const cbNon = document.querySelector('input[name="' + nonIkeaName + '"]');
+            const defName = (nonIkeaName || "").endsWith("_nonikea") ? nonIkeaName.replace(/_nonikea$/,"_defmag") : "";
+            const cbDef = defName ? document.querySelector('input[name="' + defName + '"]') : null;
+            return !!r || ((!!cbNon && cbNon.checked) || (!!cbDef && cbDef.checked));
         }
 
           // ✅ Vrai si un item est "présent" (pour les exclusions logiques) :
@@ -1042,8 +1153,10 @@ function clearEn2TempsForRowOrPair(row){
           function isPresentForExclusion(radioName, nonIkeaName, listingName){
             const r = document.querySelector('input[name="' + radioName + '"]:checked');
             const cbNon = document.querySelector('input[name="' + nonIkeaName + '"]');
+            const defName = (nonIkeaName || "").endsWith("_nonikea") ? nonIkeaName.replace(/_nonikea$/,"_defmag") : "";
+            const cbDef = defName ? document.querySelector('input[name="' + defName + '"]') : null;
             const cbList = listingName ? document.querySelector('input[name="' + listingName + '"]') : null;
-            return ((!!r && r.value !== "pasde") || (!!cbNon && cbNon.checked) || (!!cbList && cbList.checked));
+            return ((!!r && r.value !== "pasde") || (!!cbNon && cbNon.checked) || (!!cbDef && cbDef.checked) || (!!cbList && cbList.checked));
           }
 
           // ✅ Vrai si "Non souhaité" est sélectionné pour un groupe radio donné
@@ -1135,8 +1248,12 @@ function updatePlaqueHotteConstraint() {
     const nonB = !!rowB.querySelector('input[type="checkbox"][data-nonikea="1"]')?.checked;
     const anyNon = nonA || nonB;
 
+    const defA = !!rowA.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
+    const defB = !!rowB.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
+    const anyDef = defA || defB;
+
     // "Listing" seul => la ligne n'est pas exportée
-    if (hasListing && !selA && !selB && !anyNon) return null;
+    if (hasListing && !selA && !selB && !anyNon && !anyDef) return null;
 
     const isPasDe = (sel) => sel && sel.value === "pasde";
     if (isPasDe(selA) || isPasDe(selB)) {
@@ -1146,30 +1263,132 @@ function updatePlaqueHotteConstraint() {
     const isClient = (sel) => sel && sel.value === "client";
     const client = isClient(selA) || isClient(selB);
 
-    // Quelle variante est concernée ? (celle de la ligne qui a une sélection, ou celle qui a Listing/NON IKEA)
-    const active = (selA || listingA || nonA) ? "A" : (selB || listingB || nonB) ? "B" : null;
+    const active = (selA || listingA || nonA || defA) ? "A" : (selB || listingB || nonB || defB) ? "B" : null;
     const variant = active === "A" ? pair.aVariant : active === "B" ? pair.bVariant : null;
 
-    // Rien du tout => "Base : non renseigné"
-    if (!active && !selA && !selB && !anyNon && !hasListing) {
+    if (!active && !selA && !selB && !anyNon && !anyDef && !hasListing) {
         return `${pair.base} : non renseigné`;
     }
 
-    // Construire le libellé dans l'ordre de lecture : Base + (NON IKEA) + variante
     let label = pair.base;
-    if (anyNon) label += " NON IKEA";
     if (variant) label += ` ${variant}`;
 
-    if (client) {
-        return `${label} installé(e) PAR LE CLIENT`;
-    }
 
-    // Par défaut : pas de mention entreprise (implicite)
+    // Largeur (si sélectionnée sur la variante active)
+    const activeRow = (active === "A") ? rowA : (active === "B") ? rowB : null;
+    const wv = (activeRow && activeRow.querySelector('select.width-select')) ? activeRow.querySelector('select.width-select').value : "";
+    if (wv) label += ` (${wv} cm)`;
+
+    if (anyDef) label += " À DÉFINIR EN MAGASIN";
+    else if (anyNon) label += " NON IKEA";
+// Texte libre par ligne (si renseigné sur A et/ou B)
+    const extraA = (rowA.querySelector('input[data-extra="1"]')?.value || "").trim();
+    const extraB = (rowB.querySelector('input[data-extra="1"]')?.value || "").trim();
+    const extras = [extraA, extraB].filter(Boolean);
+    if (extras.length) label += " — " + extras.join(" / ");
+
+    if (client) return `${label} installé(e) PAR LE CLIENT`;
     return label;
 }
 
+
+function injectExtraInputs(){
+    document.querySelectorAll(".row").forEach(row => {
+        if (row.querySelector('input[data-extra="1"]')) return;
+        const label = row.querySelector(".label");
+        if (!label) return;
+
+        const inp = document.createElement("input");
+        inp.type = "text";
+        inp.className = "extra-line";
+        inp.setAttribute("data-extra","1");
+        inp.placeholder = "Texte à ajouter sur cette ligne (optionnel)";
+        label.appendChild(inp);
+    });
+}
+
+function applyTwoLineLayout(){
+  document.querySelectorAll('.row[data-appliance]').forEach(row => {
+    const options = row.querySelector('.options');
+    if (!options) return;
+
+    // déjà structuré ?
+    if (options.classList.contains("two-lines")) return;
+
+    const labels = Array.from(options.querySelectorAll(':scope > label'));
+    if (!labels.length) return;
+
+    const top = document.createElement("div");
+    top.className = "optline top";
+
+    const bottom = document.createElement("div");
+    bottom.className = "optline bottom";
+
+    labels.forEach(lab => {
+      // largeur => ligne du haut
+      if (lab.classList.contains("width-wrap")) { top.appendChild(lab); return; }
+
+      const inp = lab.querySelector("input");
+      if (!inp) { top.appendChild(lab); return; }
+
+      const isClient = (inp.type === "radio" && inp.value === "client");
+      const isPasDe  = (inp.type === "radio" && inp.value === "pasde");
+
+      if (isClient || isPasDe) bottom.appendChild(lab);
+      else top.appendChild(lab);
+    });
+
+    options.innerHTML = "";
+    options.classList.add("two-lines");
+    options.appendChild(top);
+    options.appendChild(bottom);
+  });
+}
+
+const WIDTH_TARGETS = new Set([
+  "Hotte décoration",
+  "Lave-vaisselle intégrable",
+  "Congélateur intégrable",
+  "Lave-linge intégrable"
+]);
+
+function injectWidthSelectors(){
+  document.querySelectorAll('.row[data-appliance]').forEach(row => {
+    const appliance = row.getAttribute("data-appliance") || "";
+    if (!WIDTH_TARGETS.has(appliance)) return;
+    if (row.querySelector('select.width-select')) return;
+
+    const options = row.querySelector('.options');
+    if (!options) return;
+
+    const wrap = document.createElement("label");
+    wrap.className = "width-wrap";
+
+    const sel = document.createElement("select");
+    sel.className = "width-select";
+    sel.innerHTML = `
+      <option value="" selected disabled>Largeur</option>
+      <option value="45">45 cm</option>
+      <option value="60">60 cm</option>
+      <option value="90">90 cm</option>
+    `;
+    wrap.appendChild(sel);
+    options.appendChild(wrap);
+
+    sel.addEventListener("change", () => {
+      buildRecap();
+      flashMissingOtherLabel(row);
+      updateWizardNavState();
+    });
+  });
+}
+
+
+
+
         function buildRecap() {
             syncOtherNonIkeaLabels();
+        injectExtraInputs();
 
             const rows = document.querySelectorAll(".row[data-appliance], .row[data-special], .row[data-toggle], .row[data-luminaires]");
             const lines = [];
@@ -1204,11 +1423,13 @@ function updatePlaqueHotteConstraint() {
                         const checkedRadio = row.querySelector('input[type="radio"]:checked');
                         const isClient = !!(checkedRadio && checkedRadio.value === "client");
                         const nonIkeaCb = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+                        const defMagCb = row.querySelector('input[type="checkbox"][data-defmag="1"]');
                         const hasNonIkea = !!(nonIkeaCb && nonIkeaCb.checked);
+                        const hasDefMag = !!(defMagCb && defMagCb.checked);
                         const en2Cb = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
                         const hasEn2 = !!(en2Cb && en2Cb.checked);
 
-                        if (!(isClient || hasNonIkea || hasEn2)) return;
+                        if (!(isClient || hasNonIkea || hasDefMag || hasEn2)) return;
                     }
                 }
 
@@ -1243,6 +1464,7 @@ function updatePlaqueHotteConstraint() {
                     const base = row.getAttribute("data-label") || "Luminaires";
                     const listing = !!row.querySelector('input[type="checkbox"][data-listing="1"]')?.checked;
                     const nonIkea = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]')?.checked;
+                    const defMag = !!row.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
                     const selected = row.querySelector('input[type="radio"]:checked');
                     const val = selected ? selected.value : "";
                     const isClient = val === "client";
@@ -1254,16 +1476,20 @@ function updatePlaqueHotteConstraint() {
                     }
 
                     // Si "Listing" est coché, on masque la ligne, sauf si l'article est installé par le client
-                    if (listing && !isClient) return;
+                    if (listing && !isClient && !nonIkea && !defMag) return;
 
                     // Rien de sélectionné (hors Listing) : on affiche "non renseigné"
-                    if (!listing && !nonIkea && !isClient) {
+                    if (!listing && !nonIkea && !defMag && !isClient) {
                         lines.push(`${base} : non renseigné`);
                         return;
                     }
 
                     let line = base;
-                    if (nonIkea) line += " NON IKEA";
+                    if (defMag) line += " À DÉFINIR EN MAGASIN";
+                    else if (nonIkea) line += " NON IKEA";
+
+                    const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
+                    if (extra) line += " — " + extra;
                     if (isClient) line += " installé(e) PAR LE CLIENT";
                     lines.push(line);
                     return;
@@ -1318,19 +1544,22 @@ function updatePlaqueHotteConstraint() {
 
                 const isOptionalOther = row.hasAttribute("data-optional-other");
                 if (isOptionalOther) {
-                    const input = row.querySelector('input[type="text"]');
-                    const custom = (input?.value || "").trim();
+                    const input = row.querySelector('input.other-input') || row.querySelector('input[type="text"]');
+                    const custom = ((input && input.value) ? input.value : "").trim();
                     if (!custom) return; // pas d'export si vide
                     label = custom;
                 }
 
+
                 const nonIkea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+                const defMag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
                 const checked = row.querySelector('input[type="radio"]:checked');
                 const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
                 const en2Txt = (en2 && en2.checked) ? " En 2 temps" : "";
-                const nonIkeaTxt = (nonIkea && nonIkea.checked) ? " NON IKEA" : "";
-
-                // "En 2 temps" n'a de sens que si ce n'est pas "Non souhaité"
+                const stateTxt = (defMag && defMag.checked) ? " À DÉFINIR EN MAGASIN" : ((nonIkea && nonIkea.checked) ? " NON IKEA" : "");
+                const widthVal = row.querySelector('select.width-select')?.value || "";
+                const widthTxt = widthVal ? ` (${widthVal} cm)` : "";
+// "En 2 temps" n'a de sens que si ce n'est pas "Non souhaité"
                 const en2ForLine = (checked && checked.value === "pasde") ? "" : en2Txt;
 
                 if (checked) {
@@ -1338,14 +1567,18 @@ function updatePlaqueHotteConstraint() {
                         lines.push(`PAS DE ${formatForPasDe(label)} souhaité(e)`);
                     } else {
                         // seul autre choix : client
-                        lines.push(`${label}${en2ForLine}${nonIkeaTxt} installé(e) ${whoText(checked.value)}`);
+                        const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
+                const extraTxt = extra ? (" — " + extra) : "";
+                lines.push(`${label}${widthTxt}${en2ForLine}${stateTxt} installé(e) ${whoText(checked.value)}${extraTxt}`);
                     }
                 } else {
                     // Par défaut : non renseigné, sauf si NON IKEA est coché
-                    if (nonIkeaTxt) {
-                        lines.push(`${label}${en2ForLine}${nonIkeaTxt}`);
+                    if (stateTxt) {
+                        const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
+                        const extraTxt = extra ? (" — " + extra) : "";
+                        lines.push(`${label}${widthTxt}${en2ForLine}${stateTxt}${extraTxt}`);
                     } else {
-                        lines.push(`${label}${en2ForLine} : non renseigné`);
+                        lines.push(`${label}${widthTxt}${en2ForLine} : non renseigné`);
                     }
                 }
             });
@@ -1376,7 +1609,15 @@ function updatePlaqueHotteConstraint() {
             }
         }
 document.getElementById("btnCopy").addEventListener("click", async () => {
-            const text = buildRecap();
+            
+            // ✅ Si "Autre (optionnel)" a une sélection mais pas de libellé, on attire l'attention
+            try {
+              const all = Array.from(document.querySelectorAll('.row[data-optional-other]'));
+              for (const r of all) {
+                if (flashMissingOtherLabel(r)) break;
+              }
+            } catch(e) {}
+const text = buildRecap();
             await copyToClipboard(text);
         });
 
@@ -1429,32 +1670,49 @@ document.getElementById("btnCopy").addEventListener("click", async () => {
   document.addEventListener("change", (e) => {
     const t = e.target;
 
-    // --- En 2 temps (Plan de travail / Crédence) ---
+    function isPlanOrCredenceRow(row){
+      if(!row) return false;
+      const a = (row.getAttribute("data-appliance") || "").toLowerCase();
+      // tolère "Crédence" / "Credence"
+      return (a.includes("plan de travail") || a.includes("crédence") || a.includes("credence"));
+    }
+
+// --- En 2 temps (Plan de travail / Crédence) ---
     if (t.matches('input[type="checkbox"][data-en2temps="1"]')) {
-      // Si on active "En 2 temps", on évite les combinaisons incohérentes
       const row = t.closest(".row");
       if (t.checked && row) {
         const listing = row.querySelector('input[type="checkbox"][data-listing="1"]');
-        const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
         const pasde = row.querySelector('input[type="radio"][value="pasde"]');
+
+        // ✅ On garde NON IKEA / À définir pour Plan/Credence (combo autorisé), mais on évite Listing & Non souhaité
         if (listing) listing.checked = false;
-        if (nonikea) nonikea.checked = false;
         if (pasde) pasde.checked = false;
+
+        // Hors Plan/Credence, on évite les combos
+        if (!isPlanOrCredenceRow(row)) {
+          const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+          const defmag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
+          if (nonikea) nonikea.checked = false;
+          if (defmag) defmag.checked = false;
+        }
       }
       updatePlaqueHotteConstraint();
       buildRecap();
+      flashMissingOtherLabel(row);
       updateWizardNavState();
       return;
     }
 
-    // --- Listing ---
+// --- Listing ---
     if (t.matches('input[type="checkbox"][data-listing="1"]')) {
       const row = t.closest(".row");
       if (t.checked && row) resetOtherRowInBlock(row);
       syncListing(t);
 
       if (t.checked && row) {
-        // Listing => pas "NON IKEA", pas "Non souhaité", pas "En 2 temps"
+        // Listing => pas "À définir en mag", pas "NON IKEA", pas "Non souhaité", pas "En 2 temps"
+        if (typeof clearDefMagForRowOrPair === "function") clearDefMagForRowOrPair(row);
+
         const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
         const pasdeChecked = row.querySelector('input[type="radio"][value="pasde"]:checked');
         const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
@@ -1466,6 +1724,7 @@ document.getElementById("btnCopy").addEventListener("click", async () => {
 
       updatePlaqueHotteConstraint();
       buildRecap();
+      flashMissingOtherLabel(row);
       updateWizardNavState();
       return;
     }
@@ -1480,15 +1739,45 @@ document.getElementById("btnCopy").addEventListener("click", async () => {
         // NON IKEA => pas Listing, pas "Non souhaité", pas "En 2 temps"
         clearListing(row);
 
+        const defmag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
+        if (defmag) defmag.checked = false;
+
         const pasdeChecked = row.querySelector('input[type="radio"][value="pasde"]:checked');
         const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
 
         if (pasdeChecked) pasdeChecked.checked = false;
-        if (en2) en2.checked = false;
+        if (en2 && !isPlanOrCredenceRow(row)) en2.checked = false;
       }
 
       updatePlaqueHotteConstraint();
       buildRecap();
+      flashMissingOtherLabel(row);
+      updateWizardNavState();
+      return;
+    }
+
+
+    // --- À définir en mag ---
+    if (t.matches('input[type="checkbox"][data-defmag="1"]')) {
+      const row = t.closest(".row");
+
+      if (t.checked && row) resetOtherRowInBlock(row);
+      if (t.checked && row) {
+        // À définir en mag => pas Listing, pas "NON IKEA", pas "Non souhaité", pas "En 2 temps"
+        clearListing(row);
+
+        const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+        const pasdeChecked = row.querySelector('input[type="radio"][value="pasde"]:checked');
+        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+
+        if (nonikea) nonikea.checked = false;
+        if (pasdeChecked) pasdeChecked.checked = false;
+        if (en2 && !isPlanOrCredenceRow(row)) en2.checked = false;
+      }
+
+      updatePlaqueHotteConstraint();
+      buildRecap();
+      flashMissingOtherLabel(row);
       updateWizardNavState();
       return;
     }
@@ -1501,6 +1790,7 @@ document.getElementById("btnCopy").addEventListener("click", async () => {
       if (t.value === "pasde" && t.checked && row) {
         const listing = row.querySelector('input[type="checkbox"][data-listing="1"]');
         const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+        const defmag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
         const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
         if (listing) listing.checked = false;
         if (nonikea) nonikea.checked = false;
@@ -1513,6 +1803,7 @@ document.getElementById("btnCopy").addEventListener("click", async () => {
 
 updatePlaqueHotteConstraint();
       buildRecap();
+      flashMissingOtherLabel(row);
       updateWizardNavState();
       return;
     }
@@ -1530,7 +1821,13 @@ document.addEventListener("input", (e) => {
         });
 
         
-        function applyAlternatingRows() {
+        
+        document.addEventListener("input", (e) => {
+            if (e.target && e.target.matches && e.target.matches('input[data-extra="1"]')) {
+                buildRecap();
+            }
+        });
+function applyAlternatingRows() {
             const list = document.getElementById("list");
             if (!list) return;
 
@@ -1585,18 +1882,10 @@ document.addEventListener("input", (e) => {
                 const el = children[i];
                 if (!isRow(el)) { i++; continue; }
 
-                // Regroupement : "Autre #1" + "Autre #2"
+                // ✅ "Autre (optionnel) #1/#2" : 1 ligne = 1 étape (pas une paire)
                 if (el.hasAttribute("data-optional-other")) {
-                    const group = [el];
-                    const next = children[i+1];
-                    if (isRow(next) && next.hasAttribute("data-optional-other")) {
-                        group.push(next);
-                        i += 2;
-                        steps.push(group);
-                        continue;
-                    }
+                    steps.push([el]);
                     i += 1;
-                    steps.push(group);
                     continue;
                 }
 
@@ -1727,7 +2016,7 @@ function setWizardMode(on) {
             cancelWizardAutoNext();
             if (!wizardOn) return;
             // Condition obligatoire : Listing OU NON IKEA
-            if (!wizardIsStepReady(wizardSteps[wizardIndex] || [])) return;
+            if (!wizardIsStepReady(wizardSteps[wizardIndex] || [])) { flashMissingWidth(wizardSteps[wizardIndex] || []); return; }
 const n = nextVisibleIndex(wizardIndex);
             if (n !== wizardIndex) showWizardStep(n);
         }
@@ -1754,37 +2043,140 @@ function wizardIsStepReady(stepRows){
     const rows = stepRows || [];
     let hasReq = false;
     let ok = false;
+    let hasWidthError = false;
 
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
 
         const listingCb = row.querySelector('input[type="checkbox"][data-listing="1"]');
         const nonCb = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+        const defCb = row.querySelector('input[type="checkbox"][data-defmag="1"]');
         const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
+        const client = row.querySelector('input[type="radio"][value="client"]:checked');
+        const widthSel = row.querySelector('select.width-select');
 
-        if (listingCb || nonCb) hasReq = true;
+        if (listingCb || nonCb || defCb) hasReq = true;
 
         const listingChecked = !!(listingCb && listingCb.checked);
         const nonChecked = !!(nonCb && nonCb.checked);
+        const defChecked = !!(defCb && defCb.checked);
 
         if (listingChecked) ok = true;
         if (nonChecked) ok = true;
+        if (defChecked) ok = true;
+
+        // ✅ "Installé par le client" compte comme une décision suffisante pour avancer
+        if (client) ok = true;
 
         // ✅ "Non souhaité" compte comme une décision suffisante pour avancer
         if (pasde) ok = true;
 
+        // ✅ Largeur obligatoire si le select est présent ET que l'appareil est "présent"
+        // (Listing / À définir / NON IKEA / client) — sauf si "Non souhaité"
+        const present = (listingChecked || nonChecked || defChecked || !!client);
+        if (!pasde && widthSel && present) {
+            const w = (widthSel.value || "").trim();
+            if (!w) hasWidthError = true;
+        }
+
         // ✅ Exception : Plan de travail / Crédence
-        // Si "En 2 temps" + "Installé par le client" (sans Listing ni NON IKEA) => on peut avancer
+        // Si "En 2 temps" + "Installé par le client" (sans Listing / NON IKEA / À définir) => on peut avancer
         const appliance = (row.getAttribute("data-appliance") || "").trim();
-        if ((appliance === "Plan de travail" || appliance === "Crédence") && !listingChecked && !nonChecked && !pasde) {
+        if ((appliance === "Plan de travail" || appliance === "Crédence") && !listingChecked && !nonChecked && !defChecked && !pasde) {
             const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
-            const client = row.querySelector('input[type="radio"][value="client"]:checked');
             if (en2 && en2.checked && client) ok = true;
         }
     });
 
-    return !hasReq || ok;
+    return (!hasReq || ok) && !hasWidthError;
 }
+
+
+
+// ✅ Focus visuel : si une largeur est obligatoire mais non renseignée
+let __lastWidthFlashAt = 0;
+let __lastWidthFlashIndex = -1;
+
+function getMissingWidthSelectsInStep(stepRows){
+    const rows = stepRows || [];
+    const misses = [];
+    rows.forEach(row => {
+        if (!row || !row.querySelector) return;
+        const sel = row.querySelector('select.width-select');
+        if (!sel) return;
+
+        const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
+        if (pasde) return;
+
+        const listing = !!row.querySelector('input[type="checkbox"][data-listing="1"]')?.checked;
+        const non = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]')?.checked;
+        const defm = !!row.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
+        const client = !!row.querySelector('input[type="radio"][value="client"]:checked');
+
+        const present = listing || non || defm || client;
+        if (!present) return;
+
+        const v = (sel.value || "").trim();
+        if (!v) misses.push(sel);
+    });
+    return misses;
+}
+
+function flashMissingWidth(stepRows){
+    const misses = getMissingWidthSelectsInStep(stepRows);
+    if (!misses.length) return false;
+
+    const sel = misses[0];
+    const wrap = sel.closest(".width-wrap") || sel;
+
+    // anti-spam
+    const now = Date.now();
+    if (__lastWidthFlashIndex === wizardIndex && (now - __lastWidthFlashAt) < 1200) return true;
+    __lastWidthFlashAt = now;
+    __lastWidthFlashIndex = wizardIndex;
+
+    wrap.classList.add("attention");
+    try { sel.focus({ preventScroll: true }); } catch(e) { try { sel.focus(); } catch(_){} }
+    try { sel.scrollIntoView({ behavior: "smooth", block: "center" }); } catch(e){}
+
+    setTimeout(() => { wrap.classList.remove("attention"); }, 1500);
+    return true;
+}
+
+// ✅ Focus visuel : "Autre (optionnel)" => libellé requis si on coche une option
+let __lastOtherFlashAt = 0;
+
+function flashMissingOtherLabel(row){
+    if (!row || !row.hasAttribute || !row.hasAttribute("data-optional-other")) return false;
+
+    const input = row.querySelector('input.other-input') || row.querySelector('input[type="text"]');
+    if (!input) return false;
+
+    const custom = (input.value || "").trim();
+    const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
+    if (pasde) return false; // si non souhaité, pas besoin de libellé
+
+    const listing = !!row.querySelector('input[type="checkbox"][data-listing="1"]')?.checked;
+    const non = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]')?.checked;
+    const defm = !!row.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
+    const client = !!row.querySelector('input[type="radio"][value="client"]:checked');
+
+    const chosen = listing || non || defm || client;
+    if (!chosen) return false;
+    if (custom) return false;
+
+    const now = Date.now();
+    if ((now - __lastOtherFlashAt) < 900) return true;
+    __lastOtherFlashAt = now;
+
+    input.classList.add("attention");
+    try { input.focus({ preventScroll: true }); } catch(e) { try { input.focus(); } catch(_){} }
+    try { input.scrollIntoView({ behavior: "smooth", block: "center" }); } catch(e){}
+
+    setTimeout(() => input.classList.remove("attention"), 1500);
+    return true;
+}
+
 
 function updateWizardNavState(){
     if (!wizardOn) return;
@@ -1794,6 +2186,7 @@ function updateWizardNavState(){
     const atLast = (total <= 1 || wizardIndex === vis[vis.length - 1]);
     const ready = wizardIsStepReady(wizardSteps[wizardIndex] || []);
     if (wizardNext) wizardNext.disabled = atLast || !ready;
+    if (!atLast && !ready) { flashMissingWidth(wizardSteps[wizardIndex] || []); }
 }
 // Navigation manuelle : pas d'auto-advance en mode pas-à-pas
 
@@ -1819,10 +2212,13 @@ wizardPrev?.addEventListener("click", wizardGoPrev);
             }
 
             e.preventDefault();
-            if (wizardNext && wizardNext.disabled) return;
+            if (wizardNext && wizardNext.disabled) { flashMissingWidth(wizardSteps[wizardIndex] || []); return; }
             wizardGoNext();
         });
 applyAlternatingRows();
+        injectExtraInputs();
+        injectWidthSelectors();
+        applyTwoLineLayout();
         updatePlaqueHotteConstraint();
         syncOtherNonIkeaLabels();
         buildRecap();
