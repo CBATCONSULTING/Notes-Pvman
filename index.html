@@ -201,7 +201,7 @@
         }
         .width-select option{ color: #111; }
 
-        /* ✅ Sélecteurs obligatoires (plomberie évier / découpes techniques plan de travail) */
+        /* ✅ Sélecteurs obligatoires (plomberie évier / découpes techniques plan de travail / protections plaque) */
         .plumbing-wrap,
         .technical-wrap{ display:inline-flex; }
         .plumbing-wrap.attention .plumbing-select,
@@ -222,6 +222,7 @@
             max-width: 100%;
         }
         .technical-select{ min-width: 280px; }
+        .protection-select{ min-width: 360px; }
         .plumbing-select option,
         .technical-select option{ color: #111; }
         .plumbing-select.has-value,
@@ -583,7 +584,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.83</div>
+  <div class="pill">v1.84</div>
 </div>
 </div>
 <div class="card">
@@ -711,6 +712,21 @@
     <label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plaque" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaque" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-plaque="1" id="plaqueProtections" aria-label="Protections plaque de cuisson">
+    <option value="" selected disabled>Protections Plaque de cuisson</option>
+    <option value="ok">Inter diff Type A ok - Protection 32A ok - SC ok</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m">Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 5m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 5m">Inter diff Type A ok - Protection 32A ok - Dep SC 5m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 10m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 10m">Inter diff Type A ok - Protection 32A ok - Dep SC 10m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 15m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 15m">Inter diff Type A ok - Protection 32A ok - Dep SC 15m</option>
+    <option value="Manque inter diff Type A - Protection 32A ok - SC ok" data-export="Manque inter diff Type A - Protection 32A ok - SC ok">Manque inter diff Type A - Protection 32A ok - SC ok</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 10m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 10m">Manque inter diff Type A et protection 32A - Ligne SC 10m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 15m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 15m">Manque inter diff Type A et protection 32A - Ligne SC 15m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 20m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 20m">Manque inter diff Type A et protection 32A - Ligne SC 20m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 25m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 25m">Manque inter diff Type A et protection 32A - Ligne SC 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- PLAQUE DE CUISSON AVEC HOTTE INTÉGRÉE -->
@@ -1466,7 +1482,7 @@ function getEvierPlomberieExportLine(){
 }
 
 function syncTechnicalSelectVisualState(){
-    document.querySelectorAll('select[data-decoupes-plan="1"]').forEach(sel => {
+    document.querySelectorAll('select[data-decoupes-plan="1"], select[data-protection-plaque="1"]').forEach(sel => {
         const hasValue = !!((sel.value || "").trim());
         sel.classList.toggle("has-value", hasValue);
     });
@@ -1474,6 +1490,18 @@ function syncTechnicalSelectVisualState(){
 
 function getPlanDecoupesExportLine(){
     const sel = document.getElementById("planDecoupesTechniques");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getPlaqueProtectionExportLine(){
+    const sel = document.getElementById("plaqueProtections");
     if (!sel) return "";
 
     const value = (sel.value || "").trim();
@@ -1687,7 +1715,8 @@ function getPlanDecoupesExportLine(){
 
             const extraEndLines = [
                 getEvierPlomberieExportLine(),
-                getPlanDecoupesExportLine()
+                getPlanDecoupesExportLine(),
+                getPlaqueProtectionExportLine()
             ].filter(Boolean);
             if (extraEndLines.length) {
                 if (lines.length && lines[lines.length - 1] !== "") lines.push("");
@@ -1934,6 +1963,13 @@ updatePlaqueHotteConstraint();
       return;
     }
 
+    // --- Sélecteur protections plaque de cuisson ---
+    if (t.matches('select[data-protection-plaque="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
     // Par défaut
     updatePlaqueHotteConstraint();
     buildRecap();
@@ -2172,6 +2208,7 @@ function wizardIsStepReady(stepRows){
     let hasWidthError = false;
     let hasPlomberieEvierError = false;
     let hasPlanDecoupesError = false;
+    let hasPlaqueProtectionError = false;
 
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
@@ -2184,8 +2221,9 @@ function wizardIsStepReady(stepRows){
         const widthSel = row.querySelector('select.width-select');
         const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
         const planDecoupesSel = row.querySelector('select[data-decoupes-plan="1"]');
+        const plaqueProtectionSel = row.querySelector('select[data-protection-plaque="1"]');
 
-        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel) hasReq = true;
+        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel || plaqueProtectionSel) hasReq = true;
 
         const listingChecked = !!(listingCb && listingCb.checked);
         const nonChecked = !!(nonCb && nonCb.checked);
@@ -2221,6 +2259,12 @@ function wizardIsStepReady(stepRows){
             if (!dv) hasPlanDecoupesError = true;
         }
 
+        // ✅ Plaque de cuisson : choix protections obligatoire pour passer à l'étape suivante
+        if (plaqueProtectionSel) {
+            const pv = (plaqueProtectionSel.value || "").trim();
+            if (!pv) hasPlaqueProtectionError = true;
+        }
+
         // ✅ Exception : Plan de travail / Crédence
         // Si "En 2 temps" + "Installé par le client" (sans Listing / NON IKEA / À définir) => on peut avancer
         const appliance = (row.getAttribute("data-appliance") || "").trim();
@@ -2230,7 +2274,7 @@ function wizardIsStepReady(stepRows){
         }
     });
 
-    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError;
+    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError;
 }
 
 
@@ -2254,6 +2298,12 @@ function getMissingWidthSelectsInStep(stepRows){
         if (planDecoupesSel) {
             const dv = (planDecoupesSel.value || "").trim();
             if (!dv) misses.push(planDecoupesSel);
+        }
+
+        const plaqueProtectionSel = row.querySelector('select[data-protection-plaque="1"]');
+        if (plaqueProtectionSel) {
+            const pv = (plaqueProtectionSel.value || "").trim();
+            if (!pv) misses.push(plaqueProtectionSel);
         }
 
         const sel = row.querySelector('select.width-select');
