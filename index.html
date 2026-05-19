@@ -200,6 +200,36 @@
             outline: none;
         }
         .width-select option{ color: #111; }
+
+        /* ✅ Sélecteurs obligatoires (plomberie évier / découpes techniques plan de travail) */
+        .plumbing-wrap,
+        .technical-wrap{ display:inline-flex; }
+        .plumbing-wrap.attention .plumbing-select,
+        .technical-wrap.attention .technical-select{
+            animation: widthPulse .9s ease-in-out 0s 2;
+            border-color: rgba(255,255,255,0.7) !important;
+        }
+        .plumbing-select,
+        .technical-select{
+            height: 36px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.14);
+            background: rgba(255,255,255,.06);
+            color: var(--text);
+            padding: 0 10px;
+            outline: none;
+            min-width: 220px;
+            max-width: 100%;
+        }
+        .technical-select{ min-width: 280px; }
+        .plumbing-select option,
+        .technical-select option{ color: #111; }
+        .plumbing-select.has-value,
+        .technical-select.has-value{
+            background: var(--greenSoft);
+            border-color: rgba(31,143,74,.7);
+            box-shadow: 0 0 0 2px rgba(31,143,74,.18) inset;
+        }
 /* Chaque "bouton" est un label qui encapsule son input + son visuel */
         .options label{
             position: relative;
@@ -553,7 +583,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.79</div>
+  <div class="pill">v1.83</div>
 </div>
 </div>
 <div class="card">
@@ -579,6 +609,22 @@
     <label><input data-nonikea="1" name="evier_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
     <label><input name="evier" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
     <label><input name="evier" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+    <label class="plumbing-wrap">
+      <select class="plumbing-select" data-plomberie-evier="1" id="evierPlomberie" aria-label="Plomberie évier">
+        <option value="" selected disabled>Plomberie évier</option>
+        <option value="ok">Plomberie OK</option>
+        <option value="Regroupement plomberie simple 1m" data-export="Regroupement plomberie simple 1m">Regroupement plomberie simple 1m</option>
+        <option value="Regroupement plomberie double 1m" data-export="Regroupement plomberie double 1m">Regroupement plomberie double 1m</option>
+        <option value="Regroupement plomberie simple 2m" data-export="Regroupement plomberie simple 2m">Regroupement plomberie simple 2m</option>
+        <option value="Regroupement plomberie double 2m" data-export="Regroupement plomberie double 2m">Regroupement plomberie double 2m</option>
+        <option value="Regroupement plomberie simple 3m" data-export="Regroupement plomberie simple 3m">Regroupement plomberie simple 3m</option>
+        <option value="Regroupement plomberie double 3m" data-export="Regroupement plomberie double 3m">Regroupement plomberie double 3m</option>
+        <option value="Regroupement plomberie simple 4m" data-export="Regroupement plomberie simple 4m">Regroupement plomberie simple 4m</option>
+        <option value="Regroupement plomberie double 4m" data-export="Regroupement plomberie double 4m">Regroupement plomberie double 4m</option>
+        <option value="Regroupement plomberie simple 5m" data-export="Regroupement plomberie simple 5m">Regroupement plomberie simple 5m</option>
+        <option value="Regroupement plomberie double 5m" data-export="Regroupement plomberie double 5m">Regroupement plomberie double 5m</option>
+      </select>
+    </label>
   </div>
 </div>
 <!-- MITIGEUR -->
@@ -610,6 +656,15 @@
     <label><input data-nonikea="1" name="plan_travail_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plan_travail" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plan_travail" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select" data-decoupes-plan="1" id="planDecoupesTechniques" aria-label="Découpes techniques plan de travail">
+    <option value="" selected disabled>Découpe(s) Technique(s) (ex : biais)</option>
+    <option value="ok">Pas de découpe nécessaire</option>
+    <option value="1 découpe technique plan de W nécessaire" data-export="1 découpe technique plan de W nécessaire">1 découpe technique plan de W nécessaire</option>
+    <option value="2 découpes techniques plan de W nécessaires" data-export="2 découpes techniques plan de W nécessaires">2 découpes techniques plan de W nécessaires</option>
+    <option value="3 découpes techniques plan de W nécessaires" data-export="3 découpes techniques plan de W nécessaires">3 découpes techniques plan de W nécessaires</option>
+  </select>
+</label>
 </div>
 </div>
 
@@ -1324,9 +1379,15 @@ function applyTwoLineLayout(){
     const bottom = document.createElement("div");
     bottom.className = "optline bottom";
 
+    const extra = document.createElement("div");
+    extra.className = "optline extra";
+
     labels.forEach(lab => {
       // largeur => ligne du haut
       if (lab.classList.contains("width-wrap")) { top.appendChild(lab); return; }
+
+      // Sélecteurs longs/obligatoires => ligne dédiée en dessous
+      if (lab.classList.contains("plumbing-wrap") || lab.classList.contains("technical-wrap")) { extra.appendChild(lab); return; }
 
       const inp = lab.querySelector("input");
       if (!inp) { top.appendChild(lab); return; }
@@ -1342,6 +1403,7 @@ function applyTwoLineLayout(){
     options.classList.add("two-lines");
     options.appendChild(top);
     options.appendChild(bottom);
+    if (extra.children.length) options.appendChild(extra);
   });
 }
 
@@ -1385,11 +1447,49 @@ function injectWidthSelectors(){
   });
 }
 
+function syncPlumbingSelectVisualState(){
+    document.querySelectorAll('select[data-plomberie-evier="1"]').forEach(sel => {
+        const hasValue = !!((sel.value || "").trim());
+        sel.classList.toggle("has-value", hasValue);
+    });
+}
+
+function getEvierPlomberieExportLine(){
+    const sel = document.getElementById("evierPlomberie");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function syncTechnicalSelectVisualState(){
+    document.querySelectorAll('select[data-decoupes-plan="1"]').forEach(sel => {
+        const hasValue = !!((sel.value || "").trim());
+        sel.classList.toggle("has-value", hasValue);
+    });
+}
+
+function getPlanDecoupesExportLine(){
+    const sel = document.getElementById("planDecoupesTechniques");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
 
 
 
         function buildRecap() {
             syncOtherNonIkeaLabels();
+            syncPlumbingSelectVisualState();
+            syncTechnicalSelectVisualState();
         injectExtraInputs();
 
             const rows = document.querySelectorAll(".row[data-appliance], .row[data-special], .row[data-toggle], .row[data-luminaires]");
@@ -1585,6 +1685,15 @@ function injectWidthSelectors(){
                 }
             });
 
+            const extraEndLines = [
+                getEvierPlomberieExportLine(),
+                getPlanDecoupesExportLine()
+            ].filter(Boolean);
+            if (extraEndLines.length) {
+                if (lines.length && lines[lines.length - 1] !== "") lines.push("");
+                lines.push(...extraEndLines);
+            }
+
             output.value = lines.join("\n");
             autoGrowTextarea(output);
             updateWizardNavState();
@@ -1627,6 +1736,7 @@ const text = buildRecap();
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
             document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
             document.querySelectorAll('input[type="text"]').forEach(t => t.value = "");
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
             updatePlaqueHotteConstraint();
             buildRecap();
             showToast("Réinitialisé");
@@ -1806,6 +1916,20 @@ const text = buildRecap();
 updatePlaqueHotteConstraint();
       buildRecap();
       flashMissingOtherLabel(row);
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur plomberie évier ---
+    if (t.matches('select[data-plomberie-evier="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur découpes techniques plan de travail ---
+    if (t.matches('select[data-decoupes-plan="1"]')) {
+      buildRecap();
       updateWizardNavState();
       return;
     }
@@ -2046,6 +2170,8 @@ function wizardIsStepReady(stepRows){
     let hasReq = false;
     let ok = false;
     let hasWidthError = false;
+    let hasPlomberieEvierError = false;
+    let hasPlanDecoupesError = false;
 
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
@@ -2056,8 +2182,10 @@ function wizardIsStepReady(stepRows){
         const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
         const client = row.querySelector('input[type="radio"][value="client"]:checked');
         const widthSel = row.querySelector('select.width-select');
+        const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
+        const planDecoupesSel = row.querySelector('select[data-decoupes-plan="1"]');
 
-        if (listingCb || nonCb || defCb) hasReq = true;
+        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel) hasReq = true;
 
         const listingChecked = !!(listingCb && listingCb.checked);
         const nonChecked = !!(nonCb && nonCb.checked);
@@ -2081,6 +2209,18 @@ function wizardIsStepReady(stepRows){
             if (!w) hasWidthError = true;
         }
 
+        // ✅ Évier : choix plomberie obligatoire pour passer à l'étape suivante
+        if (plomberieEvierSel) {
+            const pv = (plomberieEvierSel.value || "").trim();
+            if (!pv) hasPlomberieEvierError = true;
+        }
+
+        // ✅ Plan de travail : choix découpes techniques obligatoire pour passer à l'étape suivante
+        if (planDecoupesSel) {
+            const dv = (planDecoupesSel.value || "").trim();
+            if (!dv) hasPlanDecoupesError = true;
+        }
+
         // ✅ Exception : Plan de travail / Crédence
         // Si "En 2 temps" + "Installé par le client" (sans Listing / NON IKEA / À définir) => on peut avancer
         const appliance = (row.getAttribute("data-appliance") || "").trim();
@@ -2090,7 +2230,7 @@ function wizardIsStepReady(stepRows){
         }
     });
 
-    return (!hasReq || ok) && !hasWidthError;
+    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError;
 }
 
 
@@ -2104,6 +2244,18 @@ function getMissingWidthSelectsInStep(stepRows){
     const misses = [];
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
+        const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
+        if (plomberieEvierSel) {
+            const pv = (plomberieEvierSel.value || "").trim();
+            if (!pv) misses.push(plomberieEvierSel);
+        }
+
+        const planDecoupesSel = row.querySelector('select[data-decoupes-plan="1"]');
+        if (planDecoupesSel) {
+            const dv = (planDecoupesSel.value || "").trim();
+            if (!dv) misses.push(planDecoupesSel);
+        }
+
         const sel = row.querySelector('select.width-select');
         if (!sel) return;
 
@@ -2129,7 +2281,7 @@ function flashMissingWidth(stepRows){
     if (!misses.length) return false;
 
     const sel = misses[0];
-    const wrap = sel.closest(".width-wrap") || sel;
+    const wrap = sel.closest(".width-wrap") || sel.closest(".plumbing-wrap") || sel.closest(".technical-wrap") || sel;
 
     // anti-spam
     const now = Date.now();
