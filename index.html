@@ -201,7 +201,7 @@
         }
         .width-select option{ color: #111; }
 
-        /* ✅ Sélecteurs obligatoires (plomberie évier / découpes techniques plan de travail / protections plaque) */
+        /* ✅ Sélecteurs obligatoires (plomberie évier / découpes techniques plan de travail / protections plaque / PC hotte / protections four / PC micro-ondes / protections lave-vaisselle) */
         .plumbing-wrap,
         .technical-wrap{ display:inline-flex; }
         .plumbing-wrap.attention .plumbing-select,
@@ -584,7 +584,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.84</div>
+  <div class="pill">v1.97</div>
 </div>
 </div>
 <div class="card">
@@ -661,9 +661,9 @@
   <select class="technical-select" data-decoupes-plan="1" id="planDecoupesTechniques" aria-label="Découpes techniques plan de travail">
     <option value="" selected disabled>Découpe(s) Technique(s) (ex : biais)</option>
     <option value="ok">Pas de découpe nécessaire</option>
-    <option value="1 découpe technique plan de W nécessaire" data-export="1 découpe technique plan de W nécessaire">1 découpe technique plan de W nécessaire</option>
-    <option value="2 découpes techniques plan de W nécessaires" data-export="2 découpes techniques plan de W nécessaires">2 découpes techniques plan de W nécessaires</option>
-    <option value="3 découpes techniques plan de W nécessaires" data-export="3 découpes techniques plan de W nécessaires">3 découpes techniques plan de W nécessaires</option>
+    <option value="1 découpe technique plan W nécessaire" data-export="1 découpe technique plan W nécessaire">1 découpe technique plan W nécessaire</option>
+    <option value="2 découpes techniques plan W nécessaires" data-export="2 découpes techniques plan W nécessaires">2 découpes techniques plan W nécessaires</option>
+    <option value="3 découpes techniques plan W nécessaires" data-export="3 découpes techniques plan W nécessaires">3 découpes techniques plan W nécessaires</option>
   </select>
 </label>
 </div>
@@ -775,6 +775,18 @@
     <label><input data-nonikea="1" name="hotte_deco_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="hotte_deco" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="hotte_deco" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select" data-pc-hotte="1" id="hottePc" aria-label="PC hotte">
+    <option value="" selected disabled>PC hotte</option>
+    <option value="ok">PC en place</option>
+    <option value="PC hotte à déplacer 2,5m" data-export="PC hotte à déplacer 2,5m">PC hotte à déplacer 2,5m</option>
+    <option value="PC hotte à déplacer 5m" data-export="PC hotte à déplacer 5m">PC hotte à déplacer 5m</option>
+    <option value="PC hotte à déplacer 10m" data-export="PC hotte à déplacer 10m">PC hotte à déplacer 10m</option>
+    <option value="Repiquage 2,5m pour PC hotte" data-export="Repiquage 2,5m pour PC hotte">Repiquage 2,5m pour PC hotte</option>
+    <option value="Repiquage 5m pour PC hotte" data-export="Repiquage 5m pour PC hotte">Repiquage 5m pour PC hotte</option>
+    <option value="Repiquage 10m pour PC hotte" data-export="Repiquage 10m pour PC hotte">Repiquage 10m pour PC hotte</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- FOUR -->
@@ -787,6 +799,21 @@
     <label><input data-nonikea="1" name="four_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="four" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="four" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-four="1" id="fourProtections" aria-label="Protections four">
+    <option value="" selected disabled>Protections Four</option>
+    <option value="ok">Inter diff ok - Protection 20A ok - SC ok</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep SC four 2,5m" data-export="Inter diff ok - Protection 20A ok - Dep SC four 2,5m">Inter diff ok - Protection 20A ok - Dep SC four 2,5m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep SC four 5m" data-export="Inter diff ok - Protection 20A ok - Dep SC four 5m">Inter diff ok - Protection 20A ok - Dep SC four 5m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep SC four 10m" data-export="Inter diff ok - Protection 20A ok - Dep SC four 10m">Inter diff ok - Protection 20A ok - Dep SC four 10m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep SC four 15m" data-export="Inter diff ok - Protection 20A ok - Dep SC four 15m">Inter diff ok - Protection 20A ok - Dep SC four 15m</option>
+    <option value="Manque inter diff - Protection 20A ok - SC four ok" data-export="Manque inter diff - Protection 20A ok - SC four ok">Manque inter diff - Protection 20A ok - SC four ok</option>
+    <option value="Manque inter diff et protection 20A - Ligne SC four 10m" data-export="Manque inter diff et protection 20A - Ligne SC four 10m">Manque inter diff et protection 20A - Ligne SC four 10m</option>
+    <option value="Manque inter diff et protection 20A - Ligne SC four 15m" data-export="Manque inter diff et protection 20A - Ligne SC four 15m">Manque inter diff et protection 20A - Ligne SC four 15m</option>
+    <option value="Manque inter diff et protection 20A - Ligne SC four 20m" data-export="Manque inter diff et protection 20A - Ligne SC four 20m">Manque inter diff et protection 20A - Ligne SC four 20m</option>
+    <option value="Manque inter diff et protection 20A - Ligne SC four 25m" data-export="Manque inter diff et protection 20A - Ligne SC four 25m">Manque inter diff et protection 20A - Ligne SC four 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- FOUR MICRO-ONDES INTÉGRABLE -->
@@ -811,6 +838,18 @@
     <label><input data-nonikea="1" name="mo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="mo_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="mo_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select" data-pc-microondes="1" id="microOndesPc" aria-label="PC micro-ondes">
+    <option value="" selected disabled>PC micro-ondes</option>
+    <option value="ok">PC en place</option>
+    <option value="PC MO à déplacer 2,5m" data-export="PC MO à déplacer 2,5m">PC MO à déplacer 2,5m</option>
+    <option value="PC MO à déplacer 5m" data-export="PC MO à déplacer 5m">PC MO à déplacer 5m</option>
+    <option value="PC MO à déplacer 10m" data-export="PC MO à déplacer 10m">PC MO à déplacer 10m</option>
+    <option value="Repiquage 2,5m pour PC MO" data-export="Repiquage 2,5m pour PC MO">Repiquage 2,5m pour PC MO</option>
+    <option value="Repiquage 5m pour PC MO" data-export="Repiquage 5m pour PC MO">Repiquage 5m pour PC MO</option>
+    <option value="Repiquage 10m pour PC MO" data-export="Repiquage 10m pour PC MO">Repiquage 10m pour PC MO</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- LAVE-VAISSELLE INTÉGRABLE -->
@@ -835,6 +874,21 @@
     <label><input data-nonikea="1" name="lv_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="lv_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="lv_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-lv="1" id="lvProtections" aria-label="Protections lave-vaisselle">
+    <option value="" selected disabled>Protections Lave vaisselle</option>
+    <option value="ok">Inter diff ok - Protection 20A ok - PC ok</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC LV 2,5m" data-export="Inter diff ok - Protection 20A ok - Dep PC LV 2,5m">Inter diff ok - Protection 20A ok - Dep PC LV 2,5m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC LV 5m" data-export="Inter diff ok - Protection 20A ok - Dep PC LV 5m">Inter diff ok - Protection 20A ok - Dep PC LV 5m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC LV 10m" data-export="Inter diff ok - Protection 20A ok - Dep PC LV 10m">Inter diff ok - Protection 20A ok - Dep PC LV 10m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC LV 15m" data-export="Inter diff ok - Protection 20A ok - Dep PC LV 15m">Inter diff ok - Protection 20A ok - Dep PC LV 15m</option>
+    <option value="Manque inter diff - Protection 20A ok - PC LV ok" data-export="Manque inter diff - Protection 20A ok - PC LV ok">Manque inter diff - Protection 20A ok - PC LV ok</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC LV 10m" data-export="Manque inter diff et protection 20A - Ligne PC LV 10m">Manque inter diff et protection 20A - Ligne PC LV 10m</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC LV 15m" data-export="Manque inter diff et protection 20A - Ligne PC LV 15m">Manque inter diff et protection 20A - Ligne PC LV 15m</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC LV 20m" data-export="Manque inter diff et protection 20A - Ligne PC LV 20m">Manque inter diff et protection 20A - Ligne PC LV 20m</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC LV 25m" data-export="Manque inter diff et protection 20A - Ligne PC LV 25m">Manque inter diff et protection 20A - Ligne PC LV 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- RÉFRIGÉRATEUR INTÉGRABLE -->
@@ -847,6 +901,7 @@
     <label><input data-nonikea="1" name="frigo_int_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="frigo_int" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="frigo_int" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label><input data-sousplan="1" name="frigo_int_sousplan" type="checkbox"/><span class="opt compact">Sous plan</span></label>
 </div>
 </div>
 <!-- RÉFRIGÉRATEUR POSE LIBRE -->
@@ -859,6 +914,19 @@
     <label><input data-nonikea="1" name="frigo_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="frigo_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="frigo_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label><input data-sousplan="1" name="frigo_libre_sousplan" type="checkbox"/><span class="opt compact">Sous plan</span></label>
+<label class="technical-wrap">
+  <select class="technical-select" data-pc-frigo="1" id="frigoPc" aria-label="PC réfrigérateur">
+    <option value="" selected disabled>PC réfrigérateur</option>
+    <option value="ok">PC en place</option>
+    <option value="PC frigo à déplacer 2,5m" data-export="PC frigo à déplacer 2,5m">PC frigo à déplacer 2,5m</option>
+    <option value="PC frigo à déplacer 5m" data-export="PC frigo à déplacer 5m">PC frigo à déplacer 5m</option>
+    <option value="PC frigo à déplacer 10m" data-export="PC frigo à déplacer 10m">PC frigo à déplacer 10m</option>
+    <option value="Repiquage 2,5m pour PC frigo" data-export="Repiquage 2,5m pour PC frigo">Repiquage 2,5m pour PC frigo</option>
+    <option value="Repiquage 5m pour PC frigo" data-export="Repiquage 5m pour PC frigo">Repiquage 5m pour PC frigo</option>
+    <option value="Repiquage 10m pour PC frigo" data-export="Repiquage 10m pour PC frigo">Repiquage 10m pour PC frigo</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- CONGÉLATEUR INTÉGRABLE -->
@@ -883,6 +951,18 @@
     <label><input data-nonikea="1" name="congel_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="congel_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="congel_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select" data-pc-congel="1" id="congelPc" aria-label="PC congélateur">
+    <option value="" selected disabled>PC congélateur</option>
+    <option value="ok">PC en place</option>
+    <option value="PC congel à déplacer 2,5m" data-export="PC congel à déplacer 2,5m">PC congel à déplacer 2,5m</option>
+    <option value="PC congel à déplacer 5m" data-export="PC congel à déplacer 5m">PC congel à déplacer 5m</option>
+    <option value="PC congel à déplacer 10m" data-export="PC congel à déplacer 10m">PC congel à déplacer 10m</option>
+    <option value="Repiquage 2,5m pour PC congel" data-export="Repiquage 2,5m pour PC congel">Repiquage 2,5m pour PC congel</option>
+    <option value="Repiquage 5m pour PC congel" data-export="Repiquage 5m pour PC congel">Repiquage 5m pour PC congel</option>
+    <option value="Repiquage 10m pour PC congel" data-export="Repiquage 10m pour PC congel">Repiquage 10m pour PC congel</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- LAVE-LINGE INTÉGRABLE -->
@@ -907,6 +987,21 @@
     <label><input data-nonikea="1" name="ll_libre_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="ll_libre" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="ll_libre" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-ll="1" id="llProtections" aria-label="Protections lave-linge">
+    <option value="" selected disabled>Protections Lave linge</option>
+    <option value="ok">Inter diff Type A ok - Protection 20A ok - PC ok</option>
+    <option value="Inter diff Type A ok - Protection 20A ok - Dep PC LL 2,5m" data-export="Inter diff Type A ok - Protection 20A ok - Dep PC LL 2,5m">Inter diff Type A ok - Protection 20A ok - Dep PC LL 2,5m</option>
+    <option value="Inter diff Type A ok - Protection 20A ok - Dep PC LL 5m" data-export="Inter diff Type A ok - Protection 20A ok - Dep PC LL 5m">Inter diff Type A ok - Protection 20A ok - Dep PC LL 5m</option>
+    <option value="Inter diff Type A ok - Protection 20A ok - Dep PC LL 10m" data-export="Inter diff Type A ok - Protection 20A ok - Dep PC LL 10m">Inter diff Type A ok - Protection 20A ok - Dep PC LL 10m</option>
+    <option value="Inter diff Type A ok - Protection 20A ok - Dep PC LL 15m" data-export="Inter diff Type A ok - Protection 20A ok - Dep PC LL 15m">Inter diff Type A ok - Protection 20A ok - Dep PC LL 15m</option>
+    <option value="Manque inter diff Type A - Protection 20A ok - PC LL ok" data-export="Manque inter diff Type A - Protection 20A ok - PC LL ok">Manque inter diff Type A - Protection 20A ok - PC LL ok</option>
+    <option value="Manque inter diff Type A et protection 20A - Ligne PC LL 10m" data-export="Manque inter diff Type A et protection 20A - Ligne PC LL 10m">Manque inter diff Type A et protection 20A - Ligne PC LL 10m</option>
+    <option value="Manque inter diff Type A et protection 20A - Ligne PC LL 15m" data-export="Manque inter diff Type A et protection 20A - Ligne PC LL 15m">Manque inter diff Type A et protection 20A - Ligne PC LL 15m</option>
+    <option value="Manque inter diff Type A et protection 20A - Ligne PC LL 20m" data-export="Manque inter diff Type A et protection 20A - Ligne PC LL 20m">Manque inter diff Type A et protection 20A - Ligne PC LL 20m</option>
+    <option value="Manque inter diff Type A et protection 20A - Ligne PC LL 25m" data-export="Manque inter diff Type A et protection 20A - Ligne PC LL 25m">Manque inter diff Type A et protection 20A - Ligne PC LL 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- SÈCHE-LINGE -->
@@ -919,6 +1014,21 @@
     <label><input data-nonikea="1" name="sl_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="sl" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="sl" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-sl="1" id="slProtections" aria-label="Protections sèche-linge">
+    <option value="" selected disabled>Protections Sèche linge</option>
+    <option value="ok">Inter diff ok - Protection 20A ok - PC ok</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC SL 2,5m" data-export="Inter diff ok - Protection 20A ok - Dep PC SL 2,5m">Inter diff ok - Protection 20A ok - Dep PC SL 2,5m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC SL 5m" data-export="Inter diff ok - Protection 20A ok - Dep PC SL 5m">Inter diff ok - Protection 20A ok - Dep PC SL 5m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC SL 10m" data-export="Inter diff ok - Protection 20A ok - Dep PC SL 10m">Inter diff ok - Protection 20A ok - Dep PC SL 10m</option>
+    <option value="Inter diff ok - Protection 20A ok - Dep PC SL 15m" data-export="Inter diff ok - Protection 20A ok - Dep PC SL 15m">Inter diff ok - Protection 20A ok - Dep PC SL 15m</option>
+    <option value="Manque inter diff - Protection 20A ok - PC SL ok" data-export="Manque inter diff - Protection 20A ok - PC SL ok">Manque inter diff - Protection 20A ok - PC SL ok</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC SL 10m" data-export="Manque inter diff et protection 20A - Ligne PC SL 10m">Manque inter diff et protection 20A - Ligne PC SL 10m</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC SL 15m" data-export="Manque inter diff et protection 20A - Ligne PC SL 15m">Manque inter diff et protection 20A - Ligne PC SL 15m</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC SL 20m" data-export="Manque inter diff et protection 20A - Ligne PC SL 20m">Manque inter diff et protection 20A - Ligne PC SL 20m</option>
+    <option value="Manque inter diff et protection 20A - Ligne PC SL 25m" data-export="Manque inter diff et protection 20A - Ligne PC SL 25m">Manque inter diff et protection 20A - Ligne PC SL 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- AUTRE 1 (optionnel) -->
@@ -959,7 +1069,25 @@
 <label><input data-defmag="1" name="luminaires_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
     <label><input data-nonikea="1" name="luminaires_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="luminaires" type="radio" value="client"/><span class="opt">Installés par le client</span></label>
-<label><input name="luminaires" type="radio" value="pasde"/><span class="opt compact">Non souhaités</span></label></div>
+<label><input name="luminaires" type="radio" value="pasde"/><span class="opt compact">Non souhaités</span></label>
+<label class="technical-wrap">
+  <select class="technical-select" data-pc-luminaires="1" id="luminairesPc" aria-label="PC luminaires">
+    <option value="" selected disabled>PC luminaires</option>
+    <option value="ok">PC en place</option>
+    <option value="PC luminaire à déplacer 2,5m" data-export="PC luminaire à déplacer 2,5m">PC luminaire à déplacer 2,5m</option>
+    <option value="PC luminaire à déplacer 5m" data-export="PC luminaire à déplacer 5m">PC luminaire à déplacer 5m</option>
+    <option value="PC luminaire à déplacer 10m" data-export="PC luminaire à déplacer 10m">PC luminaire à déplacer 10m</option>
+    <option value="Repiquage 2,5m pour PC luminaire" data-export="Repiquage 2,5m pour PC luminaire">Repiquage 2,5m pour PC luminaire</option>
+    <option value="Repiquage 5m pour PC luminaire" data-export="Repiquage 5m pour PC luminaire">Repiquage 5m pour PC luminaire</option>
+    <option value="Repiquage 10m pour PC luminaire" data-export="Repiquage 10m pour PC luminaire">Repiquage 10m pour PC luminaire</option>
+    <option value="2 PC luminaires à déplacer 2,5m" data-export="2 PC luminaires à déplacer 2,5m">2 PC luminaires à déplacer 2,5m</option>
+    <option value="2 PC luminaires à déplacer 5m" data-export="2 PC luminaires à déplacer 5m">2 PC luminaires à déplacer 5m</option>
+    <option value="2 PC luminaires à déplacer 10m" data-export="2 PC luminaires à déplacer 10m">2 PC luminaires à déplacer 10m</option>
+    <option value="2 repiquages 2,5m pour PC luminaires" data-export="2 repiquages 2,5m pour PC luminaires">2 repiquages 2,5m pour PC luminaires</option>
+    <option value="2 repiquages 5m pour PC luminaires" data-export="2 repiquages 5m pour PC luminaires">2 repiquages 5m pour PC luminaires</option>
+    <option value="2 repiquages 10m pour PC luminaires" data-export="2 repiquages 10m pour PC luminaires">2 repiquages 10m pour PC luminaires</option>
+  </select>
+</label></div>
 </div>
 <!-- ✅ SÉPARATEUR -->
 <div aria-hidden="true" class="separator"></div>
@@ -1120,7 +1248,8 @@ function clearRowAllChoices(row){
         'input[type="checkbox"][data-listing="1"],' +
         'input[type="checkbox"][data-defmag="1"],' +
         'input[type="checkbox"][data-nonikea="1"],' +
-        'input[type="checkbox"][data-en2temps="1"]'
+        'input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]'
     ).forEach(i => i.checked = false);
     row.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
 }
@@ -1193,7 +1322,8 @@ function clearDefMagForRowOrPair(row){
 // ✅ "En 2 temps" (Plan de travail / Crédence) : si on coche Listing / NON IKEA / Non souhaité => on décoche "En 2 temps"
 function clearEn2TempsInRow(row){
     if(!row) return;
-    row.querySelectorAll('input[type="checkbox"][data-en2temps="1"]').forEach(cb => cb.checked = false);
+    row.querySelectorAll('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]').forEach(cb => cb.checked = false);
 }
 function clearEn2TempsForRowOrPair(row){
     if(!row) return;
@@ -1323,8 +1453,12 @@ function updatePlaqueHotteConstraint() {
     const defB = !!rowB.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
     const anyDef = defA || defB;
 
-    // "Listing" seul => la ligne n'est pas exportée
-    if (hasListing && !selA && !selB && !anyNon && !anyDef) return null;
+    const sousA = !!rowA.querySelector('input[type="checkbox"][data-sousplan="1"]')?.checked;
+    const sousB = !!rowB.querySelector('input[type="checkbox"][data-sousplan="1"]')?.checked;
+    const anySous = sousA || sousB;
+
+    // "Listing" seul => la ligne n'est pas exportée, sauf si une note complémentaire est cochée
+    if (hasListing && !selA && !selB && !anyNon && !anyDef && !anySous) return null;
 
     const isPasDe = (sel) => sel && sel.value === "pasde";
     if (isPasDe(selA) || isPasDe(selB)) {
@@ -1334,10 +1468,10 @@ function updatePlaqueHotteConstraint() {
     const isClient = (sel) => sel && sel.value === "client";
     const client = isClient(selA) || isClient(selB);
 
-    const active = (selA || listingA || nonA || defA) ? "A" : (selB || listingB || nonB || defB) ? "B" : null;
+    const active = (selA || listingA || nonA || defA || sousA) ? "A" : (selB || listingB || nonB || defB || sousB) ? "B" : null;
     const variant = active === "A" ? pair.aVariant : active === "B" ? pair.bVariant : null;
 
-    if (!active && !selA && !selB && !anyNon && !anyDef && !hasListing) {
+    if (!active && !selA && !selB && !anyNon && !anyDef && !anySous && !hasListing) {
         return `${pair.base} : non renseigné`;
     }
 
@@ -1347,8 +1481,15 @@ function updatePlaqueHotteConstraint() {
 
     // Largeur (si sélectionnée sur la variante active)
     const activeRow = (active === "A") ? rowA : (active === "B") ? rowB : null;
-    const wv = (activeRow && activeRow.querySelector('select.width-select')) ? activeRow.querySelector('select.width-select').value : "";
+    const activeLabel = (active === "A") ? pair.aLabel : (active === "B") ? pair.bLabel : "";
+    let widthSelect = activeRow ? activeRow.querySelector('select.width-select:not([data-width-for])') : null;
+    if (!widthSelect && activeLabel) {
+        widthSelect = rowA.querySelector(`select.width-select[data-width-for="${activeLabel}"]`) || rowB.querySelector(`select.width-select[data-width-for="${activeLabel}"]`);
+    }
+    const wv = widthSelect ? widthSelect.value : "";
     if (wv) label += ` (${wv} cm)`;
+
+    if ((active === "A" && sousA) || (active === "B" && sousB)) label += " sous plan";
 
     if (anyDef) label += " À DÉFINIR EN MAGASIN";
     else if (anyNon) label += " NON IKEA";
@@ -1423,17 +1564,19 @@ function applyTwoLineLayout(){
   });
 }
 
-const WIDTH_TARGETS = new Set([
-  "Hotte décoration",
-  "Lave-vaisselle intégrable",
-  "Congélateur intégrable",
-  "Lave-linge intégrable"
-]);
+const WIDTH_OPTIONS_BY_APPLIANCE = {
+  "Hotte décoration": [60, 70, 80, 90, 100],
+  "Lave-vaisselle intégrable": [45, 60],
+  // Largeur demandée uniquement quand "Listing" est coché sur le lave-linge pose libre.
+  "Lave-linge pose libre": [45, 60],
+  "Réfrigérateur pose libre": [50, 55, 60, 70, 80, 90, 120]
+};
 
 function injectWidthSelectors(){
   document.querySelectorAll('.row[data-appliance]').forEach(row => {
     const appliance = row.getAttribute("data-appliance") || "";
-    if (!WIDTH_TARGETS.has(appliance)) return;
+    const widths = WIDTH_OPTIONS_BY_APPLIANCE[appliance];
+    if (!widths) return;
     if (row.querySelector('select.width-select')) return;
 
     const options = row.querySelector('.options');
@@ -1444,15 +1587,14 @@ function injectWidthSelectors(){
 
     const sel = document.createElement("select");
     sel.className = "width-select";
+    if (appliance === "Lave-linge pose libre") {
+      sel.setAttribute("data-width-require-listing", "ll_libre_listing");
+    }
     sel.innerHTML = `
       <option value="" selected disabled>Largeur</option>
-      <option value="45">45 cm</option>
-      <option value="60">60 cm</option>
-      <option value="70">70 cm</option>
-      <option value="80">80 cm</option>
-      <option value="90">90 cm</option>
-      <option value="100">100 cm</option>
-    `;wrap.appendChild(sel);
+      ${widths.map(w => `<option value="${w}">${w} cm</option>`).join("")}
+    `;
+    wrap.appendChild(sel);
     options.appendChild(wrap);
 
     sel.addEventListener("change", () => {
@@ -1482,7 +1624,7 @@ function getEvierPlomberieExportLine(){
 }
 
 function syncTechnicalSelectVisualState(){
-    document.querySelectorAll('select[data-decoupes-plan="1"], select[data-protection-plaque="1"]').forEach(sel => {
+    document.querySelectorAll('select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]').forEach(sel => {
         const hasValue = !!((sel.value || "").trim());
         sel.classList.toggle("has-value", hasValue);
     });
@@ -1506,6 +1648,113 @@ function getPlaqueProtectionExportLine(){
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getHottePcExportLine(){
+    const sel = document.getElementById("hottePc");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getFourProtectionExportLine(){
+    const sel = document.getElementById("fourProtections");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getMicroOndesPcExportLine(){
+    const sel = document.getElementById("microOndesPc");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getLvProtectionExportLine(){
+    const sel = document.getElementById("lvProtections");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+
+function getFrigoPcExportLine(){
+    const sel = document.getElementById("frigoPc");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getCongelPcExportLine(){
+    const sel = document.getElementById("congelPc");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+
+function getLlProtectionExportLine(){
+    const sel = document.getElementById("llProtections");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+
+function getSlProtectionExportLine(){
+    const sel = document.getElementById("slProtections");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+
+function getLuminairesPcExportLine(){
+    const sel = document.getElementById("luminairesPc");
+    if (!sel) return "";
+
+    const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
 
     const option = sel.options[sel.selectedIndex];
@@ -1556,7 +1805,8 @@ function getPlaqueProtectionExportLine(){
                         const defMagCb = row.querySelector('input[type="checkbox"][data-defmag="1"]');
                         const hasNonIkea = !!(nonIkeaCb && nonIkeaCb.checked);
                         const hasDefMag = !!(defMagCb && defMagCb.checked);
-                        const en2Cb = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+                        const en2Cb = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
                         const hasEn2 = !!(en2Cb && en2Cb.checked);
 
                         if (!(isClient || hasNonIkea || hasDefMag || hasEn2)) return;
@@ -1683,10 +1933,15 @@ function getPlaqueProtectionExportLine(){
 
                 const nonIkea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
                 const defMag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
+                const listingChecked = !!row.querySelector('input[type="checkbox"][data-listing="1"]')?.checked;
                 const checked = row.querySelector('input[type="radio"]:checked');
-                const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+                const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
                 const en2Txt = (en2 && en2.checked) ? " En 2 temps" : "";
-                const stateTxt = (defMag && defMag.checked) ? " À DÉFINIR EN MAGASIN" : ((nonIkea && nonIkea.checked) ? " NON IKEA" : "");
+                const applianceForState = (row.getAttribute("data-appliance") || "").toLowerCase();
+                const isPlanOrCredenceForState = applianceForState.includes("plan de travail") || applianceForState.includes("crédence") || applianceForState.includes("credence");
+                const ikeaTxt = (listingChecked && (en2 && en2.checked) && isPlanOrCredenceForState && !(defMag && defMag.checked) && !(nonIkea && nonIkea.checked)) ? " IKEA" : "";
+                const stateTxt = (defMag && defMag.checked) ? " À DÉFINIR EN MAGASIN" : ((nonIkea && nonIkea.checked) ? " NON IKEA" : ikeaTxt);
                 const widthVal = row.querySelector('select.width-select')?.value || "";
                 const widthTxt = widthVal ? ` (${widthVal} cm)` : "";
 // "En 2 temps" n'a de sens que si ce n'est pas "Non souhaité"
@@ -1716,7 +1971,16 @@ function getPlaqueProtectionExportLine(){
             const extraEndLines = [
                 getEvierPlomberieExportLine(),
                 getPlanDecoupesExportLine(),
-                getPlaqueProtectionExportLine()
+                getPlaqueProtectionExportLine(),
+                getHottePcExportLine(),
+                getFourProtectionExportLine(),
+                getMicroOndesPcExportLine(),
+                getLvProtectionExportLine(),
+                getFrigoPcExportLine(),
+                getCongelPcExportLine(),
+                getLlProtectionExportLine(),
+                getSlProtectionExportLine(),
+                getLuminairesPcExportLine()
             ].filter(Boolean);
             if (extraEndLines.length) {
                 if (lines.length && lines[lines.length - 1] !== "") lines.push("");
@@ -1819,14 +2083,15 @@ const text = buildRecap();
     }
 
 // --- En 2 temps (Plan de travail / Crédence) ---
-    if (t.matches('input[type="checkbox"][data-en2temps="1"]')) {
+    if (t.matches('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]')) {
       const row = t.closest(".row");
       if (t.checked && row) {
         const listing = row.querySelector('input[type="checkbox"][data-listing="1"]');
         const pasde = row.querySelector('input[type="radio"][value="pasde"]');
 
-        // ✅ On garde NON IKEA / À définir pour Plan/Credence (combo autorisé), mais on évite Listing & Non souhaité
-        if (listing) listing.checked = false;
+        // ✅ Plan/Credence : combo autorisé avec Listing, on évite seulement "Non souhaité"
+        if (!isPlanOrCredenceRow(row) && listing) listing.checked = false;
         if (pasde) pasde.checked = false;
 
         // Hors Plan/Credence, on évite les combos
@@ -1851,16 +2116,18 @@ const text = buildRecap();
       syncListing(t);
 
       if (t.checked && row) {
-        // Listing => pas "À définir en mag", pas "NON IKEA", pas "Non souhaité", pas "En 2 temps"
+        // Listing => pas "À définir en mag", pas "NON IKEA", pas "Non souhaité"
+        // Exception Plan/Credence : on garde "En 2 temps" pour pouvoir sortir la mention IKEA.
         if (typeof clearDefMagForRowOrPair === "function") clearDefMagForRowOrPair(row);
 
         const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
         const pasdeChecked = row.querySelector('input[type="radio"][value="pasde"]:checked');
-        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
 
         if (nonikea) nonikea.checked = false;
         if (pasdeChecked) pasdeChecked.checked = false;
-        if (en2) en2.checked = false;
+        if (en2 && !isPlanOrCredenceRow(row)) en2.checked = false;
       }
 
       updatePlaqueHotteConstraint();
@@ -1884,7 +2151,8 @@ const text = buildRecap();
         if (defmag) defmag.checked = false;
 
         const pasdeChecked = row.querySelector('input[type="radio"][value="pasde"]:checked');
-        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
 
         if (pasdeChecked) pasdeChecked.checked = false;
         if (en2 && !isPlanOrCredenceRow(row)) en2.checked = false;
@@ -1909,7 +2177,8 @@ const text = buildRecap();
 
         const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
         const pasdeChecked = row.querySelector('input[type="radio"][value="pasde"]:checked');
-        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
 
         if (nonikea) nonikea.checked = false;
         if (pasdeChecked) pasdeChecked.checked = false;
@@ -1932,7 +2201,8 @@ const text = buildRecap();
         const listing = row.querySelector('input[type="checkbox"][data-listing="1"]');
         const nonikea = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
         const defmag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
-        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+        const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
         if (listing) listing.checked = false;
         if (nonikea) nonikea.checked = false;
         if (en2) en2.checked = false;
@@ -1965,6 +2235,69 @@ updatePlaqueHotteConstraint();
 
     // --- Sélecteur protections plaque de cuisson ---
     if (t.matches('select[data-protection-plaque="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur PC hotte ---
+    if (t.matches('select[data-pc-hotte="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur protections four ---
+    if (t.matches('select[data-protection-four="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur PC micro-ondes ---
+    if (t.matches('select[data-pc-microondes="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur protections lave-vaisselle ---
+    if (t.matches('select[data-protection-lv="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur PC réfrigérateur ---
+    if (t.matches('select[data-pc-frigo="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur PC congélateur ---
+    if (t.matches('select[data-pc-congel="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur protections lave-linge ---
+    if (t.matches('select[data-protection-ll="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur protections sèche-linge ---
+    if (t.matches('select[data-protection-sl="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteur PC luminaires ---
+    if (t.matches('select[data-pc-luminaires="1"]')) {
       buildRecap();
       updateWizardNavState();
       return;
@@ -2198,6 +2531,35 @@ function elementIsInCurrentStep(el) {
             return step.includes(row);
         }
 
+function rowIsPresentForWidth(row){
+    if (!row || !row.querySelector) return false;
+    const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
+    if (pasde) return false;
+    const listing = !!row.querySelector('input[type="checkbox"][data-listing="1"]')?.checked;
+    const non = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]')?.checked;
+    const defm = !!row.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
+    const client = !!row.querySelector('input[type="radio"][value="client"]:checked');
+    return listing || non || defm || client;
+}
+
+function widthSelectIsRequired(sel){
+    if (!sel) return false;
+
+    // Cas spécifique : le lave-linge pose libre ne demande la largeur
+    // que si son bouton "Listing" est coché.
+    const requireListingName = sel.getAttribute("data-width-require-listing");
+    if (requireListingName) {
+        const listingCb = document.querySelector(`input[name="${requireListingName}"]`);
+        return !!(listingCb && listingCb.checked);
+    }
+
+    const target = sel.getAttribute("data-width-for");
+    if (target) {
+        const targetRow = document.querySelector(`.row[data-appliance="${target}"]`);
+        return rowIsPresentForWidth(targetRow);
+    }
+    return rowIsPresentForWidth(sel.closest(".row"));
+}
 
 
 // ✅ En mode 1 par 1, on ne passe à la suite que si "Listing" OU "NON IKEA" est choisi
@@ -2209,6 +2571,15 @@ function wizardIsStepReady(stepRows){
     let hasPlomberieEvierError = false;
     let hasPlanDecoupesError = false;
     let hasPlaqueProtectionError = false;
+    let hasHottePcError = false;
+    let hasFourProtectionError = false;
+    let hasMicroOndesPcError = false;
+    let hasLvProtectionError = false;
+    let hasFrigoPcError = false;
+    let hasCongelPcError = false;
+    let hasLlProtectionError = false;
+    let hasSlProtectionError = false;
+    let hasLuminairesPcError = false;
 
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
@@ -2218,12 +2589,22 @@ function wizardIsStepReady(stepRows){
         const defCb = row.querySelector('input[type="checkbox"][data-defmag="1"]');
         const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
         const client = row.querySelector('input[type="radio"][value="client"]:checked');
+        const sousplan = row.querySelector('input[type="checkbox"][data-sousplan="1"]:checked');
         const widthSel = row.querySelector('select.width-select');
         const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
         const planDecoupesSel = row.querySelector('select[data-decoupes-plan="1"]');
         const plaqueProtectionSel = row.querySelector('select[data-protection-plaque="1"]');
+        const hottePcSel = row.querySelector('select[data-pc-hotte="1"]');
+        const fourProtectionSel = row.querySelector('select[data-protection-four="1"]');
+        const microOndesPcSel = row.querySelector('select[data-pc-microondes="1"]');
+        const lvProtectionSel = row.querySelector('select[data-protection-lv="1"]');
+        const frigoPcSel = row.querySelector('select[data-pc-frigo="1"]');
+        const congelPcSel = row.querySelector('select[data-pc-congel="1"]');
+        const llProtectionSel = row.querySelector('select[data-protection-ll="1"]');
+        const slProtectionSel = row.querySelector('select[data-protection-sl="1"]');
+        const luminairesPcSel = row.querySelector('select[data-pc-luminaires="1"]');
 
-        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel || plaqueProtectionSel) hasReq = true;
+        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel || plaqueProtectionSel || hottePcSel || fourProtectionSel || microOndesPcSel || lvProtectionSel || frigoPcSel || congelPcSel || llProtectionSel || slProtectionSel || luminairesPcSel) hasReq = true;
 
         const listingChecked = !!(listingCb && listingCb.checked);
         const nonChecked = !!(nonCb && nonCb.checked);
@@ -2239,10 +2620,12 @@ function wizardIsStepReady(stepRows){
         // ✅ "Non souhaité" compte comme une décision suffisante pour avancer
         if (pasde) ok = true;
 
+        // ✅ "Sous plan" est une note optionnelle, mais compte comme une décision si cochée
+        if (sousplan) ok = true;
+
         // ✅ Largeur obligatoire si le select est présent ET que l'appareil est "présent"
         // (Listing / À définir / NON IKEA / client) — sauf si "Non souhaité"
-        const present = (listingChecked || nonChecked || defChecked || !!client);
-        if (!pasde && widthSel && present) {
+        if (widthSel && widthSelectIsRequired(widthSel)) {
             const w = (widthSel.value || "").trim();
             if (!w) hasWidthError = true;
         }
@@ -2265,16 +2648,71 @@ function wizardIsStepReady(stepRows){
             if (!pv) hasPlaqueProtectionError = true;
         }
 
+        // ✅ Hotte : choix PC obligatoire pour passer à l'étape suivante
+        if (hottePcSel) {
+            const hv = (hottePcSel.value || "").trim();
+            if (!hv) hasHottePcError = true;
+        }
+
+        // ✅ Four : choix protections obligatoire pour passer à l'étape suivante
+        if (fourProtectionSel) {
+            const fv = (fourProtectionSel.value || "").trim();
+            if (!fv) hasFourProtectionError = true;
+        }
+
+        // ✅ Micro-ondes : choix PC obligatoire pour passer à l'étape suivante
+        if (microOndesPcSel) {
+            const mv = (microOndesPcSel.value || "").trim();
+            if (!mv) hasMicroOndesPcError = true;
+        }
+
+        // ✅ Lave-vaisselle : choix protections obligatoire pour passer à l'étape suivante
+        if (lvProtectionSel) {
+            const lv = (lvProtectionSel.value || "").trim();
+            if (!lv) hasLvProtectionError = true;
+        }
+
+        // ✅ Réfrigérateur : choix PC obligatoire pour passer à l'étape suivante
+        if (frigoPcSel) {
+            const fv = (frigoPcSel.value || "").trim();
+            if (!fv) hasFrigoPcError = true;
+        }
+
+        // ✅ Congélateur : choix PC obligatoire pour passer à l'étape suivante
+        if (congelPcSel) {
+            const cv = (congelPcSel.value || "").trim();
+            if (!cv) hasCongelPcError = true;
+        }
+
+        // ✅ Lave-linge : choix protections obligatoire pour passer à l'étape suivante
+        if (llProtectionSel) {
+            const ll = (llProtectionSel.value || "").trim();
+            if (!ll) hasLlProtectionError = true;
+        }
+
+        // ✅ Sèche-linge : choix protections obligatoire pour passer à l'étape suivante
+        if (slProtectionSel) {
+            const sl = (slProtectionSel.value || "").trim();
+            if (!sl) hasSlProtectionError = true;
+        }
+
+        // ✅ Luminaires : choix PC obligatoire pour passer à l'étape suivante
+        if (luminairesPcSel) {
+            const lum = (luminairesPcSel.value || "").trim();
+            if (!lum) hasLuminairesPcError = true;
+        }
+
         // ✅ Exception : Plan de travail / Crédence
         // Si "En 2 temps" + "Installé par le client" (sans Listing / NON IKEA / À définir) => on peut avancer
         const appliance = (row.getAttribute("data-appliance") || "").trim();
         if ((appliance === "Plan de travail" || appliance === "Crédence") && !listingChecked && !nonChecked && !defChecked && !pasde) {
-            const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"]');
+            const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
+        'input[type="checkbox"][data-sousplan="1"]');
             if (en2 && en2.checked && client) ok = true;
         }
     });
 
-    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError;
+    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError && !hasHottePcError && !hasFourProtectionError && !hasMicroOndesPcError && !hasLvProtectionError && !hasFrigoPcError && !hasCongelPcError && !hasLlProtectionError && !hasSlProtectionError && !hasLuminairesPcError;
 }
 
 
@@ -2306,19 +2744,57 @@ function getMissingWidthSelectsInStep(stepRows){
             if (!pv) misses.push(plaqueProtectionSel);
         }
 
+        const hottePcSel = row.querySelector('select[data-pc-hotte="1"]');
+        if (hottePcSel) {
+            const hv = (hottePcSel.value || "").trim();
+            if (!hv) misses.push(hottePcSel);
+        }
+
+        const fourProtectionSel = row.querySelector('select[data-protection-four="1"]');
+        if (fourProtectionSel) {
+            const fv = (fourProtectionSel.value || "").trim();
+            if (!fv) misses.push(fourProtectionSel);
+        }
+
+        const microOndesPcSel = row.querySelector('select[data-pc-microondes="1"]');
+        const lvProtectionSel = row.querySelector('select[data-protection-lv="1"]');
+        const frigoPcSel = row.querySelector('select[data-pc-frigo="1"]');
+        const congelPcSel = row.querySelector('select[data-pc-congel="1"]');
+        const llProtectionSel = row.querySelector('select[data-protection-ll="1"]');
+        const slProtectionSel = row.querySelector('select[data-protection-sl="1"]');
+        const luminairesPcSel = row.querySelector('select[data-pc-luminaires="1"]');
+        if (microOndesPcSel) {
+            const mv = (microOndesPcSel.value || "").trim();
+            if (!mv) misses.push(microOndesPcSel);
+        }
+        if (lvProtectionSel) {
+            const lv = (lvProtectionSel.value || "").trim();
+            if (!lv) misses.push(lvProtectionSel);
+        }
+        if (frigoPcSel) {
+            const fv = (frigoPcSel.value || "").trim();
+            if (!fv) misses.push(frigoPcSel);
+        }
+        if (congelPcSel) {
+            const cv = (congelPcSel.value || "").trim();
+            if (!cv) misses.push(congelPcSel);
+        }
+        if (llProtectionSel) {
+            const ll = (llProtectionSel.value || "").trim();
+            if (!ll) misses.push(llProtectionSel);
+        }
+        if (slProtectionSel) {
+            const sl = (slProtectionSel.value || "").trim();
+            if (!sl) misses.push(slProtectionSel);
+        }
+        if (luminairesPcSel) {
+            const lum = (luminairesPcSel.value || "").trim();
+            if (!lum) misses.push(luminairesPcSel);
+        }
+
         const sel = row.querySelector('select.width-select');
         if (!sel) return;
-
-        const pasde = row.querySelector('input[type="radio"][value="pasde"]:checked');
-        if (pasde) return;
-
-        const listing = !!row.querySelector('input[type="checkbox"][data-listing="1"]')?.checked;
-        const non = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]')?.checked;
-        const defm = !!row.querySelector('input[type="checkbox"][data-defmag="1"]')?.checked;
-        const client = !!row.querySelector('input[type="radio"][value="client"]:checked');
-
-        const present = listing || non || defm || client;
-        if (!present) return;
+        if (!widthSelectIsRequired(sel)) return;
 
         const v = (sel.value || "").trim();
         if (!v) misses.push(sel);
@@ -2389,7 +2865,10 @@ function updateWizardNavState(){
     if (wizardPrev) wizardPrev.disabled = (total <= 1 || wizardIndex === vis[0]);
     const atLast = (total <= 1 || wizardIndex === vis[vis.length - 1]);
     const ready = wizardIsStepReady(wizardSteps[wizardIndex] || []);
-    if (wizardNext) wizardNext.disabled = atLast || !ready;
+    if (wizardNext) {
+        wizardNext.textContent = atLast ? "Fin" : "Suivant";
+        wizardNext.disabled = !ready;
+    }
     if (!atLast && !ready) { flashMissingWidth(wizardSteps[wizardIndex] || []); }
 }
 // Navigation manuelle : pas d'auto-advance en mode pas-à-pas
