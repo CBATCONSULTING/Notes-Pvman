@@ -567,9 +567,13 @@
             0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
             50%      { box-shadow: 0 0 0 3px rgba(255,255,255,0.35); }
         }
-        input.other-input.attention{
+        input.other-input.attention,
+        input.length-line.attention{
             animation: otherPulse .9s ease-in-out 0s 2;
             border-color: rgba(255,255,255,0.7) !important;
+        }
+        input.length-line{
+            margin-top: 8px;
         }
 </style>
 </head>
@@ -584,7 +588,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.97</div>
+  <div class="pill">v1.99</div>
 </div>
 </div>
 <div class="card">
@@ -1504,6 +1508,48 @@ function updatePlaqueHotteConstraint() {
 }
 
 
+function isPlanOrCredenceRow(row){
+    if (!row) return false;
+    const a = (row.getAttribute("data-appliance") || "").toLowerCase();
+    return (a.includes("plan de travail") || a.includes("crédence") || a.includes("credence"));
+}
+
+function injectNonIkeaLengthInputs(){
+    document.querySelectorAll('.row[data-appliance]').forEach(row => {
+        if (!isPlanOrCredenceRow(row)) return;
+        if (row.querySelector('input[data-nonikea-length="1"]')) return;
+
+        const label = row.querySelector(".label");
+        if (!label) return;
+
+        const inp = document.createElement("input");
+        inp.type = "text";
+        inp.className = "extra-line length-line";
+        inp.setAttribute("data-nonikea-length", "1");
+        inp.placeholder = "Longueur NON IKEA obligatoire (ex : 3,20 m)";
+        inp.style.display = "none";
+        label.appendChild(inp);
+    });
+}
+
+function syncNonIkeaLengthInputs(){
+    document.querySelectorAll('.row[data-appliance]').forEach(row => {
+        if (!isPlanOrCredenceRow(row)) return;
+        const inp = row.querySelector('input[data-nonikea-length="1"]');
+        if (!inp) return;
+        const nonIkea = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]:checked');
+        inp.style.display = nonIkea ? "" : "none";
+        inp.setAttribute("aria-hidden", nonIkea ? "false" : "true");
+    });
+}
+
+function getNonIkeaLengthForRow(row){
+    const inp = row ? row.querySelector('input[data-nonikea-length="1"]') : null;
+    return ((inp && inp.value) ? inp.value : "").trim();
+}
+
+
+
 function injectExtraInputs(){
     document.querySelectorAll(".row").forEach(row => {
         if (row.querySelector('input[data-extra="1"]')) return;
@@ -1768,6 +1814,8 @@ function getLuminairesPcExportLine(){
             syncPlumbingSelectVisualState();
             syncTechnicalSelectVisualState();
         injectExtraInputs();
+        injectNonIkeaLengthInputs();
+        syncNonIkeaLengthInputs();
 
             const rows = document.querySelectorAll(".row[data-appliance], .row[data-special], .row[data-toggle], .row[data-luminaires]");
             const lines = [];
@@ -1953,14 +2001,18 @@ function getLuminairesPcExportLine(){
                     } else {
                         // seul autre choix : client
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
-                const extraTxt = extra ? (" — " + extra) : "";
+                const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
+                const extras = [lengthVal, extra].filter(Boolean);
+                const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
                 lines.push(`${label}${widthTxt}${en2ForLine}${stateTxt} installé(e) ${whoText(checked.value)}${extraTxt}`);
                     }
                 } else {
                     // Par défaut : non renseigné, sauf si NON IKEA est coché
                     if (stateTxt) {
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
-                        const extraTxt = extra ? (" — " + extra) : "";
+                        const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
+                        const extras = [lengthVal, extra].filter(Boolean);
+                        const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
                         lines.push(`${label}${widthTxt}${en2ForLine}${stateTxt}${extraTxt}`);
                     } else {
                         lines.push(`${label}${widthTxt}${en2ForLine} : non renseigné`);
@@ -2580,6 +2632,7 @@ function wizardIsStepReady(stepRows){
     let hasLlProtectionError = false;
     let hasSlProtectionError = false;
     let hasLuminairesPcError = false;
+    let hasNonIkeaLengthError = false;
 
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
@@ -2609,6 +2662,12 @@ function wizardIsStepReady(stepRows){
         const listingChecked = !!(listingCb && listingCb.checked);
         const nonChecked = !!(nonCb && nonCb.checked);
         const defChecked = !!(defCb && defCb.checked);
+        const appliance = (row.getAttribute("data-appliance") || "").trim();
+
+        if ((appliance === "Plan de travail" || appliance === "Crédence") && nonChecked) {
+            const lengthVal = getNonIkeaLengthForRow(row);
+            if (!lengthVal) hasNonIkeaLengthError = true;
+        }
 
         if (listingChecked) ok = true;
         if (nonChecked) ok = true;
@@ -2704,7 +2763,6 @@ function wizardIsStepReady(stepRows){
 
         // ✅ Exception : Plan de travail / Crédence
         // Si "En 2 temps" + "Installé par le client" (sans Listing / NON IKEA / À définir) => on peut avancer
-        const appliance = (row.getAttribute("data-appliance") || "").trim();
         if ((appliance === "Plan de travail" || appliance === "Crédence") && !listingChecked && !nonChecked && !defChecked && !pasde) {
             const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
         'input[type="checkbox"][data-sousplan="1"]');
@@ -2712,7 +2770,7 @@ function wizardIsStepReady(stepRows){
         }
     });
 
-    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError && !hasHottePcError && !hasFourProtectionError && !hasMicroOndesPcError && !hasLvProtectionError && !hasFrigoPcError && !hasCongelPcError && !hasLlProtectionError && !hasSlProtectionError && !hasLuminairesPcError;
+    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError && !hasHottePcError && !hasFourProtectionError && !hasMicroOndesPcError && !hasLvProtectionError && !hasFrigoPcError && !hasCongelPcError && !hasLlProtectionError && !hasSlProtectionError && !hasLuminairesPcError && !hasNonIkeaLengthError;
 }
 
 
@@ -2790,6 +2848,14 @@ function getMissingWidthSelectsInStep(stepRows){
         if (luminairesPcSel) {
             const lum = (luminairesPcSel.value || "").trim();
             if (!lum) misses.push(luminairesPcSel);
+        }
+
+        const appliance = (row.getAttribute("data-appliance") || "").trim();
+        const nonIkeaCb = row.querySelector('input[type="checkbox"][data-nonikea="1"]');
+        const lengthInput = row.querySelector('input[data-nonikea-length="1"]');
+        if ((appliance === "Plan de travail" || appliance === "Crédence") && nonIkeaCb && nonIkeaCb.checked && lengthInput) {
+            const lengthVal = (lengthInput.value || "").trim();
+            if (!lengthVal) misses.push(lengthInput);
         }
 
         const sel = row.querySelector('select.width-select');
@@ -2900,6 +2966,8 @@ wizardPrev?.addEventListener("click", wizardGoPrev);
         });
 applyAlternatingRows();
         injectExtraInputs();
+        injectNonIkeaLengthInputs();
+        syncNonIkeaLengthInputs();
         injectWidthSelectors();
         applyTwoLineLayout();
         updatePlaqueHotteConstraint();
