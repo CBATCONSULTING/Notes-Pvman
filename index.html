@@ -589,7 +589,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v2.00</div>
+  <div class="pill">v2.02</div>
 </div>
 </div>
 <div class="card">
@@ -715,6 +715,7 @@
 </div>
 <div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="plaque_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="plaque_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
     <label><input data-nonikea="1" name="plaque_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<label><input data-gaz="1" name="plaque_gaz" type="checkbox"/><span class="opt compact">Gaz</span></label>
 <label><input name="plaque" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaque" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
 <label class="technical-wrap">
@@ -744,6 +745,21 @@
     <label><input data-nonikea="1" name="plaquehotte_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
 <label><input name="plaquehotte" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="plaquehotte" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-plaquehotte="1" id="plaqueHotteProtections" aria-label="Protections plaque de cuisson-hotte">
+    <option value="" selected disabled>Protections Plaque de cuisson-hotte</option>
+    <option value="ok">Inter diff Type A ok - Protection 32A ok - SC ok</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m">Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 5m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 5m">Inter diff Type A ok - Protection 32A ok - Dep SC 5m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 10m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 10m">Inter diff Type A ok - Protection 32A ok - Dep SC 10m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 15m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 15m">Inter diff Type A ok - Protection 32A ok - Dep SC 15m</option>
+    <option value="Manque inter diff Type A - Protection 32A ok - SC ok" data-export="Manque inter diff Type A - Protection 32A ok - SC ok">Manque inter diff Type A - Protection 32A ok - SC ok</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 10m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 10m">Manque inter diff Type A et protection 32A - Ligne SC 10m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 15m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 15m">Manque inter diff Type A et protection 32A - Ligne SC 15m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 20m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 20m">Manque inter diff Type A et protection 32A - Ligne SC 20m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 25m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 25m">Manque inter diff Type A et protection 32A - Ligne SC 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- CUISINIÈRE / PIANO -->
@@ -754,8 +770,24 @@
 </div>
 <div class="options compact-gap"><label><input class="listing-toggle" data-listing="1" name="piano_listing" type="checkbox"/><span class="opt opt-listing compact">Listing</span></label><label><input data-defmag="1" name="piano_defmag" type="checkbox"/><span class="opt compact opt-defmag">À définir en mag</span></label>
     <label><input data-nonikea="1" name="piano_nonikea" type="checkbox"/><span class="opt compact">NON IKEA</span></label>
+<label><input data-gaz="1" name="piano_gaz" type="checkbox"/><span class="opt compact">Gaz</span></label>
 <label><input name="piano" type="radio" value="client"/><span class="opt">Installé par le client</span></label>
 <label><input name="piano" type="radio" value="pasde"/><span class="opt compact">Non souhaité</span></label>
+<label class="technical-wrap">
+  <select class="technical-select protection-select" data-protection-piano="1" id="pianoProtections" aria-label="Protections cuisinière-piano">
+    <option value="" selected disabled>Protections Cuisinière-Piano</option>
+    <option value="ok">Inter diff Type A ok - Protection 32A ok - SC ok</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m">Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 5m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 5m">Inter diff Type A ok - Protection 32A ok - Dep SC 5m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 10m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 10m">Inter diff Type A ok - Protection 32A ok - Dep SC 10m</option>
+    <option value="Inter diff Type A ok - Protection 32A ok - Dep SC 15m" data-export="Inter diff Type A ok - Protection 32A ok - Dep SC 15m">Inter diff Type A ok - Protection 32A ok - Dep SC 15m</option>
+    <option value="Manque inter diff Type A - Protection 32A ok - SC ok" data-export="Manque inter diff Type A - Protection 32A ok - SC ok">Manque inter diff Type A - Protection 32A ok - SC ok</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 10m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 10m">Manque inter diff Type A et protection 32A - Ligne SC 10m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 15m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 15m">Manque inter diff Type A et protection 32A - Ligne SC 15m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 20m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 20m">Manque inter diff Type A et protection 32A - Ligne SC 20m</option>
+    <option value="Manque inter diff Type A et protection 32A - Ligne SC 25m" data-export="Manque inter diff Type A et protection 32A - Ligne SC 25m">Manque inter diff Type A et protection 32A - Ligne SC 25m</option>
+  </select>
+</label>
 </div>
 </div>
 <!-- HOTTE INTÉGRABLE -->
@@ -1652,7 +1684,7 @@ function injectWidthSelectors(){
   });
 }
 
-const CHIFFRAGE_SELECTORS = 'select[data-plomberie-evier="1"], select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]';
+const CHIFFRAGE_SELECTORS = 'select[data-plomberie-evier="1"], select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-protection-plaquehotte="1"], select[data-protection-piano="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]';
 
 function rowHasPasDe(row){
     return !!(row && row.querySelector && row.querySelector('input[type="radio"][value="pasde"]:checked'));
@@ -1673,6 +1705,72 @@ function shouldHideChiffrageSelect(sel){
 
 function chiffrageSelectIsRequired(sel){
     return !!(sel && !shouldHideChiffrageSelect(sel));
+}
+
+
+const PROTECTION_32A_OPTIONS = [
+  ["ok", "Inter diff Type A ok - Protection 32A ok - SC ok", ""],
+  ["Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m", "Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m", "Inter diff Type A ok - Protection 32A ok - Dep SC 2,5m"],
+  ["Inter diff Type A ok - Protection 32A ok - Dep SC 5m", "Inter diff Type A ok - Protection 32A ok - Dep SC 5m", "Inter diff Type A ok - Protection 32A ok - Dep SC 5m"],
+  ["Inter diff Type A ok - Protection 32A ok - Dep SC 10m", "Inter diff Type A ok - Protection 32A ok - Dep SC 10m", "Inter diff Type A ok - Protection 32A ok - Dep SC 10m"],
+  ["Inter diff Type A ok - Protection 32A ok - Dep SC 15m", "Inter diff Type A ok - Protection 32A ok - Dep SC 15m", "Inter diff Type A ok - Protection 32A ok - Dep SC 15m"],
+  ["Manque inter diff Type A - Protection 32A ok - SC ok", "Manque inter diff Type A - Protection 32A ok - SC ok", "Manque inter diff Type A - Protection 32A ok - SC ok"],
+  ["Manque inter diff Type A et protection 32A - Ligne SC 10m", "Manque inter diff Type A et protection 32A - Ligne SC 10m", "Manque inter diff Type A et protection 32A - Ligne SC 10m"],
+  ["Manque inter diff Type A et protection 32A - Ligne SC 15m", "Manque inter diff Type A et protection 32A - Ligne SC 15m", "Manque inter diff Type A et protection 32A - Ligne SC 15m"],
+  ["Manque inter diff Type A et protection 32A - Ligne SC 20m", "Manque inter diff Type A et protection 32A - Ligne SC 20m", "Manque inter diff Type A et protection 32A - Ligne SC 20m"],
+  ["Manque inter diff Type A et protection 32A - Ligne SC 25m", "Manque inter diff Type A et protection 32A - Ligne SC 25m", "Manque inter diff Type A et protection 32A - Ligne SC 25m"]
+];
+
+const PC_PIEZO_PLAQUE_OPTIONS = [
+  ["ok", "PC en place", ""],
+  ["PC Piezo plaque à déplacer 2,5m", "PC Piezo plaque à déplacer 2,5m", "PC Piezo plaque à déplacer 2,5m"],
+  ["PC Piezo plaque à déplacer 5m", "PC Piezo plaque à déplacer 5m", "PC Piezo plaque à déplacer 5m"],
+  ["PC Piezo plaque à déplacer 10m", "PC Piezo plaque à déplacer 10m", "PC Piezo plaque à déplacer 10m"],
+  ["Repiquage 2,5m pour PC Piezo plaque", "Repiquage 2,5m pour PC Piezo plaque", "Repiquage 2,5m pour PC Piezo plaque"],
+  ["Repiquage 5m pour PC Piezo plaque", "Repiquage 5m pour PC Piezo plaque", "Repiquage 5m pour PC Piezo plaque"],
+  ["Repiquage 10m pour PC Piezo plaque", "Repiquage 10m pour PC Piezo plaque", "Repiquage 10m pour PC Piezo plaque"]
+];
+
+const PC_PIEZO_CUISINIERE_OPTIONS = [
+  ["ok", "PC en place", ""],
+  ["PC Piezo Cuisinière à déplacer 2,5m", "PC Piezo Cuisinière à déplacer 2,5m", "PC Piezo Cuisinière à déplacer 2,5m"],
+  ["PC Piezo Cuisinière à déplacer 5m", "PC Piezo Cuisinière à déplacer 5m", "PC Piezo Cuisinière à déplacer 5m"],
+  ["PC Piezo Cuisinière à déplacer 10m", "PC Piezo Cuisinière à déplacer 10m", "PC Piezo Cuisinière à déplacer 10m"],
+  ["Repiquage 2,5m pour PC Piezo Cuisinière", "Repiquage 2,5m pour PC Piezo Cuisinière", "Repiquage 2,5m pour PC Piezo Cuisinière"],
+  ["Repiquage 5m pour PC Piezo Cuisinière", "Repiquage 5m pour PC Piezo Cuisinière", "Repiquage 5m pour PC Piezo Cuisinière"],
+  ["Repiquage 10m pour PC Piezo Cuisinière", "Repiquage 10m pour PC Piezo Cuisinière", "Repiquage 10m pour PC Piezo Cuisinière"]
+];
+
+function setSelectOptions(sel, title, items, mode){
+  if (!sel) return;
+  if (sel.getAttribute("data-options-mode") === mode) return;
+  sel.innerHTML = `<option value="" selected disabled>${title}</option>` + items.map(([value, text, exportText]) => {
+    const exportAttr = exportText ? ` data-export="${exportText.replace(/"/g, '&quot;')}"` : "";
+    return `<option value="${value.replace(/"/g, '&quot;')}"${exportAttr}>${text}</option>`;
+  }).join("");
+  sel.value = "";
+  sel.classList.remove("has-value");
+  sel.setAttribute("data-options-mode", mode);
+}
+
+function syncGazChiffrageOptions(){
+  const plaqueGaz = !!document.querySelector('input[name="plaque_gaz"]')?.checked;
+  const plaqueSel = document.getElementById("plaqueProtections");
+  setSelectOptions(
+    plaqueSel,
+    plaqueGaz ? "PC Piezo plaque" : "Protections Plaque de cuisson",
+    plaqueGaz ? PC_PIEZO_PLAQUE_OPTIONS : PROTECTION_32A_OPTIONS,
+    plaqueGaz ? "plaque-gaz" : "plaque-elec"
+  );
+
+  const pianoGaz = !!document.querySelector('input[name="piano_gaz"]')?.checked;
+  const pianoSel = document.getElementById("pianoProtections");
+  setSelectOptions(
+    pianoSel,
+    pianoGaz ? "PC Piezo Cuisinière" : "Protections Cuisinière-Piano",
+    pianoGaz ? PC_PIEZO_CUISINIERE_OPTIONS : PROTECTION_32A_OPTIONS,
+    pianoGaz ? "piano-gaz" : "piano-elec"
+  );
 }
 
 function syncChiffrageSelectAvailability(){
@@ -1707,7 +1805,7 @@ function getEvierPlomberieExportLine(){
 }
 
 function syncTechnicalSelectVisualState(){
-    document.querySelectorAll('select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]').forEach(sel => {
+    document.querySelectorAll('select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-protection-plaquehotte="1"], select[data-protection-piano="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]').forEach(sel => {
         const hasValue = !!((sel.value || "").trim()) && !shouldHideChiffrageSelect(sel);
         sel.classList.toggle("has-value", hasValue);
     });
@@ -1731,6 +1829,29 @@ function getPlaqueProtectionExportLine(){
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+
+function getPlaqueHotteProtectionExportLine(){
+    const sel = document.getElementById("plaqueHotteProtections");
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
+
+    const value = (sel.value || "").trim();
+    if (!value || value === "ok") return "";
+
+    const option = sel.options[sel.selectedIndex];
+    return ((option && option.getAttribute("data-export")) || (option && option.textContent) || value).trim();
+}
+
+function getPianoProtectionExportLine(){
+    const sel = document.getElementById("pianoProtections");
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
+
+    const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
 
     const option = sel.options[sel.selectedIndex];
@@ -1848,6 +1969,7 @@ function getLuminairesPcExportLine(){
 
         function buildRecap() {
             syncOtherNonIkeaLabels();
+            syncGazChiffrageOptions();
             syncChiffrageSelectAvailability();
             syncPlumbingSelectVisualState();
             syncTechnicalSelectVisualState();
@@ -1894,8 +2016,10 @@ function getLuminairesPcExportLine(){
                         const en2Cb = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
         'input[type="checkbox"][data-sousplan="1"]');
                         const hasEn2 = !!(en2Cb && en2Cb.checked);
+                        const gazCb = row.querySelector('input[type="checkbox"][data-gaz="1"]');
+                        const hasGaz = !!(gazCb && gazCb.checked);
 
-                        if (!(isClient || hasNonIkea || hasDefMag || hasEn2)) return;
+                        if (!(isClient || hasNonIkea || hasDefMag || hasEn2 || hasGaz)) return;
                     }
                 }
 
@@ -2030,6 +2154,8 @@ function getLuminairesPcExportLine(){
                 const stateTxt = (defMag && defMag.checked) ? " À DÉFINIR EN MAGASIN" : ((nonIkea && nonIkea.checked) ? " NON IKEA" : ikeaTxt);
                 const widthVal = row.querySelector('select.width-select')?.value || "";
                 const widthTxt = widthVal ? ` (${widthVal} cm)` : "";
+                const gazChecked = !!row.querySelector('input[type="checkbox"][data-gaz="1"]:checked');
+                const gazTxt = gazChecked ? " Gaz" : "";
 // "En 2 temps" n'a de sens que si ce n'est pas "Non souhaité"
                 const en2ForLine = (checked && checked.value === "pasde") ? "" : en2Txt;
 
@@ -2042,16 +2168,16 @@ function getLuminairesPcExportLine(){
                 const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
                 const extras = [lengthVal, extra].filter(Boolean);
                 const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
-                lines.push(`${label}${widthTxt}${en2ForLine}${stateTxt} installé(e) ${whoText(checked.value)}${extraTxt}`);
+                lines.push(`${label}${widthTxt}${gazTxt}${en2ForLine}${stateTxt} installé(e) ${whoText(checked.value)}${extraTxt}`);
                     }
                 } else {
                     // Par défaut : non renseigné, sauf si NON IKEA est coché
-                    if (stateTxt) {
+                    if (stateTxt || gazTxt) {
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
                         const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
                         const extras = [lengthVal, extra].filter(Boolean);
                         const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
-                        lines.push(`${label}${widthTxt}${en2ForLine}${stateTxt}${extraTxt}`);
+                        lines.push(`${label}${widthTxt}${gazTxt}${en2ForLine}${stateTxt}${extraTxt}`);
                     } else {
                         lines.push(`${label}${widthTxt}${en2ForLine} : non renseigné`);
                     }
@@ -2062,6 +2188,8 @@ function getLuminairesPcExportLine(){
                 getEvierPlomberieExportLine(),
                 getPlanDecoupesExportLine(),
                 getPlaqueProtectionExportLine(),
+                getPlaqueHotteProtectionExportLine(),
+                getPianoProtectionExportLine(),
                 getHottePcExportLine(),
                 getFourProtectionExportLine(),
                 getMicroOndesPcExportLine(),
@@ -2294,9 +2422,11 @@ const text = buildRecap();
         const defmag = row.querySelector('input[type="checkbox"][data-defmag="1"]');
         const en2 = row.querySelector('input[type="checkbox"][data-en2temps="1"],' +
         'input[type="checkbox"][data-sousplan="1"]');
+        const gaz = row.querySelector('input[type="checkbox"][data-gaz="1"]');
         if (listing) listing.checked = false;
         if (nonikea) nonikea.checked = false;
         if (en2) en2.checked = false;
+        if (gaz) gaz.checked = false;
       }
 
             // ✅ Paires (data-block) : "on repart de 0"
@@ -2324,8 +2454,15 @@ updatePlaqueHotteConstraint();
       return;
     }
 
-    // --- Sélecteur protections plaque de cuisson ---
-    if (t.matches('select[data-protection-plaque="1"]')) {
+    // --- Bouton Gaz plaque / cuisinière ---
+    if (t.matches('input[type="checkbox"][data-gaz="1"]')) {
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
+    // --- Sélecteurs protections plaque / plaque-hotte / cuisinière-piano ---
+    if (t.matches('select[data-protection-plaque="1"], select[data-protection-plaquehotte="1"], select[data-protection-piano="1"]')) {
       buildRecap();
       updateWizardNavState();
       return;
@@ -2686,6 +2823,8 @@ function wizardIsStepReady(stepRows){
         const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
         const planDecoupesSel = row.querySelector('select[data-decoupes-plan="1"]');
         const plaqueProtectionSel = row.querySelector('select[data-protection-plaque="1"]');
+        const plaqueHotteProtectionSel = row.querySelector('select[data-protection-plaquehotte="1"]');
+        const pianoProtectionSel = row.querySelector('select[data-protection-piano="1"]');
         const hottePcSel = row.querySelector('select[data-pc-hotte="1"]');
         const fourProtectionSel = row.querySelector('select[data-protection-four="1"]');
         const microOndesPcSel = row.querySelector('select[data-pc-microondes="1"]');
@@ -2696,7 +2835,7 @@ function wizardIsStepReady(stepRows){
         const slProtectionSel = row.querySelector('select[data-protection-sl="1"]');
         const luminairesPcSel = row.querySelector('select[data-pc-luminaires="1"]');
 
-        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel || plaqueProtectionSel || hottePcSel || fourProtectionSel || microOndesPcSel || lvProtectionSel || frigoPcSel || congelPcSel || llProtectionSel || slProtectionSel || luminairesPcSel) hasReq = true;
+        if (listingCb || nonCb || defCb || plomberieEvierSel || planDecoupesSel || plaqueProtectionSel || plaqueHotteProtectionSel || pianoProtectionSel || hottePcSel || fourProtectionSel || microOndesPcSel || lvProtectionSel || frigoPcSel || congelPcSel || llProtectionSel || slProtectionSel || luminairesPcSel) hasReq = true;
 
         const listingChecked = !!(listingCb && listingCb.checked);
         const nonChecked = !!(nonCb && nonCb.checked);
@@ -2740,10 +2879,18 @@ function wizardIsStepReady(stepRows){
             if (!dv) hasPlanDecoupesError = true;
         }
 
-        // ✅ Plaque de cuisson : choix protections obligatoire pour passer à l'étape suivante
+        // ✅ Plaque / plaque-hotte / cuisinière-piano : choix protections obligatoire pour passer à l'étape suivante
         if (chiffrageSelectIsRequired(plaqueProtectionSel)) {
             const pv = (plaqueProtectionSel.value || "").trim();
             if (!pv) hasPlaqueProtectionError = true;
+        }
+        if (chiffrageSelectIsRequired(plaqueHotteProtectionSel)) {
+            const phv = (plaqueHotteProtectionSel.value || "").trim();
+            if (!phv) hasPlaqueProtectionError = true;
+        }
+        if (chiffrageSelectIsRequired(pianoProtectionSel)) {
+            const piv = (pianoProtectionSel.value || "").trim();
+            if (!piv) hasPlaqueProtectionError = true;
         }
 
         // ✅ Hotte : choix PC obligatoire pour passer à l'étape suivante
@@ -2839,6 +2986,16 @@ function getMissingWidthSelectsInStep(stepRows){
         if (chiffrageSelectIsRequired(plaqueProtectionSel)) {
             const pv = (plaqueProtectionSel.value || "").trim();
             if (!pv) misses.push(plaqueProtectionSel);
+        }
+        const plaqueHotteProtectionSel = row.querySelector('select[data-protection-plaquehotte="1"]');
+        if (chiffrageSelectIsRequired(plaqueHotteProtectionSel)) {
+            const phv = (plaqueHotteProtectionSel.value || "").trim();
+            if (!phv) misses.push(plaqueHotteProtectionSel);
+        }
+        const pianoProtectionSel = row.querySelector('select[data-protection-piano="1"]');
+        if (chiffrageSelectIsRequired(pianoProtectionSel)) {
+            const piv = (pianoProtectionSel.value || "").trim();
+            if (!piv) misses.push(pianoProtectionSel);
         }
 
         const hottePcSel = row.querySelector('select[data-pc-hotte="1"]');
