@@ -569,11 +569,13 @@
             50%      { box-shadow: 0 0 0 4px rgba(239,68,68,.38); background: rgba(239,68,68,.55); }
         }
         input.other-input.attention,
-        input.length-line.attention{
+        input.length-line.attention,
+        input.height-line.attention{
             animation: otherPulse .75s ease-in-out 0s 3;
             border-color: rgba(255,90,90,1) !important;
         }
-        input.length-line{
+        input.length-line,
+        input.height-line{
             margin-top: 8px;
         }
 </style>
@@ -589,7 +591,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v2.02</div>
+  <div class="pill">v2.03</div>
 </div>
 </div>
 <div class="card">
@@ -1583,6 +1585,49 @@ function getNonIkeaLengthForRow(row){
 
 
 
+function isMitigeurRow(row){
+    const a = (row?.getAttribute("data-appliance") || "").trim().toLowerCase();
+    return a === "mitigeur";
+}
+
+function injectMitigeurHeightInputs(){
+    document.querySelectorAll('.row[data-appliance]').forEach(row => {
+        if (!isMitigeurRow(row)) return;
+        if (row.querySelector('input[data-mitigeur-height="1"]')) return;
+
+        const label = row.querySelector(".label");
+        if (!label) return;
+
+        const inp = document.createElement("input");
+        inp.type = "text";
+        inp.className = "extra-line height-line";
+        inp.setAttribute("data-mitigeur-height", "1");
+        inp.placeholder = "Hauteur maximum obligatoire (ex : 21cm)";
+        inp.style.display = "none";
+        label.appendChild(inp);
+    });
+}
+
+function syncMitigeurHeightInputs(){
+    document.querySelectorAll('.row[data-appliance]').forEach(row => {
+        if (!isMitigeurRow(row)) return;
+        const inp = row.querySelector('input[data-mitigeur-height="1"]');
+        if (!inp) return;
+        const nonIkea = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]:checked');
+        inp.style.display = nonIkea ? "" : "none";
+        inp.setAttribute("aria-hidden", nonIkea ? "false" : "true");
+        if (!nonIkea) inp.classList.remove("attention");
+    });
+}
+
+function getMitigeurHeightForRow(row){
+    const inp = row ? row.querySelector('input[data-mitigeur-height="1"]') : null;
+    const value = ((inp && inp.value) ? inp.value : "").trim();
+    return value ? ("Hauteur maximum : " + value) : "";
+}
+
+
+
 function injectExtraInputs(){
     document.querySelectorAll(".row").forEach(row => {
         if (row.querySelector('input[data-extra="1"]')) return;
@@ -1976,6 +2021,8 @@ function getLuminairesPcExportLine(){
         injectExtraInputs();
         injectNonIkeaLengthInputs();
         syncNonIkeaLengthInputs();
+        injectMitigeurHeightInputs();
+        syncMitigeurHeightInputs();
 
             const rows = document.querySelectorAll(".row[data-appliance], .row[data-special], .row[data-toggle], .row[data-luminaires]");
             const lines = [];
@@ -2166,7 +2213,8 @@ function getLuminairesPcExportLine(){
                         // seul autre choix : client
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
                 const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
-                const extras = [lengthVal, extra].filter(Boolean);
+                const heightVal = (nonIkea && nonIkea.checked) ? getMitigeurHeightForRow(row) : "";
+                const extras = [lengthVal, heightVal, extra].filter(Boolean);
                 const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
                 lines.push(`${label}${widthTxt}${gazTxt}${en2ForLine}${stateTxt} installé(e) ${whoText(checked.value)}${extraTxt}`);
                     }
@@ -2175,7 +2223,8 @@ function getLuminairesPcExportLine(){
                     if (stateTxt || gazTxt) {
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
                         const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
-                        const extras = [lengthVal, extra].filter(Boolean);
+                        const heightVal = (nonIkea && nonIkea.checked) ? getMitigeurHeightForRow(row) : "";
+                        const extras = [lengthVal, heightVal, extra].filter(Boolean);
                         const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
                         lines.push(`${label}${widthTxt}${gazTxt}${en2ForLine}${stateTxt}${extraTxt}`);
                     } else {
@@ -2809,6 +2858,7 @@ function wizardIsStepReady(stepRows){
     let hasSlProtectionError = false;
     let hasLuminairesPcError = false;
     let hasNonIkeaLengthError = false;
+    let hasMitigeurHeightError = false;
 
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
@@ -2845,6 +2895,11 @@ function wizardIsStepReady(stepRows){
         if ((appliance === "Plan de travail" || appliance === "Crédence") && nonChecked) {
             const lengthVal = getNonIkeaLengthForRow(row);
             if (!lengthVal) hasNonIkeaLengthError = true;
+        }
+
+        if (appliance === "Mitigeur" && nonChecked) {
+            const heightVal = getMitigeurHeightForRow(row);
+            if (!heightVal) hasMitigeurHeightError = true;
         }
 
         if (listingChecked) ok = true;
@@ -2956,7 +3011,7 @@ function wizardIsStepReady(stepRows){
         }
     });
 
-    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError && !hasHottePcError && !hasFourProtectionError && !hasMicroOndesPcError && !hasLvProtectionError && !hasFrigoPcError && !hasCongelPcError && !hasLlProtectionError && !hasSlProtectionError && !hasLuminairesPcError && !hasNonIkeaLengthError;
+    return (!hasReq || ok) && !hasWidthError && !hasPlomberieEvierError && !hasPlanDecoupesError && !hasPlaqueProtectionError && !hasHottePcError && !hasFourProtectionError && !hasMicroOndesPcError && !hasLvProtectionError && !hasFrigoPcError && !hasCongelPcError && !hasLlProtectionError && !hasSlProtectionError && !hasLuminairesPcError && !hasNonIkeaLengthError && !hasMitigeurHeightError;
 }
 
 
@@ -3052,6 +3107,12 @@ function getMissingWidthSelectsInStep(stepRows){
         if ((appliance === "Plan de travail" || appliance === "Crédence") && nonIkeaCb && nonIkeaCb.checked && lengthInput) {
             const lengthVal = (lengthInput.value || "").trim();
             if (!lengthVal) misses.push(lengthInput);
+        }
+
+        const heightInput = row.querySelector('input[data-mitigeur-height="1"]');
+        if (appliance === "Mitigeur" && nonIkeaCb && nonIkeaCb.checked && heightInput) {
+            const heightVal = (heightInput.value || "").trim();
+            if (!heightVal) misses.push(heightInput);
         }
 
         const sel = row.querySelector('select.width-select');
@@ -3164,6 +3225,8 @@ applyAlternatingRows();
         injectExtraInputs();
         injectNonIkeaLengthInputs();
         syncNonIkeaLengthInputs();
+        injectMitigeurHeightInputs();
+        syncMitigeurHeightInputs();
         injectWidthSelectors();
         applyTwoLineLayout();
         updatePlaqueHotteConstraint();
