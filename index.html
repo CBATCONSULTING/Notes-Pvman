@@ -183,12 +183,12 @@
         
 
         @keyframes widthPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-            50%      { box-shadow: 0 0 0 3px rgba(255,255,255,0.35); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); background: rgba(255,255,255,.06); }
+            50%      { box-shadow: 0 0 0 4px rgba(239,68,68,.38); background: rgba(239,68,68,.55); }
         }
         .width-wrap.attention .width-select{
-            animation: widthPulse .9s ease-in-out 0s 2;
-            border-color: rgba(255,255,255,0.7) !important;
+            animation: widthPulse .75s ease-in-out 0s 3;
+            border-color: rgba(255,90,90,1) !important;
         }
 .width-select{
             height: 36px;
@@ -204,10 +204,11 @@
         /* ✅ Sélecteurs obligatoires (plomberie évier / découpes techniques plan de travail / protections plaque / PC hotte / protections four / PC micro-ondes / protections lave-vaisselle) */
         .plumbing-wrap,
         .technical-wrap{ display:inline-flex; }
+        .chiffrage-hidden{ display:none !important; }
         .plumbing-wrap.attention .plumbing-select,
         .technical-wrap.attention .technical-select{
-            animation: widthPulse .9s ease-in-out 0s 2;
-            border-color: rgba(255,255,255,0.7) !important;
+            animation: widthPulse .75s ease-in-out 0s 3;
+            border-color: rgba(255,90,90,1) !important;
         }
         .plumbing-select,
         .technical-select{
@@ -564,13 +565,13 @@
 
 
         @keyframes otherPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-            50%      { box-shadow: 0 0 0 3px rgba(255,255,255,0.35); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); background: rgba(255,255,255,.06); }
+            50%      { box-shadow: 0 0 0 4px rgba(239,68,68,.38); background: rgba(239,68,68,.55); }
         }
         input.other-input.attention,
         input.length-line.attention{
-            animation: otherPulse .9s ease-in-out 0s 2;
-            border-color: rgba(255,255,255,0.7) !important;
+            animation: otherPulse .75s ease-in-out 0s 3;
+            border-color: rgba(255,90,90,1) !important;
         }
         input.length-line{
             margin-top: 8px;
@@ -588,7 +589,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v1.99</div>
+  <div class="pill">v2.00</div>
 </div>
 </div>
 <div class="card">
@@ -1651,16 +1652,52 @@ function injectWidthSelectors(){
   });
 }
 
+const CHIFFRAGE_SELECTORS = 'select[data-plomberie-evier="1"], select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]';
+
+function rowHasPasDe(row){
+    return !!(row && row.querySelector && row.querySelector('input[type="radio"][value="pasde"]:checked'));
+}
+
+function blockHasPasDe(row){
+    if (!row || !row.getAttribute) return false;
+    const block = row.getAttribute("data-block");
+    if (!block) return false;
+    return Array.from(document.querySelectorAll('.row[data-block]')).some(r => r.getAttribute("data-block") === block && rowHasPasDe(r));
+}
+
+function shouldHideChiffrageSelect(sel){
+    if (!sel) return false;
+    const row = sel.closest(".row");
+    return rowHasPasDe(row) || blockHasPasDe(row);
+}
+
+function chiffrageSelectIsRequired(sel){
+    return !!(sel && !shouldHideChiffrageSelect(sel));
+}
+
+function syncChiffrageSelectAvailability(){
+    document.querySelectorAll(CHIFFRAGE_SELECTORS).forEach(sel => {
+        const hide = shouldHideChiffrageSelect(sel);
+        const wrap = sel.closest(".plumbing-wrap") || sel.closest(".technical-wrap") || sel;
+        wrap.classList.toggle("chiffrage-hidden", hide);
+        if (hide) {
+            sel.value = "";
+            sel.classList.remove("has-value");
+            wrap.classList.remove("attention");
+        }
+    });
+}
+
 function syncPlumbingSelectVisualState(){
     document.querySelectorAll('select[data-plomberie-evier="1"]').forEach(sel => {
-        const hasValue = !!((sel.value || "").trim());
+        const hasValue = !!((sel.value || "").trim()) && !shouldHideChiffrageSelect(sel);
         sel.classList.toggle("has-value", hasValue);
     });
 }
 
 function getEvierPlomberieExportLine(){
     const sel = document.getElementById("evierPlomberie");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
@@ -1671,14 +1708,14 @@ function getEvierPlomberieExportLine(){
 
 function syncTechnicalSelectVisualState(){
     document.querySelectorAll('select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]').forEach(sel => {
-        const hasValue = !!((sel.value || "").trim());
+        const hasValue = !!((sel.value || "").trim()) && !shouldHideChiffrageSelect(sel);
         sel.classList.toggle("has-value", hasValue);
     });
 }
 
 function getPlanDecoupesExportLine(){
     const sel = document.getElementById("planDecoupesTechniques");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
@@ -1690,7 +1727,7 @@ function getPlanDecoupesExportLine(){
 
 function getPlaqueProtectionExportLine(){
     const sel = document.getElementById("plaqueProtections");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
@@ -1702,7 +1739,7 @@ function getPlaqueProtectionExportLine(){
 
 function getHottePcExportLine(){
     const sel = document.getElementById("hottePc");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
@@ -1714,7 +1751,7 @@ function getHottePcExportLine(){
 
 function getFourProtectionExportLine(){
     const sel = document.getElementById("fourProtections");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
@@ -1726,7 +1763,7 @@ function getFourProtectionExportLine(){
 
 function getMicroOndesPcExportLine(){
     const sel = document.getElementById("microOndesPc");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
@@ -1738,7 +1775,7 @@ function getMicroOndesPcExportLine(){
 
 function getLvProtectionExportLine(){
     const sel = document.getElementById("lvProtections");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     // Choix de validation : pas de note à ajouter dans le récap final
@@ -1751,7 +1788,7 @@ function getLvProtectionExportLine(){
 
 function getFrigoPcExportLine(){
     const sel = document.getElementById("frigoPc");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
@@ -1762,7 +1799,7 @@ function getFrigoPcExportLine(){
 
 function getCongelPcExportLine(){
     const sel = document.getElementById("congelPc");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
@@ -1774,7 +1811,7 @@ function getCongelPcExportLine(){
 
 function getLlProtectionExportLine(){
     const sel = document.getElementById("llProtections");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
@@ -1786,7 +1823,7 @@ function getLlProtectionExportLine(){
 
 function getSlProtectionExportLine(){
     const sel = document.getElementById("slProtections");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
@@ -1798,7 +1835,7 @@ function getSlProtectionExportLine(){
 
 function getLuminairesPcExportLine(){
     const sel = document.getElementById("luminairesPc");
-    if (!sel) return "";
+    if (!sel || shouldHideChiffrageSelect(sel)) return "";
 
     const value = (sel.value || "").trim();
     if (!value || value === "ok") return "";
@@ -1811,6 +1848,7 @@ function getLuminairesPcExportLine(){
 
         function buildRecap() {
             syncOtherNonIkeaLabels();
+            syncChiffrageSelectAvailability();
             syncPlumbingSelectVisualState();
             syncTechnicalSelectVisualState();
         injectExtraInputs();
@@ -2083,6 +2121,7 @@ const text = buildRecap();
             document.querySelectorAll('input[type="text"]').forEach(t => t.value = "");
             document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
             updatePlaqueHotteConstraint();
+            syncChiffrageSelectAvailability();
             buildRecap();
             showToast("Réinitialisé");
         });
@@ -2690,73 +2729,73 @@ function wizardIsStepReady(stepRows){
         }
 
         // ✅ Évier : choix plomberie obligatoire pour passer à l'étape suivante
-        if (plomberieEvierSel) {
+        if (chiffrageSelectIsRequired(plomberieEvierSel)) {
             const pv = (plomberieEvierSel.value || "").trim();
             if (!pv) hasPlomberieEvierError = true;
         }
 
         // ✅ Plan de travail : choix découpes techniques obligatoire pour passer à l'étape suivante
-        if (planDecoupesSel) {
+        if (chiffrageSelectIsRequired(planDecoupesSel)) {
             const dv = (planDecoupesSel.value || "").trim();
             if (!dv) hasPlanDecoupesError = true;
         }
 
         // ✅ Plaque de cuisson : choix protections obligatoire pour passer à l'étape suivante
-        if (plaqueProtectionSel) {
+        if (chiffrageSelectIsRequired(plaqueProtectionSel)) {
             const pv = (plaqueProtectionSel.value || "").trim();
             if (!pv) hasPlaqueProtectionError = true;
         }
 
         // ✅ Hotte : choix PC obligatoire pour passer à l'étape suivante
-        if (hottePcSel) {
+        if (chiffrageSelectIsRequired(hottePcSel)) {
             const hv = (hottePcSel.value || "").trim();
             if (!hv) hasHottePcError = true;
         }
 
         // ✅ Four : choix protections obligatoire pour passer à l'étape suivante
-        if (fourProtectionSel) {
+        if (chiffrageSelectIsRequired(fourProtectionSel)) {
             const fv = (fourProtectionSel.value || "").trim();
             if (!fv) hasFourProtectionError = true;
         }
 
         // ✅ Micro-ondes : choix PC obligatoire pour passer à l'étape suivante
-        if (microOndesPcSel) {
+        if (chiffrageSelectIsRequired(microOndesPcSel)) {
             const mv = (microOndesPcSel.value || "").trim();
             if (!mv) hasMicroOndesPcError = true;
         }
 
         // ✅ Lave-vaisselle : choix protections obligatoire pour passer à l'étape suivante
-        if (lvProtectionSel) {
+        if (chiffrageSelectIsRequired(lvProtectionSel)) {
             const lv = (lvProtectionSel.value || "").trim();
             if (!lv) hasLvProtectionError = true;
         }
 
         // ✅ Réfrigérateur : choix PC obligatoire pour passer à l'étape suivante
-        if (frigoPcSel) {
+        if (chiffrageSelectIsRequired(frigoPcSel)) {
             const fv = (frigoPcSel.value || "").trim();
             if (!fv) hasFrigoPcError = true;
         }
 
         // ✅ Congélateur : choix PC obligatoire pour passer à l'étape suivante
-        if (congelPcSel) {
+        if (chiffrageSelectIsRequired(congelPcSel)) {
             const cv = (congelPcSel.value || "").trim();
             if (!cv) hasCongelPcError = true;
         }
 
         // ✅ Lave-linge : choix protections obligatoire pour passer à l'étape suivante
-        if (llProtectionSel) {
+        if (chiffrageSelectIsRequired(llProtectionSel)) {
             const ll = (llProtectionSel.value || "").trim();
             if (!ll) hasLlProtectionError = true;
         }
 
         // ✅ Sèche-linge : choix protections obligatoire pour passer à l'étape suivante
-        if (slProtectionSel) {
+        if (chiffrageSelectIsRequired(slProtectionSel)) {
             const sl = (slProtectionSel.value || "").trim();
             if (!sl) hasSlProtectionError = true;
         }
 
         // ✅ Luminaires : choix PC obligatoire pour passer à l'étape suivante
-        if (luminairesPcSel) {
+        if (chiffrageSelectIsRequired(luminairesPcSel)) {
             const lum = (luminairesPcSel.value || "").trim();
             if (!lum) hasLuminairesPcError = true;
         }
@@ -2785,31 +2824,31 @@ function getMissingWidthSelectsInStep(stepRows){
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
         const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
-        if (plomberieEvierSel) {
+        if (chiffrageSelectIsRequired(plomberieEvierSel)) {
             const pv = (plomberieEvierSel.value || "").trim();
             if (!pv) misses.push(plomberieEvierSel);
         }
 
         const planDecoupesSel = row.querySelector('select[data-decoupes-plan="1"]');
-        if (planDecoupesSel) {
+        if (chiffrageSelectIsRequired(planDecoupesSel)) {
             const dv = (planDecoupesSel.value || "").trim();
             if (!dv) misses.push(planDecoupesSel);
         }
 
         const plaqueProtectionSel = row.querySelector('select[data-protection-plaque="1"]');
-        if (plaqueProtectionSel) {
+        if (chiffrageSelectIsRequired(plaqueProtectionSel)) {
             const pv = (plaqueProtectionSel.value || "").trim();
             if (!pv) misses.push(plaqueProtectionSel);
         }
 
         const hottePcSel = row.querySelector('select[data-pc-hotte="1"]');
-        if (hottePcSel) {
+        if (chiffrageSelectIsRequired(hottePcSel)) {
             const hv = (hottePcSel.value || "").trim();
             if (!hv) misses.push(hottePcSel);
         }
 
         const fourProtectionSel = row.querySelector('select[data-protection-four="1"]');
-        if (fourProtectionSel) {
+        if (chiffrageSelectIsRequired(fourProtectionSel)) {
             const fv = (fourProtectionSel.value || "").trim();
             if (!fv) misses.push(fourProtectionSel);
         }
@@ -2821,31 +2860,31 @@ function getMissingWidthSelectsInStep(stepRows){
         const llProtectionSel = row.querySelector('select[data-protection-ll="1"]');
         const slProtectionSel = row.querySelector('select[data-protection-sl="1"]');
         const luminairesPcSel = row.querySelector('select[data-pc-luminaires="1"]');
-        if (microOndesPcSel) {
+        if (chiffrageSelectIsRequired(microOndesPcSel)) {
             const mv = (microOndesPcSel.value || "").trim();
             if (!mv) misses.push(microOndesPcSel);
         }
-        if (lvProtectionSel) {
+        if (chiffrageSelectIsRequired(lvProtectionSel)) {
             const lv = (lvProtectionSel.value || "").trim();
             if (!lv) misses.push(lvProtectionSel);
         }
-        if (frigoPcSel) {
+        if (chiffrageSelectIsRequired(frigoPcSel)) {
             const fv = (frigoPcSel.value || "").trim();
             if (!fv) misses.push(frigoPcSel);
         }
-        if (congelPcSel) {
+        if (chiffrageSelectIsRequired(congelPcSel)) {
             const cv = (congelPcSel.value || "").trim();
             if (!cv) misses.push(congelPcSel);
         }
-        if (llProtectionSel) {
+        if (chiffrageSelectIsRequired(llProtectionSel)) {
             const ll = (llProtectionSel.value || "").trim();
             if (!ll) misses.push(llProtectionSel);
         }
-        if (slProtectionSel) {
+        if (chiffrageSelectIsRequired(slProtectionSel)) {
             const sl = (slProtectionSel.value || "").trim();
             if (!sl) misses.push(slProtectionSel);
         }
-        if (luminairesPcSel) {
+        if (chiffrageSelectIsRequired(luminairesPcSel)) {
             const lum = (luminairesPcSel.value || "").trim();
             if (!lum) misses.push(luminairesPcSel);
         }
@@ -2971,6 +3010,7 @@ applyAlternatingRows();
         injectWidthSelectors();
         applyTwoLineLayout();
         updatePlaqueHotteConstraint();
+        syncChiffrageSelectAvailability();
         syncOtherNonIkeaLabels();
         buildRecap();
         setWizardMode(wizardOn);
