@@ -591,7 +591,7 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v2.03</div>
+  <div class="pill">v2.04</div>
 </div>
 </div>
 <div class="card">
@@ -1614,9 +1614,14 @@ function syncMitigeurHeightInputs(){
         const inp = row.querySelector('input[data-mitigeur-height="1"]');
         if (!inp) return;
         const nonIkea = !!row.querySelector('input[type="checkbox"][data-nonikea="1"]:checked');
-        inp.style.display = nonIkea ? "" : "none";
-        inp.setAttribute("aria-hidden", nonIkea ? "false" : "true");
-        if (!nonIkea) inp.classList.remove("attention");
+        const defMag = !!row.querySelector('input[type="checkbox"][data-defmag="1"]:checked');
+        const mustShow = nonIkea || defMag;
+        inp.style.display = mustShow ? "" : "none";
+        inp.setAttribute("aria-hidden", mustShow ? "false" : "true");
+        if (!mustShow) {
+            inp.classList.remove("attention");
+            inp.value = "";
+        }
     });
 }
 
@@ -2213,7 +2218,7 @@ function getLuminairesPcExportLine(){
                         // seul autre choix : client
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
                 const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
-                const heightVal = (nonIkea && nonIkea.checked) ? getMitigeurHeightForRow(row) : "";
+                const heightVal = ((nonIkea && nonIkea.checked) || (defMag && defMag.checked)) ? getMitigeurHeightForRow(row) : "";
                 const extras = [lengthVal, heightVal, extra].filter(Boolean);
                 const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
                 lines.push(`${label}${widthTxt}${gazTxt}${en2ForLine}${stateTxt} installé(e) ${whoText(checked.value)}${extraTxt}`);
@@ -2223,7 +2228,7 @@ function getLuminairesPcExportLine(){
                     if (stateTxt || gazTxt) {
                         const extra = (row.querySelector('input[data-extra="1"]')?.value || "").trim();
                         const lengthVal = (nonIkea && nonIkea.checked) ? getNonIkeaLengthForRow(row) : "";
-                        const heightVal = (nonIkea && nonIkea.checked) ? getMitigeurHeightForRow(row) : "";
+                        const heightVal = ((nonIkea && nonIkea.checked) || (defMag && defMag.checked)) ? getMitigeurHeightForRow(row) : "";
                         const extras = [lengthVal, heightVal, extra].filter(Boolean);
                         const extraTxt = extras.length ? (" — " + extras.join(" — ")) : "";
                         lines.push(`${label}${widthTxt}${gazTxt}${en2ForLine}${stateTxt}${extraTxt}`);
@@ -2897,7 +2902,7 @@ function wizardIsStepReady(stepRows){
             if (!lengthVal) hasNonIkeaLengthError = true;
         }
 
-        if (appliance === "Mitigeur" && nonChecked) {
+        if (appliance === "Mitigeur" && (nonChecked || defChecked)) {
             const heightVal = getMitigeurHeightForRow(row);
             if (!heightVal) hasMitigeurHeightError = true;
         }
@@ -3110,7 +3115,8 @@ function getMissingWidthSelectsInStep(stepRows){
         }
 
         const heightInput = row.querySelector('input[data-mitigeur-height="1"]');
-        if (appliance === "Mitigeur" && nonIkeaCb && nonIkeaCb.checked && heightInput) {
+        const defMagCb = row.querySelector('input[type="checkbox"][data-defmag="1"]');
+        if (appliance === "Mitigeur" && heightInput && ((nonIkeaCb && nonIkeaCb.checked) || (defMagCb && defMagCb.checked))) {
             const heightVal = (heightInput.value || "").trim();
             if (!heightVal) misses.push(heightInput);
         }
