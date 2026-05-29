@@ -205,6 +205,37 @@
         .plumbing-wrap,
         .technical-wrap{ display:inline-flex; }
         .chiffrage-hidden{ display:none !important; }
+        .travaux-question{
+            display:flex;
+            flex-wrap:wrap;
+            align-items:center;
+            gap:10px 12px;
+            margin: 0 0 14px;
+            padding: 0 4px;
+        }
+        .travaux-title{
+            font-weight:800;
+            letter-spacing:.02em;
+            color: var(--text);
+        }
+        .travaux-choice-group{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            flex-wrap:wrap;
+        }
+        .travaux-choice-group.attention .opt{
+            animation: widthPulse .75s ease-in-out 0s 3;
+            border-color: rgba(255,90,90,1) !important;
+            background: rgba(239,68,68,.55);
+        }
+        .travaux-hint{
+            width:100%;
+            color: #ffe24f;
+            font-size: 13px;
+            line-height: 1.25;
+            margin-top: -2px;
+        }
         .plumbing-wrap.attention .plumbing-select,
         .technical-wrap.attention .technical-select{
             animation: widthPulse .75s ease-in-out 0s 3;
@@ -591,10 +622,18 @@
 </div>
 <div class="header-right">
   <button class="ghost btn-small" id="btnMode" type="button">Mode 1 par 1</button>
-  <div class="pill">v2.04</div>
+  <div class="pill">v2.05</div>
 </div>
 </div>
 <div class="card">
+<div class="travaux-question" id="travauxQuestion">
+  <div class="travaux-title">TRAVAUX EN COURS :</div>
+  <div class="travaux-choice-group" id="travauxChoices">
+    <label><input name="travaux_en_cours" type="radio" value="oui"/><span class="opt compact">Oui</span></label>
+    <label><input name="travaux_en_cours" type="radio" value="non"/><span class="opt compact">Non</span></label>
+  </div>
+  <div class="travaux-hint">Oui = entreprise déjà sur place</div>
+</div>
 <div class="wizard-controls" id="wizardControls" aria-hidden="true">
   <div class="wizard-top">
     <div class="wizard-progress">
@@ -1736,6 +1775,14 @@ function injectWidthSelectors(){
 
 const CHIFFRAGE_SELECTORS = 'select[data-plomberie-evier="1"], select[data-decoupes-plan="1"], select[data-protection-plaque="1"], select[data-protection-plaquehotte="1"], select[data-protection-piano="1"], select[data-pc-hotte="1"], select[data-protection-four="1"], select[data-pc-microondes="1"], select[data-protection-lv="1"], select[data-pc-frigo="1"], select[data-pc-congel="1"], select[data-protection-ll="1"], select[data-protection-sl="1"], select[data-pc-luminaires="1"]';
 
+function travauxEnCoursAnswered(){
+    return !!document.querySelector('input[name="travaux_en_cours"]:checked');
+}
+
+function travauxEnCoursOui(){
+    return !!document.querySelector('input[name="travaux_en_cours"][value="oui"]:checked');
+}
+
 function rowHasPasDe(row){
     return !!(row && row.querySelector && row.querySelector('input[type="radio"][value="pasde"]:checked'));
 }
@@ -1750,7 +1797,7 @@ function blockHasPasDe(row){
 function shouldHideChiffrageSelect(sel){
     if (!sel) return false;
     const row = sel.closest(".row");
-    return rowHasPasDe(row) || blockHasPasDe(row);
+    return travauxEnCoursOui() || rowHasPasDe(row) || blockHasPasDe(row);
 }
 
 function chiffrageSelectIsRequired(sel){
@@ -2465,6 +2512,14 @@ const text = buildRecap();
       return;
     }
 
+    // --- Travaux en cours (global) ---
+    if (t.matches('input[name="travaux_en_cours"]')) {
+      syncChiffrageSelectAvailability();
+      buildRecap();
+      updateWizardNavState();
+      return;
+    }
+
     // --- Radios : client / pasde (Non souhaité) ---
     if (t.matches('input[type="radio"]')) {
       const row = t.closest(".row");
@@ -2846,6 +2901,7 @@ function widthSelectIsRequired(sel){
 
 // ✅ En mode 1 par 1, on ne passe à la suite que si "Listing" OU "NON IKEA" est choisi
 function wizardIsStepReady(stepRows){
+    if (!travauxEnCoursAnswered()) return false;
     const rows = stepRows || [];
     let hasReq = false;
     let ok = false;
@@ -3028,6 +3084,11 @@ let __lastWidthFlashIndex = -1;
 function getMissingWidthSelectsInStep(stepRows){
     const rows = stepRows || [];
     const misses = [];
+    if (!travauxEnCoursAnswered()) {
+        const input = document.querySelector('input[name="travaux_en_cours"]');
+        if (input) misses.push(input);
+        return misses;
+    }
     rows.forEach(row => {
         if (!row || !row.querySelector) return;
         const plomberieEvierSel = row.querySelector('select[data-plomberie-evier="1"]');
@@ -3136,7 +3197,7 @@ function flashMissingWidth(stepRows){
     if (!misses.length) return false;
 
     const sel = misses[0];
-    const wrap = sel.closest(".width-wrap") || sel.closest(".plumbing-wrap") || sel.closest(".technical-wrap") || sel;
+    const wrap = sel.closest(".width-wrap") || sel.closest(".plumbing-wrap") || sel.closest(".technical-wrap") || sel.closest(".travaux-choice-group") || document.getElementById("travauxChoices") || sel;
 
     // anti-spam
     const now = Date.now();
